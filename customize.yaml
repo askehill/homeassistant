@@ -1,0 +1,6 @@
+switch.sonoff_1000524d2d_1:
+  friendly_name: Hall and Outdoor lights - Hall
+switch.sonoff_1000524d2d_2:
+  friendly_name: Hall and Outdoor lights - Outdoor
+switch.sonoff_1000524d2d_3:
+  friendly_name: Unused

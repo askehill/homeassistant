@@ -1,0 +1,47 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+#http:
+#   base_url: https://house.adrianskehill.com
+#   use_x_forwarded_for: true
+#   trusted_proxies: 127.0.0.1
+
+
+frontend:
+  themes: !include_dir_merge_named themes   
+
+device_tracker:
+  - platform: ddwrt
+    host: 192.168.1.1
+    username: admin
+    password: !secret router_password
+
+sonoff:
+  username: adrian.skehill@gmail.com
+  password: !secret sonoff_password
+  api_region: eu 
+  debug: False
+
+tplink:
+  discovery: false
+  light:
+    - host: 192.168.1.141
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+hive:
+  username: adrian.skehill@gmail.com
+  password: !secret hive_password
+
+homeassistant:
+  customize: !include customize.yaml
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml

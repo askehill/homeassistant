@@ -1,0 +1,126 @@
+- id: '1579368086048'
+  alias: Outdoor lights on at Sunset
+  description: ''
+  trigger:
+  - event: sunset
+    offset: +00:15:00
+    platform: sun
+  condition: []
+  action:
+  - entity_id: switch.sonoff_1000524d2d_2
+    service: switch.turn_on
+- id: '1579368286267'
+  alias: Turn outdoor lights off
+  description: ''
+  trigger:
+  - at: '23:35'
+    platform: time
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.sonoff_1000524d2d_2
+    service: switch.turn_off
+- id: '1579910205699'
+  alias: Living room light on at dusk
+  description: ''
+  trigger:
+  - event: sunset
+    offset: +00:00:00
+    platform: sun
+  condition: []
+  action:
+  - entity_id: switch.living_room_light
+    service: switch.turn_on
+- id: '1579910576936'
+  alias: Living room light off
+  description: ''
+  trigger:
+  - at: '23:30'
+    platform: time
+  condition: []
+  action:
+  - entity_id: switch.living_room_light
+    service: switch.turn_off
+- id: '1581724986134'
+  alias: Downstairs Heating on
+  description: Turn downstairs on for from 17:45
+  trigger:
+  - at: '17:45'
+    platform: time
+  condition: []
+  action:
+  - data:
+      temperature: 22
+    entity_id: climate.downstairs_heating
+    service: climate.set_temperature
+  - data:
+      temperature: 20
+    entity_id: climate.upstairs_heating
+    service: climate.set_temperature
+- id: '1581725082327'
+  alias: Upstairs Off
+  description: Turn off heating upstairs at 19:00
+  trigger:
+  - at: '19:00'
+    platform: time
+  condition: []
+  action:
+  - data:
+      temperature: 7
+    entity_id: climate.upstairs_heating
+    service: climate.set_temperature
+- id: '1581725156741'
+  alias: Downstairs Heating Off
+  description: Turn Downstairs heating off at 22:30
+  trigger:
+  - at: '22:30'
+    platform: time
+  condition: []
+  action:
+  - data:
+      temperature: 7
+    entity_id: climate.downstairs_heating
+    service: climate.set_temperature
+- id: '1581803658819'
+  alias: Landing Light on at Dusk
+  description: As the above!
+  trigger:
+  - event: sunset
+    offset: +00:10:00
+    platform: sun
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.landing_light
+    service: switch.turn_on
+- id: '1581803790658'
+  alias: Landing Light off at 23:45
+  description: ''
+  trigger:
+  - at: '23:45'
+    platform: time
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.landing_light
+    service: switch.turn_off
+- id: '1581804716802'
+  alias: Lights On
+  description: ''
+  trigger:
+  - event: sunset
+    platform: sun
+  condition: []
+  action:
+  - entity_id: script.1581804598858
+    service: script.turn_on
+- id: '1581807159917'
+  alias: Hot Water Boost
+  description: Turn on hot water for 1 hour
+  trigger: []
+  condition: []
+  action:
+  - data:
+      time_period: 01:00:00
+    entity_id: water_heater.hot_water
+    service: hive.boost_hot_water
