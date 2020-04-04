@@ -46,6 +46,19 @@ media_player:
   - platform: philips_js
     host: 192.168.1.145
 
+
+binary_sensor:
+    - platform: mqtt
+      state_topic: "tele/rfbridge/RESULT"
+      name: 'Pir Motion'
+      value_template: '{{value_json.RfReceived.Data}}'
+      payload_on: 'E6BC6E'
+      payload_off: 'E6BC6Eoff'
+      device_class: motion
+      optimistic: false
+      qos: 1
+      retain: false
+
 homeassistant:
   customize: !include customize.yaml
 
