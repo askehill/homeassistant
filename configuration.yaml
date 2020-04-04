@@ -56,7 +56,6 @@ binary_sensor:
       payload_off: 'E6BC6Eoff'
       device_class: motion
       qos: 1
-      retain: false
 
 homeassistant:
   customize: !include customize.yaml
