@@ -55,7 +55,6 @@ binary_sensor:
       payload_on: 'E6BC6E'
       payload_off: 'E6BC6Eoff'
       device_class: motion
-      optimistic: false
       qos: 1
       retain: false
 
