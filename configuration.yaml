@@ -68,7 +68,7 @@ switch:
       state_off: 'OFF'
       optimistic: false
       qos: 0
-      retrain: true
+      retain: true
 
 homeassistant:
   customize: !include customize.yaml
