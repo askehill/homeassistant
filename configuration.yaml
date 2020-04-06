@@ -57,6 +57,7 @@ binary_sensor:
       device_class: motion
       qos: 1
 
+binary_sensor:
     - platform: mqtt
       state_topic: "stat/sonsock1/STATE"
       command_topic: "cmnd/sonsock1/POWER"
