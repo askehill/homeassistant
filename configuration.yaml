@@ -41,18 +41,6 @@ hive:
 switch:
   - platform: wake_on_lan
     mac: a4:83:e7:97:53:c0
-  - platform: mqtt
-    state_topic: "stat/sonsock1/STATE"
-    command_topic: "cmnd/sonsock1/POWER"
-    availability_topic: "tele/sonsock1/LWT"
-    name: "Sonoff Socket 1"
-    payload_on: "ON"
-    payload_off: "OFF"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    optimistic: false
-    qos: 1
-    retain: true
 
 media_player:
   - platform: philips_js
