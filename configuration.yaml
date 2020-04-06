@@ -57,6 +57,18 @@ binary_sensor:
       device_class: motion
       qos: 1
 
+    - platform: mqtt
+      state_topic: "stat/sonsock1/STATE"
+      command_topic: "cmnd/sonsock1/POWER"
+      name: "Sonoff Socket 1"
+      payload_on: 'ON'
+      payload_off: 'OFF'
+      state_on: 'ON'
+      state_off: 'OFF'
+      optimistic: false
+      qos: 0
+      retrain: true
+
 homeassistant:
   customize: !include customize.yaml
 
