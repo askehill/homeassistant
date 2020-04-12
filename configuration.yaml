@@ -43,11 +43,11 @@ switch:
 
 media_player:
   - platform: philips_js
+    name: Living Room TV
     host: 192.168.1.145
   - platform: braviatv
     name: Playroom TV
     host: 192.168.1.111
-
 
 spotify:
   client_id: 2e4914baee3c4576ba89393016fb588c
