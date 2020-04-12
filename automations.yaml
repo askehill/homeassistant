@@ -50,7 +50,7 @@
   condition: []
   action:
   - data:
-      temperature: 22
+      temperature: 21
     entity_id: climate.downstairs_heating
     service: climate.set_temperature
   - data:
@@ -124,3 +124,54 @@
       time_period: 01:00:00
     entity_id: water_heater.hot_water
     service: hive.boost_hot_water
+- id: '1586039347252'
+  alias: Landing Motion
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.pir_motion
+    platform: state
+    to: 'on'
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: switch.landing_light
+      state: 'off'
+    - before: sunrise
+      condition: sun
+  action:
+  - data: {}
+    entity_id: switch.landing_light
+    service: switch.turn_on
+- id: '1586113907411'
+  alias: Reset PIR
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.pir_motion
+    for: 0:00:05
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      payload: E6BC6Eoff
+      topic: tele/rfbridge/RESULT
+    service: mqtt.publish
+- id: '1586116736096'
+  alias: Landing Light Off After 5 mins
+  description: If it's after lights off, turn light on for 5 mins if movement upstairs
+  trigger:
+  - entity_id: binary_sensor.pir_motion
+    for: 0:05:00
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition:
+  - after: '23:45:00'
+    before: 06:00:00
+    condition: time
+  action:
+  - data: {}
+    entity_id: switch.landing_light
+    service: switch.turn_off

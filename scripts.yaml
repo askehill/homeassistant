@@ -11,3 +11,33 @@
     service: switch.turn_on
   - entity_id: switch.sonoff_1000524d2d_2
     service: switch.turn_on
+'1586209812296':
+  alias: Boost Downstairs Heating
+  sequence:
+  - data:
+      temperature: '21.5'
+      time_period: 01:00:00
+      entity_id: climate.downstairs_heating
+    service: hive.boost_heating
+'1586209927400':
+  alias: Boost Hot Water
+  sequence:
+  - data:
+      on_off: 'on'
+      time_period: 01:00:00
+      entity_id: water_heater.hot_water
+    service: hive.boost_hot_water
+'1586210345324':
+  alias: Boost Upstairs Heating
+  sequence:
+  - service: hive.boost_hot_water
+    data:
+      entity_id: water_heater.hot_water
+      on_off: 'on'
+      time_period: 01:00:00
+  - service: hive.boost_heating 
+    data:
+      entity_id: climate.upstairs_heating
+      time_period: 01:00:00
+      temperature: '21.5'
+
