@@ -3,11 +3,10 @@
 default_config:
 
 
-# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
-#http:
-#   base_url: https://house.adrianskehill.com
-#   use_x_forwarded_for: true
-#   trusted_proxies: 127.0.0.1
+http:
+  base_url: https://fruitfield.duckdns.org
+  use_x_forwarded_for: true
+  trusted_proxies: 127.0.0.1
 
 
 frontend:
@@ -46,6 +45,10 @@ media_player:
   - platform: philips_js
     host: 192.168.1.145
 
+
+spotify:
+  client_id: 2e4914baee3c4576ba89393016fb588c
+  client_secret: !secret spotify_secret
 
 binary_sensor:
     - platform: mqtt
