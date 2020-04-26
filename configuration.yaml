@@ -5,7 +5,7 @@ default_config:
 discovery:
 
 http:
-  base_url: https://fruitfield.duckdns.org
+  base_url: !secret site_name
   use_x_forwarded_for: true
   trusted_proxies: 127.0.0.1
 
