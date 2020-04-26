@@ -62,6 +62,14 @@ binary_sensor:
       payload_off: 'E6BC6Eoff'
       device_class: motion
       qos: 1
+    - platform: mqtt
+      state_topic: "tele/rfbridge/RESULT"
+      name: 'Upstairs Smoke Alarm'
+      value_template: '{{value_json.RfReceived.Data}}'
+      payload_on: '649606'
+      payload_off: '649606off'
+      device_class: smoke
+      qos: 1
 
 homeassistant:
   customize: !include customize.yaml
