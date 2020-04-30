@@ -42,10 +42,9 @@ switch:
     mac: a4:83:e7:97:53:c0
 
 media_player:
-  - platform: philips_js
-    name: Living Room TV
-    host: 192.168.1.147
-    api_version: 6
+  - platform: androidtv
+    name: Philips OLED
+    host: 192.168.1.143
   - platform: braviatv
     name: Playroom TV
     host: 192.168.1.111
