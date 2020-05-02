@@ -137,8 +137,12 @@
     - condition: state
       entity_id: switch.landing_light
       state: 'off'
-    - before: sunrise
-      condition: sun
+    - condition: or
+      conditions:
+      - after: '23:45:00'
+        condition: time
+      - before: sunrise
+        condition: sun
   action:
   - data: {}
     entity_id: switch.landing_light
@@ -148,7 +152,7 @@
   description: ''
   trigger:
   - entity_id: binary_sensor.pir_motion
-    for: 0:00:05
+    for: 0:00:15
     from: 'off'
     platform: state
     to: 'on'
@@ -175,3 +179,27 @@
   - data: {}
     entity_id: switch.landing_light
     service: switch.turn_off
+- id: '1587913331545'
+  alias: Reset Smoke Alarm
+  description: ''
+  trigger: []
+  condition: []
+  action:
+  - data:
+      payload: 649606off
+      topic: tele/rfbridge/RESULT
+    service: mqtt.publish
+- id: '1588437919449'
+  alias: Toggle Playroom Light
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.playroom_rf_light_switch
+    platform: state
+  condition: []
+  action:
+  - entity_id: switch.playroom
+    service: switch.toggle
+  - data:
+      payload: 84A794off
+      topic: tele/rfbridge/RESULT
+    service: mqtt.publish
