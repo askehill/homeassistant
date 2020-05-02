@@ -76,7 +76,6 @@ binary_sensor:
       value_template: '{{value_json.RfReceived.Data}}'
       payload_on: '84A794'
       payload_off: '84A794off'
-      device_class: None
 
 homeassistant:
   customize: !include customize.yaml
