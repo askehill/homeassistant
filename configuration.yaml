@@ -71,6 +71,13 @@ binary_sensor:
       payload_off: '649606off'
       device_class: smoke
       qos: 1
+    - platform: mqtt
+      state_topic: "tele/rfbridge/RESULT"
+      name: "Playroom RF Light Switch"
+      value_template: '{{value_json.RfReceived.Data}}'
+      payload_on: '84A794'
+      payload_off: '84A794off'
+      device_class: None
 
 homeassistant:
   customize: !include customize.yaml
