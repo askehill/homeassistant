@@ -18,12 +18,6 @@ device_tracker:
     username: admin
     password: !secret router_password
 
-sonoff:
-  username: adrian.skehill@gmail.com
-  password: !secret sonoff_password
-  api_region: eu 
-  debug: False
-
 tplink:
   discovery: false
   light:
@@ -76,7 +70,7 @@ binary_sensor:
       value_template: '{{value_json.RfReceived.Data}}'
       payload_on: '84A794'
       payload_off: '84A794off'
-
+    
 homeassistant:
   customize: !include customize.yaml
 
