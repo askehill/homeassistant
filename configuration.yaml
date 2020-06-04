@@ -69,7 +69,13 @@ binary_sensor:
       value_template: '{{value_json.RfReceived.Data}}'
       payload_on: '84A794'
       payload_off: '84A794off'
-    
+    - platform: mqtt
+      state_topic: "tele/rfbridge/RESULT"
+      name: "Test Sonoff Sensor"
+      value_template: '{{value_json.RfReceived.Data}}'
+      payload: '84A794' 
+      payload_off: '84A794off'
+      
 homeassistant:
   customize: !include customize.yaml
 
