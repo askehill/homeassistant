@@ -7,9 +7,12 @@
   - delay: 00:10:00
   - entity_id: switch.outdoor_lights
     service: switch.turn_on
-  - entity_id: switch.landing_light
+  - entity_id: switch.landinglight
     service: switch.turn_on
-  - entity_id: switch.sonoff_1000524d2d_2
+  - entity_id: switch.outdoor
+    service: switch.turn_on
+  - data: {}
+    entity_id: switch.pathway
     service: switch.turn_on
 '1586209812296':
   alias: Boost Downstairs Heating
@@ -35,9 +38,8 @@
       entity_id: water_heater.hot_water
       on_off: 'on'
       time_period: 01:00:00
-  - service: hive.boost_heating 
+  - service: hive.boost_heating
     data:
       entity_id: climate.upstairs_heating
       time_period: 01:00:00
       temperature: '21.5'
-

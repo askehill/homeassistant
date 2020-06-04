@@ -7,7 +7,7 @@
     platform: sun
   condition: []
   action:
-  - entity_id: switch.sonoff_1000524d2d_2
+  - entity_id: switch.outdoor
     service: switch.turn_on
 - id: '1579368286267'
   alias: Turn outdoor lights off
@@ -18,7 +18,10 @@
   condition: []
   action:
   - data: {}
-    entity_id: switch.sonoff_1000524d2d_2
+    entity_id: switch.outdoor
+    service: switch.turn_off
+  - data: {}
+    entity_id: switch.pathway
     service: switch.turn_off
 - id: '1579910205699'
   alias: Living room light on at dusk
@@ -91,7 +94,7 @@
   condition: []
   action:
   - data: {}
-    entity_id: switch.landing_light
+    entity_id: switch.landinglight
     service: switch.turn_on
 - id: '1581803790658'
   alias: Landing Light off at 23:45
@@ -102,7 +105,7 @@
   condition: []
   action:
   - data: {}
-    entity_id: switch.landing_light
+    entity_id: switch.landinglight
     service: switch.turn_off
 - id: '1581804716802'
   alias: Lights On
@@ -135,7 +138,7 @@
   - condition: and
     conditions:
     - condition: state
-      entity_id: switch.landing_light
+      entity_id: switch.landinglight
       state: 'off'
     - condition: or
       conditions:
@@ -145,7 +148,7 @@
         condition: sun
   action:
   - data: {}
-    entity_id: switch.landing_light
+    entity_id: switch.landinglight
     service: switch.turn_on
 - id: '1586113907411'
   alias: Reset PIR
@@ -177,7 +180,7 @@
     condition: time
   action:
   - data: {}
-    entity_id: switch.landing_light
+    entity_id: switch.landinglight
     service: switch.turn_off
 - id: '1587913331545'
   alias: Reset Smoke Alarm
@@ -197,9 +200,20 @@
     platform: state
   condition: []
   action:
-  - entity_id: switch.playroom
+  - entity_id: switch.playroom_light
     service: switch.toggle
   - data:
       payload: 84A794off
       topic: tele/rfbridge/RESULT
     service: mqtt.publish
+- id: '1590162517183'
+  alias: Toggle Pathway
+  description: ''
+  trigger:
+  - entity_id: switch.pathway
+    platform: state
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.outdoor_lights
+    service: switch.toggle
