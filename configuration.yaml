@@ -41,6 +41,10 @@ media_player:
   - platform: braviatv
     name: Playroom TV
     host: 192.168.1.111
+  - platform: enigma2
+    host: vuduo2.lan
+    password: !secret vu_password
+
 
 spotify:
   client_id: 2e4914baee3c4576ba89393016fb588c
