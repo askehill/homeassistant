@@ -73,8 +73,8 @@ binary_sensor:
       state_topic: "tele/rfbridge/RESULT"
       name: "Test Sonoff Sensor"
       value_template: '{{value_json.RfReceived.Data}}'
-      payload: '84A794' 
-      payload_off: '84A794off'
+      payload: '986BA9' 
+      payload_off: '986BA9off'
       
 homeassistant:
   customize: !include customize.yaml
