@@ -165,6 +165,21 @@
       payload: E6BC6Eoff
       topic: tele/rfbridge/RESULT
     service: mqtt.publish
+- id: '1586113907412'
+  alias: Reset Test Sensor
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.test_sonoff_sensor
+    for: 0:00:15
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      payload: 986BA9off
+      topic: tele/rfbridge/RESULT
+    service: mqtt.publish
 - id: '1586116736096'
   alias: Landing Light Off After 5 mins
   description: If it's after lights off, turn light on for 5 mins if movement upstairs
