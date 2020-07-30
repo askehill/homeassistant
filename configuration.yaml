@@ -110,7 +110,7 @@ binary_sensor:
       payload_on: '986BA9' 
       payload_off: '986BA9off'
     - platform: mqtt
-      state_topic: "sshellies/shellydw2-A4CF12F437D2/sensor/state"
+      state_topic: "shellies/shellydw2-A4CF12F437D2/sensor/state"
       name: "Shelly Door/Window Sensor"
       payload_on: 'open'
       payload_off: 'close'
