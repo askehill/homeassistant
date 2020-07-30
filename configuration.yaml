@@ -50,6 +50,36 @@ spotify:
   client_id: 2e4914baee3c4576ba89393016fb588c
   client_secret: !secret spotify_secret
 
+sensor:
+  - platform: mqtt
+    name: "Shelly Door/Window Lux"
+    state_topic: "shellies/shellydw2-A4CF12F437D2/sensor/lux"
+    value_template: '{{ value|round(0) }}'
+    qos: 0
+    device_class: illuminance
+    unit_of_measurement: 'lux'
+  - platform: mqtt
+    name: "Shelly Door/Window Battery"
+    state_topic: "shellies/shellydw2-A4CF12F437D2/sensor/battery"
+    value_template: '{{ value|round(0) }}'
+    qos: 0
+    device_class: battery
+    unit_of_measurement: '%'
+  - platform: mqtt
+    name: "Shelly Door/Window Tilt"
+    state_topic: "shellies/shellydw2-A4CF12F437D2/sensor/tilt"
+    value_template: '{{ value|round(0) }}'
+    qos: 0
+    unit_of_measurement: '°'
+    icon: mdi:angle-acute
+  - platform: mqtt
+    name: "Shelly Door/Window Temperature"
+    state_topic: "shellies/shellydw2-A4CF12F437D2/sensor/temperature"
+    value_template: '{{ value }}'
+    device_class: temperature
+    qos: 0
+
+
 binary_sensor:
     - platform: mqtt
       state_topic: "tele/rfbridge/RESULT"
@@ -79,6 +109,20 @@ binary_sensor:
       value_template: '{{value_json.RfReceived.Data}}'
       payload_on: '986BA9' 
       payload_off: '986BA9off'
+    - platform: mqtt
+      state_topic: "sshellies/shellydw2-A4CF12F437D2/sensor/state"
+      name: "Shelly Door/Window Sensor"
+      payload_on: 'open'
+      payload_off: 'close'
+      qos: 0
+      device_class: door
+    - platform: mqtt
+      state_topic: "shellies/shellydw2-A4CF12F437D2/sensor/vibration"
+      name: "Shelly Door/Window Vibration"
+      payload_on: '128'
+      payload_off: '0'
+      qos: 0
+      device_class: vibration
       
 homeassistant:
   customize: !include customize.yaml
