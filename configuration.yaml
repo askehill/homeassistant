@@ -4,6 +4,8 @@ default_config:
 
 discovery:
 
+python_script:
+
 http:
   use_x_forwarded_for: true
   trusted_proxies: 127.0.0.1
@@ -44,8 +46,6 @@ media_player:
   - platform: enigma2
     host: vuduo2.lan
     password: !secret vu_password
-
-python_script:
 
 spotify:
   client_id: 2e4914baee3c4576ba89393016fb588c
