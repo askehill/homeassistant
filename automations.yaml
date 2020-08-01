@@ -7,7 +7,7 @@
     platform: sun
   condition: []
   action:
-  - entity_id: switch.outdoor
+  - entity_id: switch.pathwaylights
     service: switch.turn_on
 - id: '1579368286267'
   alias: Turn outdoor lights off
@@ -19,6 +19,9 @@
   action:
   - data: {}
     entity_id: switch.outdoor
+    service: switch.turn_off
+  - data: {}
+    entity_id: switch.pathwaylights
     service: switch.turn_off
   - data: {}
     entity_id: switch.pathway
@@ -230,5 +233,5 @@
   condition: []
   action:
   - data: {}
-    entity_id: switch.outdoor_lights
+    entity_id: switch.pathwaylights
     service: switch.toggle

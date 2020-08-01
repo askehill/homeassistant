@@ -12,7 +12,7 @@
   - entity_id: switch.outdoor
     service: switch.turn_on
   - data: {}
-    entity_id: switch.pathway
+    entity_id: switch.pathwaylights
     service: switch.turn_on
 '1586209812296':
   alias: Boost Downstairs Heating
