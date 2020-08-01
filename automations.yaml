@@ -251,7 +251,6 @@
 
 - id: 'shellies_discovery'
   alias: 'Shellies Discovery'
-  max: 999
   trigger:
     platform: mqtt
     topic: shellies/announce
