@@ -2,7 +2,7 @@
   alias: House Lighting up time
   sequence:
   - data: {}
-    entity_id: switch.living_room_light
+    entity_id: switch.livingroomlight
     service: switch.turn_on
   - delay: 00:10:00
   - entity_id: switch.outdoor_lights
@@ -12,8 +12,9 @@
   - entity_id: switch.outdoor
     service: switch.turn_on
   - data: {}
-    entity_id: switch.pathway
+    entity_id: switch.pathlights
     service: switch.turn_on
+  mode: single
 '1586209812296':
   alias: Boost Downstairs Heating
   sequence:

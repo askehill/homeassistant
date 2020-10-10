@@ -21,7 +21,7 @@
     entity_id: switch.outdoor
     service: switch.turn_off
   - data: {}
-    entity_id: switch.pathwaylights
+    entity_id: switch.internalpathway
     service: switch.turn_off
   - data: {}
     entity_id: switch.pathlights
@@ -45,8 +45,9 @@
     platform: time
   condition: []
   action:
-  - entity_id: switch.living_room_light
+  - entity_id: switch.livingroomlight
     service: switch.turn_off
+  mode: single
 - id: '1581724986134'
   alias: Downstairs Heating on
   description: Turn downstairs on for from 17:45
@@ -138,21 +139,21 @@
     platform: state
     to: 'on'
   condition:
-  - condition: and
+  - condition: or
     conditions:
-    - condition: state
-      entity_id: switch.landinglight
-      state: 'off'
-    - condition: or
-      conditions:
-      - after: '23:45:00'
-        condition: time
-      - before: sunrise
-        condition: sun
+    - condition: time
+      after: '23:45'
+    - condition: sun
+      before: sunrise
   action:
   - data: {}
     entity_id: switch.landinglight
     service: switch.turn_on
+  - delay: 00:05:00
+  - data: {}
+    entity_id: switch.landinglight
+    service: switch.turn_off
+  mode: restart
 - id: '1586113907411'
   alias: Reset PIR
   description: ''
@@ -183,23 +184,6 @@
       payload: 986BA9off
       topic: tele/rfbridge/RESULT
     service: mqtt.publish
-- id: '1586116736096'
-  alias: Landing Light Off After 5 mins
-  description: If it's after lights off, turn light on for 5 mins if movement upstairs
-  trigger:
-  - entity_id: binary_sensor.pir_motion
-    for: 0:05:00
-    from: 'on'
-    platform: state
-    to: 'off'
-  condition:
-  - after: '23:45:00'
-    before: 06:00:00
-    condition: time
-  action:
-  - data: {}
-    entity_id: switch.landinglight
-    service: switch.turn_off
 - id: '1587913331545'
   alias: Reset Smoke Alarm
   description: ''
@@ -220,10 +204,12 @@
   action:
   - entity_id: switch.playroom_light
     service: switch.toggle
-  - data:
+  - delay: 00:00:02
+  - service: mqtt.publish
+    data:
       payload: 84A794off
       topic: tele/rfbridge/RESULT
-    service: mqtt.publish
+  mode: single
 - id: '1590162517183'
   alias: Toggle Pathway
   description: ''
