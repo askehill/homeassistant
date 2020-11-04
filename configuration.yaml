@@ -13,16 +13,28 @@ http:
 frontend:
   themes: !include_dir_merge_named themes   
 
-device_tracker:
-  - platform: ddwrt
-    host: 192.168.1.1
-    username: admin
-    password: !secret router_password
 
 tplink:
   discovery: false
   light:
     - host: 192.168.1.141
+
+google_assistant:
+  project_id: fruitfield-5db56
+  service_account: !include SERVICE_ACCOUNT.JSON
+  report_state: true
+  exposed_domains:
+    - switch
+    - light
+  entity_config:
+    switch.kitchen:
+      name: CUSTOM_NAME_FOR_GOOGLE_ASSISTANT
+      aliases:
+        - BRIGHT_LIGHTS
+        - ENTRY_LIGHTS
+    light.living_room:
+      expose: false
+      room: LIVING_ROOM
 
 # Text to speech
 tts:
@@ -76,7 +88,7 @@ binary_sensor:
       payload_off: '84A794off'
     - platform: mqtt
       state_topic: "tele/rfbridge/RESULT"
-      name: "Test Sonoff Sensor"
+      name: "Shed Door Sensor"
       value_template: '{{value_json.RfReceived.Data}}'
       payload_on: '986BA9' 
       payload_off: '986BA9off'
