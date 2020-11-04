@@ -7,8 +7,10 @@
   - delay: 00:10:00
   - entity_id: switch.outdoor_lights
     service: switch.turn_on
-  - entity_id: switch.landinglight
-    service: switch.turn_on
+  - entity_id: light.shellydimmer2_d8bfc019cb69
+    service: light.turn_on
+    data:
+      brightness_pct: 55
   - entity_id: switch.outdoor
     service: switch.turn_on
   - data: {}

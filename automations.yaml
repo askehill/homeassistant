@@ -88,18 +88,6 @@
       temperature: 7
     entity_id: climate.downstairs_heating
     service: climate.set_temperature
-- id: '1581803658819'
-  alias: Landing Light on at Dusk
-  description: As the above!
-  trigger:
-  - event: sunset
-    offset: +00:10:00
-    platform: sun
-  condition: []
-  action:
-  - data: {}
-    entity_id: switch.landinglight
-    service: switch.turn_on
 - id: '1581803790658'
   alias: Landing Light off at 23:45
   description: ''
@@ -109,8 +97,9 @@
   condition: []
   action:
   - data: {}
-    entity_id: switch.landinglight
-    service: switch.turn_off
+    entity_id: light.shellydimmer2_d8bfc019cb69
+    service: light.turn_off
+  mode: single
 - id: '1581804716802'
   alias: Lights On
   description: ''
@@ -146,13 +135,14 @@
     - condition: sun
       before: sunrise
   action:
-  - data: {}
-    entity_id: switch.landinglight
-    service: switch.turn_on
+  - data:
+      brightness_pct: 30
+    entity_id: light.shellydimmer2_d8bfc019cb69
+    service: light.turn_on
   - delay: 00:05:00
   - data: {}
-    entity_id: switch.landinglight
-    service: switch.turn_off
+    entity_id: light.shellydimmer2_d8bfc019cb69
+    service: light.turn_off
   mode: restart
 - id: '1586113907411'
   alias: Reset PIR
