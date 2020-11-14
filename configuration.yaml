@@ -19,13 +19,13 @@ tplink:
   light:
     - host: 192.168.1.141
 
-#google_assistant:
-#  project_id: fruitfield-5db56
-#  service_account: !include SERVICE_ACCOUNT.JSON
-#  report_state: true
-#  exposed_domains:
-#    - switch
-#    - light
+google_assistant:
+ project_id: fruitfield-5db56
+ service_account: !include service_account.json
+ report_state: true
+ exposed_domains:
+   - switch
+   - light
 #  entity_config:
 #    switch.kitchen:
 #      name: CUSTOM_NAME_FOR_GOOGLE_ASSISTANT
