@@ -59,6 +59,14 @@ climate:
     heater: switch.landinglight
     target_sensor: sensor.shelly_h_t_1a9705_temperature
     target_temp: 7
+  - platform: generic_thermostat
+    name: Living Room
+    min_temp: 5
+    max_temp: 32
+    initial_hvac_mode: "heat"
+    heater: switch.landinglight
+    target_sensor: sensor.shelly_h_t_9551e9_temperature
+    target_temp: 7
 
 media_player:
   - platform: androidtv
