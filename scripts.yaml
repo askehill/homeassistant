@@ -7,10 +7,11 @@
   - delay: 00:10:00
   - entity_id: switch.outdoor_lights
     service: switch.turn_on
-  - entity_id: light.shellydimmer2_d8bfc019cb69
-    service: light.turn_on
-    data:
-      brightness_pct: 55
+  - type: turn_on
+    device_id: ead15cf2160e11ebbf08fb8b6ac91333
+    entity_id: light.shelly_dimmer_2_d8bfc019cb69_light_0
+    domain: light
+    brightness_pct: 50
   - entity_id: switch.outdoor
     service: switch.turn_on
   - data: {}
