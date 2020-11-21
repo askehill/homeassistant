@@ -53,11 +53,12 @@ switch:
 climate:
   - platform: generic_thermostat
     name: Study
+    min_temp: 5
+    max_temp: 32
     initial_hvac_mode: "heat"
     heater: switch.landinglight
     target_sensor: sensor.shelly_h_t_1a9705_temperature
     target_temp: 7
-    initial_hvac_mode: "off"
 
 media_player:
   - platform: androidtv
