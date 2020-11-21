@@ -53,6 +53,7 @@ switch:
 climate:
   - platform: generic_thermostat
     name: Study
+    initial_hvac_mode: "heat"
     heater: switch.landinglight
     target_sensor: sensor.shelly_h_t_1a9705_temperature
     target_temp: 7
