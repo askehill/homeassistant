@@ -64,6 +64,7 @@
       temperature: 20
     entity_id: climate.upstairs_heating
     service: climate.set_temperature
+  mode: single
 - id: '1581725082327'
   alias: Upstairs Off
   description: Turn off heating upstairs at 19:00
@@ -127,6 +128,7 @@
   - entity_id: binary_sensor.pir_motion
     platform: state
     to: 'on'
+    from: 'off'
   condition:
   - condition: or
     conditions:
@@ -239,3 +241,16 @@
       id: '{{ trigger.payload_json.id }}'
       mac: '{{ trigger.payload_json.mac }}'
       fw_ver: '{{ trigger.payload_json.fw_ver }}'
+- id: '1606991349298'
+  alias: Tag tester is scanned
+  description: ''
+  trigger:
+  - platform: tag
+    tag_id: d6d576ea-7f31-4698-8ace-7c451cd085c3
+  condition: []
+  action:
+  - type: toggle
+    device_id: 157d5e14767e47a58d7894e7ee228828
+    entity_id: switch.studylight
+    domain: switch
+  mode: single
