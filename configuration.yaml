@@ -41,6 +41,13 @@ google_assistant:
 tts:
   - platform: google_translate
 
+
+timer:
+  bread:
+    duration: '00:01:00'
+  stew:
+    duration: '00:02:30'
+    
 hive:
   username: adrian.skehill@gmail.com
   password: !secret hive_password
