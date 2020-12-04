@@ -47,10 +47,6 @@ timer:
     duration: '00:01:00'
   stew:
     duration: '00:02:30'
-    
-hive:
-  username: adrian.skehill@gmail.com
-  password: !secret hive_password
 
 switch:
   - platform: wake_on_lan
