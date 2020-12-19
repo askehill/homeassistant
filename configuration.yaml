@@ -52,6 +52,13 @@ switch:
   - platform: wake_on_lan
     mac: a4:83:e7:97:53:c0
 
+# nest:
+#   client_id:  476574656894-0q443uj6rpflnq8tm9u4f7fa1gsuh3or.apps.googleusercontent.com 
+#   client_secret:  FLw_m9GzoeMt_80WmtXZHdqF 
+#   # "Project ID" in the Device Access Console
+#   project_id: nestdoorbell
+#   # Provide the full path exactly as shown under "Subscription name" in Google Cloud Console
+#   subscriber_id: projects/project-label-22ee1/subscriptions/SUBSCRIBER_ID
 
 climate:
   - platform: generic_thermostat
@@ -59,7 +66,7 @@ climate:
     min_temp: 5
     max_temp: 32
     initial_hvac_mode: "heat"
-    heater: switch.landinglight
+    heater: switch.upstairs
     target_sensor: sensor.shelly_h_t_1a9705_temperature
     target_temp: 7
   - platform: generic_thermostat
@@ -67,7 +74,7 @@ climate:
     min_temp: 5
     max_temp: 32
     initial_hvac_mode: "heat"
-    heater: switch.landinglight
+    heater: switch.downstairs
     target_sensor: sensor.shelly_h_t_9551e9_temperature
     target_temp: 7
 
