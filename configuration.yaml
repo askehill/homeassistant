@@ -65,6 +65,8 @@ climate:
     name: Study
     min_temp: 5
     max_temp: 32
+    cold_tolerance: 1
+    hot_tolerance: 0
     initial_hvac_mode: "heat"
     heater: switch.upstairs
     target_sensor: sensor.shelly_h_t_1a9705_temperature
@@ -73,6 +75,8 @@ climate:
     name: Living Room
     min_temp: 5
     max_temp: 32
+    cold_tolerance: 1
+    hot_tolerance: 0
     initial_hvac_mode: "heat"
     heater: switch.downstairs
     target_sensor: sensor.shelly_h_t_9551e9_temperature
