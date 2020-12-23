@@ -1,23 +1,16 @@
-downstairs_heating:
-  name: "Downstairs Heating"
-  entites:
+group:
+  downstairs_heating:
     - switch.hotwater_2
     - switch.downstairs
 
-upstairs_heating:
-  name: "Upstairs Heating"
-  entities:
+  upstairs_heating:
     - switch.hotwater_2
     - switch.upstairs
 
-downstairs_timer:
-  name: "Downstairs Heating Timer"
-  entities:
+  downstairs_timer:
     - group.downstairs_heating
     - input_slider.heat_run_time
 
-upstairs_timer:
-  name: "Upstairs Heating Timer"
-  entites:
+  upstairs_timer:
     - group.upstairs_heating
     - input_slider.heat_run_time
