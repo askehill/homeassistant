@@ -1,16 +1,15 @@
-group:
-  downstairs_heating:
-    - switch.hotwater_2
-    - switch.downstairs
+downstairs_heating:
+  - switch.hotwater_2
+  - switch.downstairs
 
-  upstairs_heating:
-    - switch.hotwater_2
-    - switch.upstairs
+upstairs_heating:
+  - switch.hotwater_2
+  - switch.upstairs
 
-  downstairs_timer:
-    - group.downstairs_heating
-    - input_slider.heat_run_time
+downstairs_timer:
+  - group.downstairs_heating
+  - input_slider.heat_run_time
 
-  upstairs_timer:
-    - group.upstairs_heating
-    - input_slider.heat_run_time
+upstairs_timer:
+  - group.upstairs_heating
+  - input_slider.heat_run_time
