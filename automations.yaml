@@ -47,36 +47,46 @@
   action:
   - entity_id: switch.livingroomlight
     service: switch.turn_off
+  - delay: 00:15:00
+  - service: switch.turn_off
+    data: {}
+    entity_id: switch.livingroom2
   mode: single
 - id: '1581724986134'
   alias: Downstairs Heating on
-  description: Turn downstairs on for from 17:45
+  description: Turn all heating on from 15 mins after sunset.
   trigger:
-  - at: '17:45'
-    platform: time
+  - platform: sun
+    event: sunset
+    offset: +00:15:00
   condition: []
   action:
   - data:
-      temperature: 21
-    entity_id: climate.downstairs_heating
+      temperature: 20
+    entity_id: climate.living_room
     service: climate.set_temperature
   - data:
-      temperature: 20
-    entity_id: climate.upstairs_heating
+      temperature: 17
+    entity_id: climate.study
     service: climate.set_temperature
+  - type: turn_on
+    device_id: cface4cdb90d68175e3a8dcb4f5dcf45
+    entity_id: switch.hotwater_2
+    domain: switch
   mode: single
 - id: '1581725082327'
   alias: Upstairs Off
   description: Turn off heating upstairs at 19:00
   trigger:
-  - at: '19:00'
+  - at: '18:45'
     platform: time
   condition: []
   action:
   - data:
       temperature: 7
-    entity_id: climate.upstairs_heating
+    entity_id: climate.study
     service: climate.set_temperature
+  mode: single
 - id: '1581725156741'
   alias: Downstairs Heating Off
   description: Turn Downstairs heating off at 22:30
@@ -87,8 +97,13 @@
   action:
   - data:
       temperature: 7
-    entity_id: climate.downstairs_heating
+    entity_id: climate.living_room
     service: climate.set_temperature
+  - type: turn_off
+    device_id: cface4cdb90d68175e3a8dcb4f5dcf45
+    entity_id: switch.hotwater_2
+    domain: switch
+  mode: single
 - id: '1581803790658'
   alias: Landing Light off at 23:45
   description: ''
@@ -111,16 +126,6 @@
   action:
   - entity_id: script.1581804598858
     service: script.turn_on
-- id: '1581807159917'
-  alias: Hot Water Boost
-  description: Turn on hot water for 1 hour
-  trigger: []
-  condition: []
-  action:
-  - data:
-      time_period: 01:00:00
-    entity_id: water_heater.hot_water
-    service: hive.boost_hot_water
 - id: '1586039347252'
   alias: Landing Motion
   description: ''
@@ -252,5 +257,34 @@
   - type: toggle
     device_id: 157d5e14767e47a58d7894e7ee228828
     entity_id: switch.studylight
+    domain: switch
+  mode: single
+- id: '1607031963787'
+  alias: Tag Kitchen Timer is scanned
+  description: ''
+  trigger:
+  - platform: tag
+    tag_id: 4be40cb9-9645-4cb9-9e67-43ad0ec56f56
+  condition: []
+  action:
+  - service: script.simple_timer
+    data: {}
+  mode: single
+- id: '1608424917760'
+  alias: Hot Water in the morning
+  description: ''
+  trigger:
+  - platform: time
+    at: 06:00
+  condition: []
+  action:
+  - type: turn_off
+    device_id: cface4cdb90d68175e3a8dcb4f5dcf45
+    entity_id: switch.hotwater_2
+    domain: switch
+  - delay: 01:00:00
+  - type: turn_off
+    device_id: cface4cdb90d68175e3a8dcb4f5dcf45
+    entity_id: switch.hotwater_2
     domain: switch
   mode: single

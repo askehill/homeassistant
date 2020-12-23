@@ -4,6 +4,9 @@
   - data: {}
     entity_id: switch.livingroomlight
     service: switch.turn_on
+  - service: switch.turn_on
+    data: {}
+    entity_id: switch.livingroom2
   - delay: 00:10:00
   - entity_id: switch.outdoor_lights
     service: switch.turn_on
@@ -24,26 +27,53 @@
   - data:
       temperature: '21.5'
       time_period: 01:00:00
-      entity_id: climate.downstairs_heating
-    service: hive.boost_heating
+    service: climate.set_temperature
+    entity_id: climate.living_room
+  mode: single
 '1586209927400':
   alias: Boost Hot Water
   sequence:
   - data:
       on_off: 'on'
       time_period: 01:00:00
-      entity_id: water_heater.hot_water
-    service: hive.boost_hot_water
+    service: switch.turn_on
+    entity_id: switch.hotwater_2
+  mode: single
 '1586210345324':
   alias: Boost Upstairs Heating
   sequence:
-  - service: hive.boost_hot_water
+  - service: climate.set_temperature
     data:
-      entity_id: water_heater.hot_water
-      on_off: 'on'
-      time_period: 01:00:00
-  - service: hive.boost_heating
-    data:
-      entity_id: climate.upstairs_heating
       time_period: 01:00:00
       temperature: '21.5'
+    entity_id: climate.study
+  mode: single
+simple_timer:
+  alias: Simple Timer
+  sequence:
+  - service: timer.start
+    data:
+      duration: 00:00:30
+    entity_id: timer.bread
+  - wait_template: '{{ is_state(''timer.bread'', ''idle'') }}'
+  - service: notify.mobile_app_oneplus_a6013
+    data:
+      message: Bread is done
+      title: Bread Done
+  mode: single
+  icon: mdi:timer
+heating_timer:
+  alias: Heating Timer
+  sequence:
+  - delay: '''00:{{ states.input_slider.heat_run_time.state | int }}:00'''
+  - service: switch.turn_off
+    data: {}
+    entity_id: switch.hotwater_2
+  - service: switch.turn_off
+    data: {}
+    entity_id: switch.downstairs
+  - service: switch.turn_off
+    data: {}
+    entity_id: switch.downstairs
+  mode: single
+  icon: hass:thermometer
