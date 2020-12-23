@@ -65,7 +65,7 @@ simple_timer:
 heating_timer:
   alias: Heating Timer
   sequence:
-  - delay: '''00:{{ states.input_slider.heat_run_time.state | int }}:00'''
+  - delay: 00:60:00
   - service: switch.turn_off
     data: {}
     entity_id: switch.hotwater_2
