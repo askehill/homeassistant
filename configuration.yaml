@@ -64,7 +64,7 @@ climate:
     name: Upstairs (Master Bedroom)
     min_temp: 5
     max_temp: 32
-    cold_tolerance: 1
+    cold_tolerance: 0.3
     hot_tolerance: 0
     initial_hvac_mode: "heat"
     heater: group.upstairs_heating
@@ -76,7 +76,7 @@ climate:
     name: Downstairs (Living Room)
     min_temp: 5
     max_temp: 32
-    cold_tolerance: 1
+    cold_tolerance: 0.3
     hot_tolerance: 0
     initial_hvac_mode: "heat"
     heater: group.downstairs_heating
