@@ -49,8 +49,8 @@ timer:
 
 switch:
   - platform: template
-    unique_id: heating_upstairs_template
     switches:
+      unique_id: downstairs_hotwater
       hotwater:
         value_template: "{{ is_state('switch.upstairs', 'on') }}"
         turn_on:
@@ -62,8 +62,8 @@ switch:
           data:
             entity_id: switch.hotwater_2
   - platform: template
-    unique_id: heating_downstairs_template
     switches:
+      unique_id: upstairs_hotwater
       hotwater:
         value_template: "{{ is_state('switch.downstairs', 'on') }}"
         turn_on:
