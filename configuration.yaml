@@ -48,6 +48,33 @@ timer:
     duration: '00:02:30'
 
 switch:
+  - platform: template
+    unique_id: heating_upstairs_template
+    switches:
+      skylight:
+        value_template: "{{ is_state('switch.upstairs', 'on') }}"
+        turn_on:
+          service: switch.turn_on
+          data:
+            entity_id: switch.hotwater_2
+        turn_off:
+          service: switch.turn_off
+          data:
+            entity_id: switch.hotwater_2
+  - platform: template
+    unique_id: heating_downstairs_template
+    switches:
+      skylight:
+        value_template: "{{ is_state('switch.downstairs', 'on') }}"
+        turn_on:
+          service: switch.turn_on
+          data:
+            entity_id: switch.hotwater_2
+        turn_off:
+          service: switch.turn_off
+          data:
+            entity_id: switch.hotwater_2
+
   - platform: wake_on_lan
     mac: a4:83:e7:97:53:c0
 
@@ -84,6 +111,7 @@ climate:
     keep_alive: 
       minutes: 5
     target_temp: 7
+
 
 media_player:
   - platform: androidtv
