@@ -78,11 +78,11 @@ switch:
         turn_on:
           service: switch.turn_on
           data:
-            entity_id: switch.switch.livingroomlight
+            entity_id: switch.livingroomlight
         turn_off:
           service: switch.turn_off
           data:
-            entity_id: switch.switch.livingroomlight
+            entity_id: switch.livingroomlight
   - platform: wake_on_lan
     mac: a4:83:e7:97:53:c0
 
