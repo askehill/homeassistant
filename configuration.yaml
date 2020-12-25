@@ -62,7 +62,7 @@ switch:
           data:
             entity_id: switch.hotwater_2
       downstairstemplate:
-        friendly_name: "Upstairs Template"
+        friendly_name: "Downstairs Template"
         value_template: "{{ is_state('switch.downstairs', 'on') }}"
         turn_on:
           service: switch.turn_on
