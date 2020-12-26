@@ -52,41 +52,34 @@ switch:
     switches:
       upstairstemplate:
         friendly_name: "Upstairs Template"
-        value_template: "{{ is_state('switch.upstairs', 'on') }}"
+        value_template: "{{ is_state('switch.upstairs', 'on') and is_state('switch.hotwater_2', 'on')}}"
         turn_on:
           service: switch.turn_on
           data:
-            entity_id: switch.hotwater_2
+            entity_id:
+            - switch.hotwater_2
+            - switch.upstairs
         turn_off:
           service: switch.turn_off
           data:
-            entity_id: switch.hotwater_2
+            entity_id: 
+            - switch.hotwater_2
+            - switch.upstairs
       downstairstemplate:
         friendly_name: "Downstairs Template"
-        value_template: "{{ is_state('switch.downstairs', 'on') }}"
-        turn_on:
-          service: switch.turn_on
-          data:
-            entity_id: switch.hotwater_2
-        turn_off:
-          service: switch.turn_off
-          data:
-            entity_id: switch.hotwater_2
-      testtemplate:
-        friendly_name: "Test Template"
-        value_template: "{{ is_state('switch.landinglight', 'on') and is_state('switch.studylight', 'on')}}"
+        value_template: "{{ is_state('switch.downstairs', 'on') and is_state('switch.hotwater_2', 'on' )}}"
         turn_on:
           service: switch.turn_on
           data:
             entity_id: 
-            - switch.landinglight
-            - switch.studylight
+            - switch.hotwater_2
+            - switch.downstairs
         turn_off:
           service: switch.turn_off
           data:
             entity_id: 
-            - switch.landinglight
-            - switch.studylight
+            - switch.hotwater_2
+            - switch.downstairs
   - platform: wake_on_lan
     mac: a4:83:e7:97:53:c0
 
@@ -106,7 +99,7 @@ climate:
     cold_tolerance: 0.3
     hot_tolerance: 0
     initial_hvac_mode: "heat"
-    heater: group.upstairs_heating
+    heater: switch.downstairstemplate
     target_sensor: sensor.shelly_h_t_1a9705_temperature
     target_temp: 7
   - platform: generic_thermostat
@@ -116,7 +109,7 @@ climate:
     cold_tolerance: 0.3
     hot_tolerance: 0
     initial_hvac_mode: "heat"
-    heater: group.downstairs_heating
+    heater: switch.upstairstemplate
     target_sensor: sensor.shelly_h_t_9551e9_temperature
     target_temp: 7
 

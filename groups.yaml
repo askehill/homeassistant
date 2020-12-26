@@ -1,17 +1,1 @@
-downstairs_heating:
-  all: true
-  entities:
-  - switch.hotwater_2
-  - switch.downstairs
-
-upstairs_heating:
-  all: true
-  entities:
-  - switch.hotwater_2
-  - switch.upstairs
-
-test_lights:
-  all: true
-  entities:
-  - switch.landinglight
-  - switch.studylight
+---
