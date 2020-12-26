@@ -12,6 +12,6 @@ upstairs_heating:
 
 test_lights:
   all: true
-  entites:
+  entities:
   - switch.landinglight
   - switch.studylight
