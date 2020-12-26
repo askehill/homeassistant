@@ -74,7 +74,7 @@ switch:
             entity_id: switch.hotwater_2
       testtemplate:
         friendly_name: "Test Template"
-        value_template: "{{ is_state('switch.landinglinglight', 'on') and is_state('switch.studylight', on)}}"
+        value_template: "{{ is_state('switch.landinglight', 'on') and is_state('switch.studylight', 'on')}}"
         turn_on:
           service: switch.turn_on
           data:
