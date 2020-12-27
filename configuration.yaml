@@ -67,7 +67,7 @@ switch:
             - switch.upstairs
       downstairstemplate:
         friendly_name: "Downstairs Template"
-        value_template: "{{ is_state('switch.downstairs', 'on') and is_state('switch.hotwater_2', 'on' )}}"
+        value_template: "{{ is_state('switch.downstairs', 'on') and is_state('switch.hotwater_2', 'on')}}"
         turn_on:
           service: switch.turn_on
           data:
