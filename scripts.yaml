@@ -10,15 +10,53 @@
   - delay: 00:10:00
   - entity_id: switch.outdoor_lights
     service: switch.turn_on
-  - type: turn_on
-    device_id: ead15cf2160e11ebbf08fb8b6ac91333
-    entity_id: light.shelly_dimmer_2_d8bfc019cb69_light_0
-    domain: light
-    brightness_pct: 50
+  - service: light.turn_on
+    data:
+      brightness_pct: 50
+    entity_id: light.shellydimmer2_d8bfc019cb69
   - entity_id: switch.outdoor
     service: switch.turn_on
   - data: {}
     entity_id: switch.pathlights
     service: switch.turn_on
   mode: single
-
+boost_hot_water:
+  alias: Boost Hot Water
+  sequence:
+  - service: switch.turn_on
+    data: {}
+    entity_id: switch.hotwater_2
+  - delay: 01:00:00
+  - service: switch.turn_off
+    data: {}
+    entity_id: switch.hotwater_2
+  mode: single
+  icon: mdi:water-boiler
+boost_downstairs_heating:
+  alias: Boost Downstairs Heating
+  sequence:
+  - service: climate.set_temperature
+    data:
+      temperature: 21.5
+    entity_id: climate.downstairs_living_room
+  - delay: 01:00:00
+  - service: climate.set_temperature
+    data:
+      temperature: 7
+    entity_id: climate.downstairs_living_room
+  mode: single
+  icon: mdi:radiator
+boost_upstairs_heating:
+  alias: Boost Upstairs heating
+  sequence:
+  - service: climate.set_temperature
+    data:
+      temperature: 20
+    entity_id: climate.upstairs_master_bedroom
+  - delay: 01:00:00
+  - service: climate.set_temperature
+    data:
+      temperature: 7
+    entity_id: climate.upstairs_master_bedroom
+  mode: single
+  icon: mdi:radiator

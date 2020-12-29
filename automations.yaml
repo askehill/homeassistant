@@ -53,7 +53,7 @@
     entity_id: switch.livingroom2
   mode: single
 - id: '1581724986134'
-  alias: Downstairs Heating on
+  alias: Heating on
   description: Turn all heating on from 15 mins after sunset.
   trigger:
   - platform: sun
@@ -62,12 +62,12 @@
   condition: []
   action:
   - data:
-      temperature: 20
-    entity_id: climate.living_room
+      temperature: 21.5
+    entity_id: climate.downstairs_living_room
     service: climate.set_temperature
   - data:
       temperature: 17
-    entity_id: climate.study
+    entity_id: climate.upstairs_master_bedroom
     service: climate.set_temperature
   - type: turn_on
     device_id: cface4cdb90d68175e3a8dcb4f5dcf45
@@ -76,7 +76,7 @@
   mode: single
 - id: '1581725082327'
   alias: Upstairs Off
-  description: Turn off heating upstairs at 19:00
+  description: Turn off heating upstairs at 18:45
   trigger:
   - at: '18:45'
     platform: time
@@ -84,7 +84,7 @@
   action:
   - data:
       temperature: 7
-    entity_id: climate.study
+    entity_id: climate.upstairs_master_bedroom
     service: climate.set_temperature
   mode: single
 - id: '1581725156741'
@@ -97,12 +97,8 @@
   action:
   - data:
       temperature: 7
-    entity_id: climate.living_room
+    entity_id: climate.downstairs_living_room
     service: climate.set_temperature
-  - type: turn_off
-    device_id: cface4cdb90d68175e3a8dcb4f5dcf45
-    entity_id: switch.hotwater_2
-    domain: switch
   mode: single
 - id: '1581803790658'
   alias: Landing Light off at 23:45
@@ -142,16 +138,14 @@
     - condition: sun
       before: sunrise
   action:
-  - type: turn_on
-    device_id: ead15cf2160e11ebbf08fb8b6ac91333
-    entity_id: light.shelly_dimmer_2_d8bfc019cb69_light_0
-    domain: light
-    brightness_pct: 30
+  - service: light.turn_on
+    data:
+      brightness_pct: 30
+    entity_id: light.shellydimmer2_d8bfc019cb69
   - delay: 00:05:00
-  - type: turn_off
-    device_id: ead15cf2160e11ebbf08fb8b6ac91333
-    entity_id: light.shelly_dimmer_2_d8bfc019cb69_light_0
-    domain: light
+  - service: light.turn_off
+    data: {}
+    entity_id: light.shellydimmer2_d8bfc019cb69
   mode: restart
 - id: '1586113907411'
   alias: Reset PIR
@@ -278,13 +272,6 @@
     at: 06:00
   condition: []
   action:
-  - type: turn_off
-    device_id: cface4cdb90d68175e3a8dcb4f5dcf45
-    entity_id: switch.hotwater_2
-    domain: switch
-  - delay: 01:00:00
-  - type: turn_off
-    device_id: cface4cdb90d68175e3a8dcb4f5dcf45
-    entity_id: switch.hotwater_2
-    domain: switch
+  - service: script.boost_hot_water
+    data: {}
   mode: single
