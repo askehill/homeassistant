@@ -114,6 +114,8 @@ climate:
     heater: switch.upstairstemplate
     target_sensor: sensor.shelly_h_t_1a9705_temperature
     target_temp: 7
+    keep_alive:
+      minutes: 5
   - platform: generic_thermostat
     name: Downstairs (Living Room)
     min_temp: 5
@@ -124,6 +126,8 @@ climate:
     heater: switch.downstairstemplate 
     target_sensor: sensor.shelly_h_t_9551e9_temperature
     target_temp: 7
+    keep_alive:
+      minutes: 5
   - platform: generic_thermostat
     name: Test (Study)
     min_temp: 5
