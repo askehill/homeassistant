@@ -63,7 +63,6 @@ switch:
           service: switch.turn_off
           data:
             entity_id: 
-            - switch.hotwater_2
             - switch.upstairs
       downstairstemplate:
         friendly_name: "Downstairs Template"
@@ -80,6 +79,19 @@ switch:
             entity_id: 
             - switch.hotwater_2
             - switch.downstairs
+      testtairstemplate:
+        friendly_name: "Test Template"
+        value_template: "{{ is_state('switch.landinglight, 'on') }}"
+        turn_on:
+          service: switch.turn_on
+          data:
+            entity_id: 
+            - switch.landinglight
+        turn_off:
+          service: switch.turn_off
+          data:
+            entity_id: 
+            - switch.landinglight
   - platform: wake_on_lan
     mac: a4:83:e7:97:53:c0
 
@@ -109,10 +121,19 @@ climate:
     cold_tolerance: 0.3
     hot_tolerance: 0
     initial_hvac_mode: "heat"
-    heater: switch.downstairstemplate
+    heater: switch.downstairstemplate 
     target_sensor: sensor.shelly_h_t_9551e9_temperature
     target_temp: 7
-
+  - platform: generic_thermostat
+    name: Test (Study)
+    min_temp: 5
+    max_temp: 32
+    cold_tolerance: 0.3
+    hot_tolerance: 0
+    initial_hvac_mode: "heat"
+    heater: switch.landinglight 
+    target_sensor: sensor.shelly_h_t_9551e9_temperature
+    target_temp: 7
 
 media_player:
   - platform: androidtv
