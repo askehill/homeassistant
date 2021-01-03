@@ -81,7 +81,7 @@ switch:
             - switch.downstairs
       testtairstemplate:
         friendly_name: "Test Template"
-        value_template: "{{ is_state('switch.landinglight, 'on') }}"
+        value_template: "{{ is_state('switch.landinglight', 'on') }}"
         turn_on:
           service: switch.turn_on
           data:
