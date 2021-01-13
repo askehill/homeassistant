@@ -78,7 +78,6 @@ switch:
           data:
             entity_id: 
             - switch.hotwater_2
-            - switch.downstairs
       testtairstemplate:
         friendly_name: "Test Template"
         value_template: "{{ is_state('switch.landinglight', 'on') }}"
@@ -138,7 +137,7 @@ climate:
 media_player:
   - platform: androidtv
     name: Philips OLED
-    host: 192.168.1.145
+    host: 192.168.1.128
   - platform: braviatv
     name: Playroom TV
     host: 192.168.1.111
