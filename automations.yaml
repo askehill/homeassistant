@@ -274,4 +274,37 @@
   action:
   - service: script.boost_hot_water
     data: {}
+  - service: switch.turn_off
+    data: {}
+    entity_id: switch.upstairstemplate
+  mode: single
+- id: '1609698579316'
+  alias: Testing Events
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: switch.landinglight
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: switch.turn_on
+    data: {}
+    entity_id: switch.studylight
+  mode: single
+- id: '1609891534915'
+  alias: Manual Heat On
+  description: ''
+  trigger:
+  - platform: event
+    event_type: shelly.click
+    event_data:
+      device: downstairs.heating
+      channel: 1
+      click_type: single
+  condition: []
+  action:
+  - service: script.turn_on
+    data: {}
+    entity_id: script.boost_downstairs_heating
   mode: single
