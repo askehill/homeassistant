@@ -77,7 +77,7 @@ switch:
           service: switch.turn_off
           data:
             entity_id: 
-            - switch.hotwater_2
+            - switch.downstairs
       testtairstemplate:
         friendly_name: "Test Template"
         value_template: "{{ is_state('switch.landinglight', 'on') }}"
