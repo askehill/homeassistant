@@ -1,8 +1,7 @@
 ---
-group:
-  heating:
-    name: Heating Controls
-    entities:
-      - switch.hotwater_2
-      - switch.upstairs
-      - switch.downstairs
+heating:
+  name: Heating Controls
+  entities:
+    - switch.hotwater_2
+    - switch.upstairs
+    - switch.downstairs
