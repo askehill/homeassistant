@@ -54,12 +54,26 @@
   mode: single
 - id: '1581724986134'
   alias: Heating on
-  description: Turn all heating on from 15 mins after sunset.
+  description: Turn all heating on from 5 mins after sunset if its cold outside
   trigger:
+  - platform: numeric_state
+    entity_id: weather.home
+    attribute: temperature
+    below: '15'
   - platform: sun
     event: sunset
-    offset: +00:15:00
-  condition: []
+    offset: 00:05:00
+  condition:
+  - condition: and
+    conditions:
+    - condition: numeric_state
+      entity_id: weather.home
+      attribute: temperature
+      below: '15'
+    - condition: sun
+      after: sunset
+  - condition: time
+    before: '22:30'
   action:
   - data:
       temperature: 21.5
@@ -69,10 +83,6 @@
       temperature: 17
     entity_id: climate.upstairs_master_bedroom
     service: climate.set_temperature
-  - type: turn_on
-    device_id: cface4cdb90d68175e3a8dcb4f5dcf45
-    entity_id: switch.hotwater_2
-    domain: switch
   mode: single
 - id: '1581725082327'
   alias: Upstairs Off
@@ -88,8 +98,8 @@
     service: climate.set_temperature
   mode: single
 - id: '1581725156741'
-  alias: Downstairs Heating Off
-  description: Turn Downstairs heating off at 22:30
+  alias: Nightly Heating Power Down
+  description: Turn off anything heating related at 22:30
   trigger:
   - at: '22:30'
     platform: time
@@ -99,6 +109,13 @@
       temperature: 7
     entity_id: climate.downstairs_living_room
     service: climate.set_temperature
+  - service: climate.set_temperature
+    data:
+      temperature: 7
+    entity_id: climate.upstairs_master_bedroom
+  - service: homeassistant.turn_off
+    data: {}
+    entity_id: group.heating
   mode: single
 - id: '1581803790658'
   alias: Landing Light off at 23:45
@@ -307,4 +324,40 @@
   - service: script.turn_on
     data: {}
     entity_id: script.boost_downstairs_heating
+  mode: single
+- id: '1611338137506'
+  alias: Hot Water at 16:30
+  description: ''
+  trigger:
+  - platform: time
+    at: '16:30'
+  condition: []
+  action:
+  - service: switch.turn_on
+    data: {}
+    entity_id: switch.hotwater_2
+  mode: single
+- id: '1611338597143'
+  alias: Hot Water off if heating not required (17:30)
+  description: Turn off hot water if heating not turned on
+  trigger:
+  - platform: time
+    at: '17:30'
+  condition:
+  - condition: and
+    conditions:
+    - condition: device
+      type: is_off
+      device_id: 679d045928af7ef5cbf5aaea646cb162
+      entity_id: switch.downstairs
+      domain: switch
+    - condition: device
+      type: is_off
+      device_id: 679d045928af7ef5cbf5aaea646cb162
+      entity_id: switch.upstairs
+      domain: switch
+  action:
+  - service: switch.turn_off
+    data: {}
+    entity_id: switch.hotwater_2
   mode: single
