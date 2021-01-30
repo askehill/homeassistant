@@ -44,6 +44,10 @@ tts:
 timer:
   landing_motion:
     duration: '00:06:00'
+  hotwater_boost:
+    duration: '01:00:00'
+  heating_boost:
+    duration: '01:00:00'
   bread:
     duration: '00:01:00'
   stew:

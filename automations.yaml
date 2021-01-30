@@ -367,7 +367,7 @@
   - platform: event
     event_type: timer.finished
     event_data:
-      entity_id: timer.hallway
+      entity_id: timer.landing_motion
   condition: []
   action:
   - service: light.turn_off
