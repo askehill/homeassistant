@@ -159,10 +159,9 @@
     data:
       brightness_pct: 30
     entity_id: light.shellydimmer2_d8bfc019cb69
-  - delay: 00:05:00
-  - service: light.turn_off
+  - service: timer.start
     data: {}
-    entity_id: light.shellydimmer2_d8bfc019cb69
+    entity_id: timer.landing_motion
   mode: restart
 - id: '1586113907411'
   alias: Reset PIR
@@ -360,4 +359,18 @@
   - service: switch.turn_off
     data: {}
     entity_id: switch.hotwater_2
+  mode: single
+- id: '1612026197579'
+  alias: Turn off landing lights after motion
+  description: ''
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.hallway
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    entity_id: light.shellydimmer2_d8bfc019cb69
   mode: single
