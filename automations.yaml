@@ -361,7 +361,7 @@
     entity_id: switch.hotwater_2
   mode: single
 - id: '1612026197579'
-  alias: Turn off landing lights after motion
+  alias: Landing lights off after motion
   description: ''
   trigger:
   - platform: event
@@ -373,4 +373,18 @@
   - service: light.turn_off
     data: {}
     entity_id: light.shellydimmer2_d8bfc019cb69
+  mode: single
+- id: '1612027339078'
+  alias: Turn off heating after boost
+  description: ''
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.heating_boost
+  condition: []
+  action:
+  - service: homeassistant.turn_off
+    data: {}
+    entity_id: group.heating
   mode: single

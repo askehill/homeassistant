@@ -39,11 +39,9 @@ boost_downstairs_heating:
     data:
       temperature: 21.5
     entity_id: climate.downstairs_living_room
-  - delay: 01:00:00
-  - service: climate.set_temperature
-    data:
-      temperature: 7
-    entity_id: climate.downstairs_living_room
+  - service: timer.start
+    data: {}
+    entity_id: timer.heating_boost
   mode: single
   icon: mdi:radiator
 boost_upstairs_heating:
