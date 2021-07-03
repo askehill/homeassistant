@@ -214,8 +214,10 @@
     to: 'on'
   condition: []
   action:
-  - entity_id: switch.playroom_light
-    service: switch.toggle
+  - service: switch.toggle
+    data: {}
+    target:
+      device_id: 0d951615db50463a8d3244991c951fdf
   - delay: 00:00:02
   - service: mqtt.publish
     data:
