@@ -19,6 +19,9 @@
   - data: {}
     entity_id: switch.pathlights
     service: switch.turn_on
+  - service: switch.turn_on
+    target:
+      device_id: 386afdd2f4c04d1984dfd258383d39b8
   mode: single
 boost_hot_water:
   alias: Boost Hot Water

@@ -128,6 +128,9 @@
   - data: {}
     entity_id: light.shellydimmer2_d8bfc019cb69
     service: light.turn_off
+  - service: switch.turn_off
+    target:
+      device_id: 386afdd2f4c04d1984dfd258383d39b8
   mode: single
 - id: '1581804716802'
   alias: Lights On
