@@ -125,9 +125,6 @@
     platform: time
   condition: []
   action:
-  - data: {}
-    entity_id: light.shellydimmer2_d8bfc019cb69
-    service: light.turn_off
   - service: switch.turn_off
     target:
       device_id: 386afdd2f4c04d1984dfd258383d39b8
@@ -299,20 +296,6 @@
     data: {}
     entity_id: switch.upstairstemplate
   mode: single
-- id: '1609698579316'
-  alias: Testing Events
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: switch.landinglight
-    from: 'off'
-    to: 'on'
-  condition: []
-  action:
-  - service: switch.turn_on
-    data: {}
-    entity_id: switch.studylight
-  mode: single
 - id: '1609891534915'
   alias: Manual Heat On
   description: ''
@@ -375,9 +358,9 @@
       entity_id: timer.landing_motion
   condition: []
   action:
-  - service: light.turn_off
-    data: {}
-    entity_id: light.shellydimmer2_d8bfc019cb69
+  - service: switch.turn_on
+    target:
+      device_id: 386afdd2f4c04d1984dfd258383d39b8
   mode: single
 - id: '1612027339078'
   alias: Turn off heating after boost
