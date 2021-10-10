@@ -127,7 +127,8 @@
   action:
   - service: switch.turn_off
     target:
-      device_id: 386afdd2f4c04d1984dfd258383d39b8
+      entity_id:
+      - switch.landinglight
   mode: single
 - id: '1581804716802'
   alias: Lights On
@@ -155,13 +156,15 @@
     - condition: sun
       before: sunrise
   action:
-  - service: light.turn_on
-    data:
-      brightness_pct: 30
-    entity_id: light.shellydimmer2_d8bfc019cb69
+  - service: switch.turn_on
+    target:
+      entity_id:
+      - switch.landinglight
   - service: timer.start
-    data: {}
-    entity_id: timer.landing_motion
+    data:
+      duration: '0'
+    target:
+      entity_id: timer.landing_motion
   mode: restart
 - id: '1586113907411'
   alias: Reset PIR
@@ -358,9 +361,10 @@
       entity_id: timer.landing_motion
   condition: []
   action:
-  - service: switch.turn_on
+  - service: switch.turn_off
     target:
-      device_id: 386afdd2f4c04d1984dfd258383d39b8
+      entity_id:
+      - switch.landinglight
   mode: single
 - id: '1612027339078'
   alias: Turn off heating after boost
