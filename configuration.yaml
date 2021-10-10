@@ -89,41 +89,41 @@ switch:
   - platform: wake_on_lan
     mac: a4:83:e7:97:53:c0
 
-climate:
-  - platform: generic_thermostat
-    name: Upstairs (Master Bedroom)
-    min_temp: 5
-    max_temp: 32
-    cold_tolerance: 0.3
-    hot_tolerance: 0
-    initial_hvac_mode: "heat"
-    heater: switch.upstairstemplate
-    keep_alive:
-      minutes: 5
-    target_sensor: sensor.shelly_h_t_1a9705_temperature
-    target_temp: 7
-  - platform: generic_thermostat
-    name: Downstairs (Living Room)
-    min_temp: 5
-    max_temp: 32
-    cold_tolerance: 0.3
-    hot_tolerance: 0
-    initial_hvac_mode: "heat"
-    heater: switch.downstairstemplate 
-    keep_alive:
-      minutes: 5
-    target_sensor: sensor.shelly_h_t_9551e9_temperature
-    target_temp: 7
-  - platform: generic_thermostat
-    name: Test (Study)
-    min_temp: 5
-    max_temp: 32
-    cold_tolerance: 0.3
-    hot_tolerance: 0
-    initial_hvac_mode: "heat"
-    heater: switch.landinglight 
-    target_sensor: sensor.shelly_h_t_9551e9_temperature
-    target_temp: 7
+# climate:
+#   - platform: generic_thermostat
+#     name: Upstairs (Master Bedroom)
+#     min_temp: 5
+#     max_temp: 32
+#     cold_tolerance: 0.3
+#     hot_tolerance: 0
+#     initial_hvac_mode: "heat"
+#     heater: switch.upstairstemplate
+#     keep_alive:
+#       minutes: 5
+#     target_sensor: sensor.shelly_h_t_1a9705_temperature
+#     target_temp: 7
+#   - platform: generic_thermostat
+#     name: Downstairs (Living Room)
+#     min_temp: 5
+#     max_temp: 32
+#     cold_tolerance: 0.3
+#     hot_tolerance: 0
+#     initial_hvac_mode: "heat"
+#     heater: switch.downstairstemplate 
+#     keep_alive:
+#       minutes: 5
+#     target_sensor: sensor.shelly_h_t_9551e9_temperature
+#     target_temp: 7
+#   - platform: generic_thermostat
+#     name: Test (Study)
+#     min_temp: 5
+#     max_temp: 32
+#     cold_tolerance: 0.3
+#     hot_tolerance: 0
+#     initial_hvac_mode: "heat"
+#     heater: switch.landinglight 
+#     target_sensor: sensor.shelly_h_t_9551e9_temperature
+#     target_temp: 7
 
 media_player:
   - platform: androidtv
