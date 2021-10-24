@@ -60,12 +60,12 @@ switch:
     switches:
       upstairstemplate:
         friendly_name: "Upstairs Template"
-        value_template: "{{ is_state('switch.upstairs', 'on') and is_state('switch.hotwater_2', 'on')}}"
+        value_template: "{{ is_state('switch.upstairs', 'on') and is_state('switch.hotwater', 'on')}}"
         turn_on:
           service: switch.turn_on
           data:
             entity_id:
-            - switch.hotwater_2
+            - switch.hotwater
             - switch.upstairs
         turn_off:
           service: switch.turn_off
@@ -74,12 +74,12 @@ switch:
             - switch.upstairs
       downstairstemplate:
         friendly_name: "Downstairs Template"
-        value_template: "{{ is_state('switch.downstairs', 'on') and is_state('switch.hotwater_2', 'on')}}"
+        value_template: "{{ is_state('switch.downstairs', 'on') and is_state('switch.hotwater', 'on')}}"
         turn_on:
           service: switch.turn_on
           data:
             entity_id: 
-            - switch.hotwater_2
+            - switch.hotwater
             - switch.downstairs
         turn_off:
           service: switch.turn_off
