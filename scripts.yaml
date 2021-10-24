@@ -28,11 +28,13 @@ boost_hot_water:
   sequence:
   - service: switch.turn_on
     data: {}
-    entity_id: switch.hotwater_2
+    target:
+      entity_id: switch.hotwater
   - delay: 01:00:00
   - service: switch.turn_off
     data: {}
-    entity_id: switch.hotwater_2
+    target:
+      entity_id: switch.hotwater
   mode: single
   icon: mdi:water-boiler
 boost_downstairs_heating:
