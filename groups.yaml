@@ -2,6 +2,6 @@
 heating:
   name: Heating Controls
   entities:
-    - switch.hotwater_2
+    - switch.hotwater
     - switch.upstairs
     - switch.downstairs
