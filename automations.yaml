@@ -1,42 +1,14 @@
-- id: '1579368086048'
-  alias: Outdoor lights on at Sunset
-  description: ''
-  trigger:
-  - event: sunset
-    offset: +00:15:00
-    platform: sun
-  condition: []
-  action:
-  - entity_id: switch.pathwaylights
-    service: switch.turn_on
 - id: '1579368286267'
   alias: Turn outdoor lights off
   description: ''
   trigger:
-  - at: '23:35'
+  - at: '23:35:00'
     platform: time
   condition: []
   action:
-  - data: {}
-    entity_id: switch.outdoor
-    service: switch.turn_off
-  - data: {}
-    entity_id: switch.internalpathway
-    service: switch.turn_off
-  - data: {}
-    entity_id: switch.pathlights
-    service: switch.turn_off
-- id: '1579910205699'
-  alias: Living room light on at dusk
-  description: ''
-  trigger:
-  - event: sunset
-    offset: +00:00:00
-    platform: sun
-  condition: []
-  action:
-  - entity_id: switch.living_room_light
-    service: switch.turn_on
+  - service: light.turn_off
+    target:
+      device_id: cface4cdb90d68175e3a8dcb4f5dcf45
 - id: '1579910576936'
   alias: Living room light off
   description: ''
@@ -73,7 +45,7 @@
     - condition: sun
       after: sunset
   - condition: time
-    before: '22:30'
+    before: '22:30:00'
   action:
   - data:
       temperature: 21.5
@@ -101,7 +73,7 @@
   alias: Nightly Heating Power Down
   description: Turn off anything heating related at 22:30
   trigger:
-  - at: '22:30'
+  - at: '22:30:00'
     platform: time
   condition: []
   action:
@@ -121,14 +93,13 @@
   alias: Landing Light off at 23:45
   description: ''
   trigger:
-  - at: '23:45'
+  - at: '23:45:00'
     platform: time
   condition: []
   action:
   - service: switch.turn_off
     target:
-      entity_id:
-      - switch.landinglight
+      entity_id: switch.livingroom3
   mode: single
 - id: '1581804716802'
   alias: Lights On
@@ -152,14 +123,13 @@
   - condition: or
     conditions:
     - condition: time
-      after: '23:45'
+      after: '23:45:00'
     - condition: sun
       before: sunrise
   action:
-  - service: switch.turn_on
+  - service: light.turn_on
     target:
-      entity_id:
-      - switch.landinglight
+      device_id: 8dd3b302d420f1394f0c1a4b31200497
   - service: timer.start
     data:
       duration: '0'
@@ -197,59 +167,6 @@
       topic: tele/rfbridge/RESULT
     service: mqtt.publish
   mode: single
-- id: '1587913331545'
-  alias: Reset Smoke Alarm
-  description: ''
-  trigger: []
-  condition: []
-  action:
-  - data:
-      payload: 649606off
-      topic: tele/rfbridge/RESULT
-    service: mqtt.publish
-- id: '1588437919449'
-  alias: Toggle Playroom Light
-  description: ''
-  trigger:
-  - entity_id: binary_sensor.playroom_rf_light_switch
-    platform: state
-    from: 'off'
-    to: 'on'
-  condition: []
-  action:
-  - service: switch.toggle
-    data: {}
-    target:
-      device_id: 0d951615db50463a8d3244991c951fdf
-  - delay: 00:00:02
-  - service: mqtt.publish
-    data:
-      payload: 84A794off
-      topic: tele/rfbridge/RESULT
-  mode: single
-- id: '1590162517183'
-  alias: Toggle Pathway
-  description: ''
-  trigger:
-  - entity_id: switch.pathway
-    platform: state
-  condition: []
-  action:
-  - data: {}
-    entity_id: switch.pathlights
-    service: switch.toggle
-- id: shellies_announce
-  alias: Shellies Announce
-  trigger:
-  - platform: homeassistant
-    event: start
-  - platform: time_pattern
-    hours: /6
-  action:
-    service: mqtt.publish
-    data:
-      topic: shellies/command
-      payload: announce
 - id: shellies_discovery
   alias: Shellies Discovery
   trigger:
@@ -299,22 +216,6 @@
     data: {}
     entity_id: switch.upstairstemplate
   mode: single
-- id: '1609891534915'
-  alias: Manual Heat On
-  description: ''
-  trigger:
-  - platform: event
-    event_type: shelly.click
-    event_data:
-      device: downstairs.heating
-      channel: 1
-      click_type: single
-  condition: []
-  action:
-  - service: script.turn_on
-    data: {}
-    entity_id: script.boost_downstairs_heating
-  mode: single
 - id: '1611338137506'
   alias: Hot Water at 16:30
   description: ''
@@ -332,7 +233,7 @@
   description: Turn off hot water if heating not turned on
   trigger:
   - platform: time
-    at: '17:30'
+    at: '17:30:00'
   condition:
   - condition: and
     conditions:
@@ -349,7 +250,8 @@
   action:
   - service: switch.turn_off
     data: {}
-    entity_id: switch.hotwater_2
+    target:
+      entity_id: switch.hotwater
   mode: single
 - id: '1612026197579'
   alias: Landing lights off after motion
@@ -361,10 +263,9 @@
       entity_id: timer.landing_motion
   condition: []
   action:
-  - service: switch.turn_off
+  - service: light.turn_off
     target:
-      entity_id:
-      - switch.landinglight
+      device_id: 8dd3b302d420f1394f0c1a4b31200497
   mode: single
 - id: '1612027339078'
   alias: Turn off heating after boost

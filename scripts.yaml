@@ -5,23 +5,15 @@
     entity_id: switch.livingroomlight
     service: switch.turn_on
   - service: switch.turn_on
+    target:
+      entity_id: switch.livingroom3
+  - service: switch.turn_on
     data: {}
     entity_id: switch.livingroom2
   - delay: 00:10:00
-  - entity_id: switch.outdoor_lights
-    service: switch.turn_on
   - service: light.turn_on
-    data:
-      brightness_pct: 50
-    entity_id: light.shellydimmer2_d8bfc019cb69
-  - entity_id: switch.outdoor
-    service: switch.turn_on
-  - data: {}
-    entity_id: switch.pathlights
-    service: switch.turn_on
-  - service: switch.turn_on
     target:
-      device_id: 386afdd2f4c04d1984dfd258383d39b8
+      device_id: cface4cdb90d68175e3a8dcb4f5dcf45
   mode: single
 boost_hot_water:
   alias: Boost Hot Water
@@ -43,10 +35,13 @@ boost_downstairs_heating:
   - service: climate.set_temperature
     data:
       temperature: 21.5
-    entity_id: climate.downstairs_living_room
+    target:
+      entity_id: climate.downstairs_heating
   - service: timer.start
-    data: {}
-    entity_id: timer.heating_boost
+    data:
+      duration: '0'
+    target:
+      entity_id: timer.heating_boost
   mode: single
   icon: mdi:radiator
 boost_upstairs_heating:
