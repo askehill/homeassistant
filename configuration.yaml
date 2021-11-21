@@ -130,6 +130,20 @@ spotify:
   client_id: 2e4914baee3c4576ba89393016fb588c
   client_secret: !secret spotify_secret
 
+sensor:
+  - platform: template
+    sensors:
+      nextsunrise:
+        friendly_name: 'Next Sunrise'
+        value_template: >
+          {{ as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom(' %I:%M %p') | replace(" 0", "") }}
+        icon_template: mdi:weather-sunset-up
+      nextsunset:
+        friendly_name: 'Next Sunset'
+        value_template: >
+          {{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom(' %I:%M %p') | replace(" 0", "") }}
+        icon_template: mdi:weather-sunset-down
+
 binary_sensor:
     - platform: mqtt
       state_topic: "tele/rfbridge/RESULT"
