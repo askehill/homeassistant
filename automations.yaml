@@ -13,16 +13,16 @@
   alias: Living room light off
   description: ''
   trigger:
-  - at: '23:30'
+  - at: '23:30:00'
     platform: time
   condition: []
   action:
-  - entity_id: switch.livingroomlight
-    service: switch.turn_off
-  - delay: 00:15:00
   - service: switch.turn_off
     data: {}
-    entity_id: switch.livingroom2
+    target:
+      entity_id:
+      - switch.livingroomlight
+      - switch.livingroom3
   mode: single
 - id: '1581724986134'
   alias: Heating on
@@ -97,9 +97,9 @@
     platform: time
   condition: []
   action:
-  - service: switch.turn_off
+  - service: light.turn_off
     target:
-      entity_id: switch.livingroom3
+      device_id: 8dd3b302d420f1394f0c1a4b31200497
   mode: single
 - id: '1581804716802'
   alias: Lights On
@@ -166,30 +166,6 @@
       payload: 986BA9off
       topic: tele/rfbridge/RESULT
     service: mqtt.publish
-  mode: single
-- id: shellies_discovery
-  alias: Shellies Discovery
-  trigger:
-    platform: mqtt
-    topic: shellies/announce
-  action:
-    service: python_script.shellies_discovery
-    data_template:
-      id: '{{ trigger.payload_json.id }}'
-      mac: '{{ trigger.payload_json.mac }}'
-      fw_ver: '{{ trigger.payload_json.fw_ver }}'
-- id: '1606991349298'
-  alias: Tag tester is scanned
-  description: ''
-  trigger:
-  - platform: tag
-    tag_id: d6d576ea-7f31-4698-8ace-7c451cd085c3
-  condition: []
-  action:
-  - type: toggle
-    device_id: 157d5e14767e47a58d7894e7ee228828
-    entity_id: switch.studylight
-    domain: switch
   mode: single
 - id: '1607031963787'
   alias: Tag Kitchen Timer is scanned
@@ -281,3 +257,46 @@
     data: {}
     entity_id: group.heating
   mode: single
+- id: '1637008787311'
+  alias: Freya's Remote
+  description: ''
+  use_blueprint:
+    path: EPMatt/ikea_e2001_e2002.yaml
+    input:
+      integration: deCONZ
+      controller_device: 6ea6c0b214b7622c5d068f368292f20d
+      helper_last_controller_event: input_text.freya_controller
+      action_button_left_short:
+      - type: turn_on
+        device_id: 600ecb283ab949bf9b1b745403e28974
+        entity_id: light.extended_color_light_3
+        domain: light
+      action_button_right_short:
+      - type: turn_off
+        device_id: 600ecb283ab949bf9b1b745403e28974
+        entity_id: light.extended_color_light_3
+        domain: light
+      action_button_up_short:
+      - type: turn_off
+        device_id: 600ecb283ab949bf9b1b745403e28974
+        entity_id: light.extended_color_light_3
+        domain: light
+      action_button_down_short:
+      - device_id: 600ecb283ab949bf9b1b745403e28974
+        domain: light
+        entity_id: light.extended_color_light_3
+        type: brightness_decrease
+- id: '1637014229376'
+  alias: Study Controller
+  description: ''
+  use_blueprint:
+    path: EPMatt/ikea_e1524_e1810.yaml
+    input:
+      integration: deCONZ
+      controller_device: 999d5983438a25da9f6a81b87421da57
+      helper_last_controller_event: input_text.study_controller
+      action_button_center_short:
+      - type: toggle
+        device_id: dbb60cf9c35969d0ac5a6caacc3894eb
+        entity_id: light.study
+        domain: light

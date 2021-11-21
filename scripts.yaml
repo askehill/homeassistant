@@ -7,9 +7,9 @@
   - service: switch.turn_on
     target:
       entity_id: switch.livingroom3
-  - service: switch.turn_on
-    data: {}
-    entity_id: switch.livingroom2
+  - service: light.turn_on
+    target:
+      device_id: 8dd3b302d420f1394f0c1a4b31200497
   - delay: 00:10:00
   - service: light.turn_on
     target:
