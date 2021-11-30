@@ -17,8 +17,8 @@ frontend:
 stream:
 
 spc:
-  api_url: http://192.168.1.175:8088
-  ws_url: ws://192.168.1.175:8088/ws/spc
+  api_url: !secret spc_api_url
+  ws_url: !secret sspc_ws_url
 
 
 
