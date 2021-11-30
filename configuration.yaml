@@ -18,7 +18,7 @@ stream:
 
 spc:
   api_url: !secret spc_api_url
-  ws_url: !secret sspc_ws_url
+  ws_url: !secret spc_ws_url
 
 
 
