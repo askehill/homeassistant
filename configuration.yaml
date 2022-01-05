@@ -180,7 +180,7 @@ binary_sensor:
       value_template: '{{value_json.RfReceived.Data}}'
       payload_on: '986BA9' 
       payload_off: '986BA9off'
-    - platorm: mqtt
+    - platform: mqtt
       state_topic: "shellies/heating2/input/0"
       name: "Manual Floor 1 Switch"
       payload_on: 1
