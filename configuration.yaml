@@ -120,6 +120,7 @@ climate:
       minutes: 5
     target_sensor: sensor.shelly_h_t_9551e9_temperature
     target_temp: 7
+ 
 
 media_player:
   - platform: androidtv
@@ -179,6 +180,12 @@ binary_sensor:
       value_template: '{{value_json.RfReceived.Data}}'
       payload_on: '986BA9' 
       payload_off: '986BA9off'
+    - platorm: mqtt
+      state_topic: "shellies/heating2/input/0"
+      name: "Manual Floor 1 Switch"
+      payload_on: 1
+      payload_off: 0
+      device_class: heating
 
 homeassistant:
   customize: !include customize.yaml
