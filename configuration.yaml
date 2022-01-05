@@ -185,7 +185,7 @@ binary_sensor:
       name: "Manual Floor 1 Switch"
       payload_on: 1
       payload_off: 0
-      device_class: heating
+      device_class: heat
 
 homeassistant:
   customize: !include customize.yaml
