@@ -62,52 +62,10 @@ timer:
     duration: '00:02:30'
 
 switch:
-  - platform: template
-    switches:
-      upstairstemplate:
-        friendly_name: "Upstairs Template"
-        value_template: "{{ is_state('switch.upstairs', 'on') and is_state('switch.hotwater', 'on')}}"
-        turn_on:
-          service: switch.turn_on
-          data:
-            entity_id:
-            - switch.hotwater
-            - switch.upstairs
-        turn_off:
-          service: switch.turn_off
-          data:
-            entity_id: 
-            - switch.upstairs
-      downstairstemplate:
-        friendly_name: "Downstairs Template"
-        value_template: "{{ is_state('switch.downstairs', 'on') and is_state('switch.hotwater', 'on')}}"
-        turn_on:
-          service: switch.turn_on
-          data:
-            entity_id: 
-            - switch.hotwater
-            - switch.downstairs
-        turn_off:
-          service: switch.turn_off
-          data:
-            entity_id: 
-            - switch.downstairs
   - platform: wake_on_lan
     mac: a4:83:e7:97:53:c0
 
 climate:
-  - platform: generic_thermostat
-    name: Upstairs (Study)
-    min_temp: 5
-    max_temp: 32
-    cold_tolerance: 0.3
-    hot_tolerance: 0
-    initial_hvac_mode: "heat"
-    heater: switch.upstairstemplate
-    keep_alive:
-      minutes: 5
-    target_sensor: sensor.shelly_h_t_1a9705_temperature
-    target_temp: 7
   - platform: generic_thermostat
     name: Downstairs (Living Room)
     min_temp: 5
@@ -115,13 +73,30 @@ climate:
     cold_tolerance: 0.3
     hot_tolerance: 0
     initial_hvac_mode: "heat"
-    heater: switch.downstairstemplate 
-    keep_alive:
-      minutes: 5
+    heater: switch.downstairs 
     target_sensor: sensor.shelly_h_t_9551e9_temperature
     target_temp: 7
+  - platform: generic_thermostat
+    name: Upstairs (Study)
+    min_temp: 5
+    max_temp: 30
+    cold_tolerance: 0.3
+    hot_tolerance: 0
+    initial_hvac_mode: "heat"
+    heater: switch.floor1
+    target_sensor: sensor.shelly_h_t_1a9705_temperature
+    target_temp: 7
+  - platform: generic_thermostat
+    name: Upstairs (Master Bedroom)
+    min_temp: 5
+    max_temp: 30
+    cold_tolerance: 0.3
+    hot_tolerance: 0
+    initial_hvac_mode: "heat"
+    heater: switch.floor2
+    target_sensor: sensor.master_bedroom_h_t_temperature
+    target_temp: 7
  
-
 media_player:
   - platform: androidtv
     name: Philips OLED
@@ -162,14 +137,6 @@ binary_sensor:
       qos: 1
     - platform: mqtt
       state_topic: "tele/rfbridge/RESULT"
-      name: 'Upstairs Smoke Alarm'
-      value_template: '{{value_json.RfReceived.Data}}'
-      payload_on: '649606'
-      payload_off: '649606off'
-      device_class: smoke
-      qos: 1
-    - platform: mqtt
-      state_topic: "tele/rfbridge/RESULT"
       name: "Playroom RF Light Switch"
       value_template: '{{value_json.RfReceived.Data}}'
       payload_on: '84A794'
@@ -182,7 +149,25 @@ binary_sensor:
       payload_off: '986BA9off'
     - platform: mqtt
       state_topic: "shellies/heating2/input/0"
-      name: "Manual Floor 1 Switch"
+      name: "Manual Upstairs (Study) Boost"
+      payload_on: 1
+      payload_off: 0
+      device_class: heat
+    - platform: mqtt
+      state_topic: "shellies/heating2/input/1"
+      name: "Manual Upstairs (Master Bedroom) Boost"
+      payload_on: 1
+      payload_off: 0
+      device_class: heat
+    - platform: mqtt
+      state_topic: "shellies/heating1/input/0"
+      name: "Manual Hot Water Boost"
+      payload_on: 1
+      payload_off: 0
+      device_class: heat
+    - platform: mqtt
+      state_topic: "shellies/heating1/input/1"
+      name: "Manual Ground Floor Boost"
       payload_on: 1
       payload_off: 0
       device_class: heat
