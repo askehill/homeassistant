@@ -48,26 +48,33 @@
     before: '22:30:00'
   action:
   - data:
-      temperature: 21.5
-    entity_id: climate.downstairs_living_room
+      temperature: 21
     service: climate.set_temperature
+    target:
+      entity_id: climate.downstairs_living_room
   - data:
-      temperature: 17
-    entity_id: climate.upstairs_master_bedroom
+      temperature: 19
     service: climate.set_temperature
+    target:
+      entity_id:
+      - climate.upstairs_master_bedroom
+      - climate.upstairs_study
   mode: single
 - id: '1581725082327'
   alias: Upstairs Off
   description: Turn off heating upstairs at 18:45
   trigger:
-  - at: '18:45'
+  - at: '18:45:00'
     platform: time
   condition: []
   action:
   - data:
       temperature: 7
-    entity_id: climate.upstairs_master_bedroom
     service: climate.set_temperature
+    target:
+      entity_id:
+      - climate.upstairs_master_bedroom
+      - climate.upstairs_study
   mode: single
 - id: '1581725156741'
   alias: Nightly Heating Power Down
@@ -79,15 +86,16 @@
   action:
   - data:
       temperature: 7
-    entity_id: climate.downstairs_living_room
     service: climate.set_temperature
-  - service: climate.set_temperature
-    data:
-      temperature: 7
-    entity_id: climate.upstairs_master_bedroom
+    target:
+      entity_id:
+      - climate.downstairs_living_room
+      - climate.upstairs_study
+      - climate.upstairs_master_bedroom
   - service: homeassistant.turn_off
     data: {}
-    entity_id: group.heating
+    target:
+      entity_id: switch.hotwater
   mode: single
 - id: '1581803790658'
   alias: Landing Light off at 23:45
@@ -168,15 +176,16 @@
     service: mqtt.publish
   mode: single
 - id: '1607031963787'
-  alias: Tag Kitchen Timer is scanned
+  alias: Security Alarm Tag is Scanned
   description: ''
   trigger:
   - platform: tag
-    tag_id: 4be40cb9-9645-4cb9-9e67-43ad0ec56f56
+    tag_id: 8d9f1d71-b7c4-4659-bc05-138cb1236295
   condition: []
   action:
-  - service: script.simple_timer
-    data: {}
+  - service: alarm_control_panel.alarm_disarm
+    target:
+      entity_id: alarm_control_panel.home
   mode: single
 - id: '1608424917760'
   alias: Hot Water in the morning
@@ -204,31 +213,6 @@
     data: {}
     entity_id: switch.hotwater_2
   mode: single
-- id: '1611338597143'
-  alias: Hot Water off if heating not required (17:30)
-  description: Turn off hot water if heating not turned on
-  trigger:
-  - platform: time
-    at: '17:30:00'
-  condition:
-  - condition: and
-    conditions:
-    - condition: device
-      type: is_off
-      device_id: 679d045928af7ef5cbf5aaea646cb162
-      entity_id: switch.downstairs
-      domain: switch
-    - condition: device
-      type: is_off
-      device_id: 679d045928af7ef5cbf5aaea646cb162
-      entity_id: switch.upstairs
-      domain: switch
-  action:
-  - service: switch.turn_off
-    data: {}
-    target:
-      entity_id: switch.hotwater
-  mode: single
 - id: '1612026197579'
   alias: Landing lights off after motion
   description: ''
@@ -253,9 +237,11 @@
       entity_id: timer.heating_boost
   condition: []
   action:
-  - service: homeassistant.turn_off
-    data: {}
-    entity_id: group.heating
+  - service: climate.set_temperature
+    target:
+      entity_id: climate.downstairs_living_room
+    data:
+      temperature: 7
   mode: single
 - id: '1637008787311'
   alias: Freya's Remote
@@ -277,10 +263,10 @@
         entity_id: light.extended_color_light_3
         domain: light
       action_button_up_short:
-      - type: turn_off
-        device_id: 600ecb283ab949bf9b1b745403e28974
-        entity_id: light.extended_color_light_3
+      - device_id: 600ecb283ab949bf9b1b745403e28974
         domain: light
+        entity_id: light.extended_color_light_3
+        type: brightness_increase
       action_button_down_short:
       - device_id: 600ecb283ab949bf9b1b745403e28974
         domain: light
@@ -300,3 +286,107 @@
         device_id: dbb60cf9c35969d0ac5a6caacc3894eb
         entity_id: light.study
         domain: light
+- id: '1639933719355'
+  alias: Controller - IKEA E1524/E1810 TRÅDFRI Wireless 5-Button Remote
+  description: ''
+  use_blueprint:
+    path: EPMatt/ikea_e1524_e1810.yaml
+    input:
+      integration: deCONZ
+      action_button_center_short:
+      - service: light.toggle
+        target:
+          device_id: 600ecb283ab949bf9b1b745403e28974
+      controller_device: 999d5983438a25da9f6a81b87421da57
+      helper_last_controller_event: input_text.freya_controller
+      action_button_up_short:
+      - device_id: 600ecb283ab949bf9b1b745403e28974
+        domain: light
+        entity_id: light.extended_color_light_3
+        type: brightness_increase
+      action_button_down_short:
+      - device_id: 600ecb283ab949bf9b1b745403e28974
+        domain: light
+        entity_id: light.extended_color_light_3
+        type: brightness_decrease
+      action_button_right_short: []
+- id: '1639935890913'
+  alias: Study Remote
+  description: ''
+  use_blueprint:
+    path: EPMatt/ikea_e2001_e2002.yaml
+    input:
+      integration: deCONZ
+      controller_device: 6ea6c0b214b7622c5d068f368292f20d
+      helper_last_controller_event: input_text.study_controller
+      action_button_up_short:
+      - service: light.turn_on
+        target:
+          entity_id: light.study
+      action_button_up_release:
+      - service: light.turn_on
+        target:
+          entity_id: light.study
+      action_button_left_short: []
+      action_button_down_short:
+      - service: light.turn_off
+        target:
+          entity_id: light.study
+      action_button_down_release:
+      - service: light.turn_off
+        target:
+          entity_id: light.study
+      action_button_up_double:
+      - service: light.turn_on
+        target:
+          entity_id: light.study
+- id: '1640031148188'
+  alias: Reset things on restart
+  description: ''
+  trigger:
+  - platform: homeassistant
+    event: start
+  condition: []
+  action:
+  - service: mqtt.publish
+    data:
+      payload: E6BC6Eoff
+      topic: tele/rfbridge/RESULT
+  mode: single
+- id: '1641422941749'
+  alias: Manual Upstairs Heating Boost
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.manual_floor_1_switch
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: climate.set_temperature
+    target:
+      entity_id:
+      - climate.upstairs_study
+      - climate.upstairs_master_bedroom
+    data:
+      temperature: 21.5
+  mode: single
+- id: '1641751162690'
+  alias: Study Lights
+  description: ''
+  use_blueprint:
+    path: EPMatt/ikea_e1524_e1810.yaml
+    input:
+      integration: deCONZ
+      controller_device: 7c33ffc006503a92362d66511db95509
+      helper_last_controller_event: input_text.new_study_controller
+      action_button_center_short:
+      - service: light.toggle
+        target:
+          device_id:
+          - 49aef742c747f12a3e8c7946b5f3c7b4
+          - dbb60cf9c35969d0ac5a6caacc3894eb
+      action_button_left_short:
+      - service: light.toggle
+        target:
+          device_id: 49aef742c747f12a3e8c7946b5f3c7b4

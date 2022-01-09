@@ -22,11 +22,11 @@ boost_hot_water:
     data: {}
     target:
       entity_id: switch.hotwater
-  - delay: 01:00:00
-  - service: switch.turn_off
-    data: {}
+  - service: timer.start
+    data:
+      duration: '0'
     target:
-      entity_id: switch.hotwater
+      entity_id: timer.hotwater_boost
   mode: single
   icon: mdi:water-boiler
 boost_downstairs_heating:
@@ -36,7 +36,7 @@ boost_downstairs_heating:
     data:
       temperature: 21.5
     target:
-      entity_id: climate.downstairs_heating
+      entity_id: climate.downstairs_living_room
   - service: timer.start
     data:
       duration: '0'
