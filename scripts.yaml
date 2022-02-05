@@ -23,8 +23,7 @@ boost_hot_water:
     target:
       entity_id: switch.hotwater
   - service: timer.start
-    data:
-      duration: '0'
+    data: {}
     target:
       entity_id: timer.hotwater_boost
   mode: single

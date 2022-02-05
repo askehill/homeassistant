@@ -45,10 +45,10 @@
     - condition: sun
       after: sunset
   - condition: time
-    before: '22:30:00'
+    before: '22:30'
   action:
   - data:
-      temperature: 21
+      temperature: 21.5
     service: climate.set_temperature
     target:
       entity_id: climate.downstairs_living_room
@@ -197,9 +197,6 @@
   action:
   - service: script.boost_hot_water
     data: {}
-  - service: switch.turn_off
-    data: {}
-    entity_id: switch.upstairstemplate
   mode: single
 - id: '1611338137506'
   alias: Hot Water at 16:30
@@ -387,6 +384,60 @@
           - 49aef742c747f12a3e8c7946b5f3c7b4
           - dbb60cf9c35969d0ac5a6caacc3894eb
       action_button_left_short:
-      - service: light.toggle
+      - service: light.turn_on
         target:
           device_id: 49aef742c747f12a3e8c7946b5f3c7b4
+        data_template:
+          hs_color:
+          - '{{ (30 + (state_attr(''light.shellyrgbw2_a8e75d'', ''hs_color'')[0] or
+            0)) % 360 }}'
+          - 100
+          brightness_pct: 100
+          transition: 1
+      action_button_right_short:
+      - service: light.turn_on
+        target:
+          device_id: 49aef742c747f12a3e8c7946b5f3c7b4
+        data_template:
+          hs_color:
+          - '{{ ((state_attr(''light.shellyrgbw2_a8e75d'', ''hs_color'')[0] or 30)
+            - 30) % 360 }}'
+          - 100
+          brightness_pct: 100
+          transition: 1
+      action_button_center_long: []
+      action_button_center_double:
+      - service: light.turn_off
+        target:
+          device_id: dbb60cf9c35969d0ac5a6caacc3894eb
+      button_center_double_press: true
+      action_button_down_short:
+      - service: light.turn_off
+        target:
+          device_id: 49aef742c747f12a3e8c7946b5f3c7b4
+      action_button_up_short:
+      - service: light.turn_on
+        target:
+          device_id: 49aef742c747f12a3e8c7946b5f3c7b4
+- id: '1642377899412'
+  alias: Turn off hot water after boost
+  description: ''
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.hotwater_boost
+  condition: []
+  action:
+  - service: switch.turn_off
+    target:
+      entity_id: switch.hotwater
+  mode: single
+- id: '1644063731454'
+  alias: Test automation
+  description: ''
+  trigger: []
+  condition: []
+  action:
+  - scene: scene.outside_lights_on
+  mode: single

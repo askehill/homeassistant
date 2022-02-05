@@ -1,0 +1,79 @@
+- id: '1644063595272'
+  name: Outside Lights On
+  entities:
+    button.utility_lights_ota_update:
+      device_class: update
+      friendly_name: Utility Lights OTA Update
+      state: unknown
+    button.utility_lights_reboot:
+      device_class: restart
+      friendly_name: Utility Lights Reboot
+      state: unknown
+    light.utility_inside:
+      supported_color_modes:
+      - onoff
+      color_mode: onoff
+      friendly_name: Utility Inside Light
+      supported_features: 0
+      state: 'on'
+    light.utility_outside:
+      supported_color_modes:
+      - onoff
+      color_mode: onoff
+      friendly_name: Utility Outside Light
+      supported_features: 0
+      state: 'on'
+    light.front_door_light:
+      supported_color_modes:
+      - onoff
+      color_mode: onoff
+      friendly_name: Front Door Light
+      supported_features: 0
+      state: 'on'
+    button.front_door_light_ota_update:
+      device_class: update
+      friendly_name: Front Door Light OTA Update
+      state: unknown
+    button.front_door_light_reboot:
+      device_class: restart
+      friendly_name: Front Door Light Reboot
+      state: unknown
+  icon: mdi:light-flood-down
+- id: '1644065068052'
+  name: Outside Lights Off
+  entities:
+    button.utility_lights_ota_update:
+      device_class: update
+      friendly_name: Utility Lights OTA Update
+      state: unknown
+    button.utility_lights_reboot:
+      device_class: restart
+      friendly_name: Utility Lights Reboot
+      state: unknown
+    light.utility_inside:
+      supported_color_modes:
+      - onoff
+      friendly_name: Utility Inside Light
+      supported_features: 0
+      state: 'off'
+    light.utility_outside:
+      supported_color_modes:
+      - onoff
+      friendly_name: Utility Outside Light
+      supported_features: 0
+      state: 'off'
+    light.front_door_light:
+      supported_color_modes:
+      - onoff
+      friendly_name: Front Door Light
+      supported_features: 0
+      state: 'off'
+    button.front_door_light_ota_update:
+      device_class: update
+      friendly_name: Front Door Light OTA Update
+      state: unknown
+    button.front_door_light_reboot:
+      device_class: restart
+      friendly_name: Front Door Light Reboot
+      state: unknown
+  icon: mdi:light-flood-down
