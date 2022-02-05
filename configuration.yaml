@@ -52,6 +52,8 @@ tts:
 timer:
   landing_motion:
     duration: '00:06:00'
+  outdoor_motion:
+    duration: '00:02:00'
   hotwater_boost:
     duration: '01:00:00'
   heating_boost:
