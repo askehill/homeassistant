@@ -105,7 +105,7 @@ media_player:
     host: 192.168.1.209
   - platform: braviatv
     name: Playroom TV
-    host: 192.168.1.111
+    host: 192.168.1.151
   - platform: enigma2
     host: 192.168.1.131
     password: !secret vu_password
