@@ -63,10 +63,6 @@ timer:
   stew:
     duration: '00:02:30'
 
-switch:
-  - platform: wake_on_lan
-    mac: a4:83:e7:97:53:c0
-
 climate:
   - platform: generic_thermostat
     name: Downstairs (Living Room)
@@ -177,6 +173,7 @@ binary_sensor:
 homeassistant:
   customize: !include customize.yaml
 
+switch: !include switches.yaml
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
