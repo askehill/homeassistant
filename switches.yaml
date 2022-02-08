@@ -14,7 +14,7 @@
           entity_id: light.front_door_light
       turn_off:
         service: light.turn_off
-        data_template:
+        dataa:
           entity_id: >
             {% if is_state('input_boolean.house_light_up_time', 'on') %}
             entity_id: light.utility_outside
