@@ -16,7 +16,7 @@
         service: light.turn_off
         target:
           entity_id:
-            {% if is_state('input_boolean.house_light_up_time', 'off')
+            {% if is_state('input_boolean.house_light_up_time', 'off') %}\
             - light.utility_outside
             - light.front_door_light
             {% else %}
