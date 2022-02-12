@@ -5,7 +5,7 @@
 - platform: template
   switches:
     security_lights:
-      friendly_name: "Outdoor Lights"
+      friendly_name: "Security Lights"
       value_template: "{{ is_state('light.utility_outside', 'on') }}"
       turn_on:
         service: light.turn_on
@@ -14,11 +14,11 @@
           entity_id: light.front_door_light
       turn_off:
         service: light.turn_off
-        target: |
-            {% if is_state('input_boolean.house_light_up_time', 'on') %}
-            entity_id: light.utility_outside
+        target:
+          entity_id:
+            {% if is_state('input_boolean.house_light_up_time', 'off')
+            - light.utility_outside
+            - light.front_door_light
             {% else %}
-            entity_id: light.utility_outside
-            entity_id: light.front_door_light
+            - light.utility_outside
             {% endif %}
-          
