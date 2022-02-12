@@ -10,8 +10,9 @@
       turn_on:
         service: light.turn_on
         target:
-          entity_id: light.utility_outside
-          entity_id: light.front_door_light
+          entity_id:
+            - light.utility_outside
+            - light.front_door_light
       turn_off:
         service: light.turn_off
         target:
