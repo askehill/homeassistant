@@ -64,7 +64,7 @@ boost_upstairs_heating:
     entity_id: climate.upstairs_master_bedroom
   mode: single
   icon: mdi:radiator
-turn_on_outdoor_security_lights:
+turn_off_outdoor_security_lights:
   alias: Turn Off Outdoor Security Lights
   sequence:
   - service: light.turn_off
