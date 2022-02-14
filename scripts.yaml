@@ -57,3 +57,7 @@ boost_upstairs_heating:
     entity_id: climate.upstairs_master_bedroom
   mode: single
   icon: mdi:radiator
+turn_on_outdoor_security_lights:
+  alias: Turn on Outdoor Security Lights
+  target
+
