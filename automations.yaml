@@ -9,6 +9,11 @@
   - service: light.turn_off
     target:
       device_id: cface4cdb90d68175e3a8dcb4f5dcf45
+    data: {}
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.house_light_up_time
 - id: '1579910576936'
   alias: Living room light off
   description: ''
@@ -433,11 +438,60 @@
     target:
       entity_id: switch.hotwater
   mode: single
-- id: '1644063731454'
-  alias: Test automation
+- id: '1644091533856'
+  alias: Security Lights at night
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.motion_front_of_house
+    from: 'off'
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.side_door_wc
+    from: 'off'
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: sun.sun
+    state: below_horizon
+    for:
+      hours: 0
+      minutes: 20
+      seconds: 0
+  action:
+  - service: light.turn_on
+    data: {}
+    target:
+      entity_id:
+      - light.utility_outside
+      - light.front_door_light
+  - service: timer.start
+    data:
+      duration: '0'
+    target:
+      entity_id: timer.outdoor_motion
+  mode: single
+- id: '1644092087858'
+  alias: Reset security light
+  description: ''
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.outdoor_motion
+  condition: []
+  action:
+  - service: script.turn_on_outdoor_security_lights
+    data: {}
+  mode: single
+- id: '1644096668891'
+  alias: test scene
   description: ''
   trigger: []
   condition: []
   action:
-  - scene: scene.outside_lights_on
+  - service: scene.turn_on
+    data: {}
+    target:
+      entity_id: scene.study_lights_on
   mode: single

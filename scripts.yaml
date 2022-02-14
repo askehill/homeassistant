@@ -7,13 +7,20 @@
   - service: switch.turn_on
     target:
       entity_id: switch.livingroom3
+    data: {}
   - service: light.turn_on
     target:
       device_id: 8dd3b302d420f1394f0c1a4b31200497
+    data: {}
   - delay: 00:10:00
   - service: light.turn_on
     target:
       device_id: cface4cdb90d68175e3a8dcb4f5dcf45
+    data: {}
+  - service: input_boolean.toggle
+    data: {}
+    target:
+      entity_id: input_boolean.house_light_up_time
   mode: single
 boost_hot_water:
   alias: Boost Hot Water
@@ -57,3 +64,19 @@ boost_upstairs_heating:
     entity_id: climate.upstairs_master_bedroom
   mode: single
   icon: mdi:radiator
+turn_on_outdoor_security_lights:
+  alias: Turn Off Outdoor Security Lights
+  sequence:
+  - service: light.turn_off
+    data: {}
+    target:
+      entity_id: light.utility_outside
+  - condition: state
+    entity_id: input_boolean.house_light_up_time
+    state: 'off'
+  - service: light.turn_off
+    data: {}
+    target:
+      entity_id: light.front_door_light
+  mode: single
+  icon: mdi:light-flood-down

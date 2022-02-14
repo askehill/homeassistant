@@ -1,21 +1,12 @@
 - id: '1644063595272'
   name: Outside Lights On
   entities:
-    button.utility_lights_ota_update:
-      device_class: update
-      friendly_name: Utility Lights OTA Update
-      state: unknown
-    button.utility_lights_reboot:
-      device_class: restart
-      friendly_name: Utility Lights Reboot
-      state: unknown
     light.utility_inside:
       supported_color_modes:
       - onoff
-      color_mode: onoff
       friendly_name: Utility Inside Light
       supported_features: 0
-      state: 'on'
+      state: 'off'
     light.utility_outside:
       supported_color_modes:
       - onoff
@@ -23,33 +14,10 @@
       friendly_name: Utility Outside Light
       supported_features: 0
       state: 'on'
-    light.front_door_light:
-      supported_color_modes:
-      - onoff
-      color_mode: onoff
-      friendly_name: Front Door Light
-      supported_features: 0
-      state: 'on'
-    button.front_door_light_ota_update:
-      device_class: update
-      friendly_name: Front Door Light OTA Update
-      state: unknown
-    button.front_door_light_reboot:
-      device_class: restart
-      friendly_name: Front Door Light Reboot
-      state: unknown
   icon: mdi:light-flood-down
 - id: '1644065068052'
   name: Outside Lights Off
   entities:
-    button.utility_lights_ota_update:
-      device_class: update
-      friendly_name: Utility Lights OTA Update
-      state: unknown
-    button.utility_lights_reboot:
-      device_class: restart
-      friendly_name: Utility Lights Reboot
-      state: unknown
     light.utility_inside:
       supported_color_modes:
       - onoff
@@ -62,18 +30,100 @@
       friendly_name: Utility Outside Light
       supported_features: 0
       state: 'off'
-    light.front_door_light:
+  icon: mdi:light-flood-down
+- id: '1644089745222'
+  name: Night time Cosy
+  entities:
+    switch.livingroomlight:
+      friendly_name: LivingRoomLight
+      state: 'on'
+    switch.livingroom3:
+      friendly_name: Living room light 3
+      state: 'on'
+    light.lower_landing:
       supported_color_modes:
       - onoff
-      friendly_name: Front Door Light
+      color_mode: onoff
+      friendly_name: shellyplus1-a8032abd23b8 switch_0
       supported_features: 0
-      state: 'off'
-    button.front_door_light_ota_update:
-      device_class: update
-      friendly_name: Front Door Light OTA Update
-      state: unknown
-    button.front_door_light_reboot:
-      device_class: restart
-      friendly_name: Front Door Light Reboot
-      state: unknown
-  icon: mdi:light-flood-down
+      state: 'on'
+    climate.downstairs_living_room:
+      hvac_modes:
+      - heat
+      - 'off'
+      min_temp: 5
+      max_temp: 32
+      target_temp_step: 0.1
+      current_temperature: 21.9
+      temperature: 21.5
+      hvac_action: idle
+      friendly_name: Downstairs (Living Room)
+      supported_features: 1
+      state: heat
+    climate.upstairs_study:
+      hvac_modes:
+      - heat
+      - 'off'
+      min_temp: 5
+      max_temp: 30
+      target_temp_step: 0.1
+      current_temperature: 19
+      temperature: 19
+      hvac_action: idle
+      friendly_name: Upstairs (Study)
+      supported_features: 1
+      state: heat
+    climate.upstairs_master_bedroom:
+      hvac_modes:
+      - heat
+      - 'off'
+      min_temp: 5
+      max_temp: 30
+      target_temp_step: 0.1
+      current_temperature: 19.5
+      temperature: 19
+      hvac_action: idle
+      friendly_name: Upstairs (Master Bedroom)
+      supported_features: 1
+      state: heat
+  icon: mdi:home-lightbulb
+- id: '1644096459584'
+  name: Study Lights on
+  entities:
+    light.study:
+      supported_color_modes:
+      - onoff
+      color_mode: onoff
+      friendly_name: Study
+      supported_features: 0
+      state: 'on'
+    light.shellyrgbw2_a8e75d:
+      effect_list:
+      - 'Off'
+      - Meteor Shower
+      - Gradual Change
+      - Flash
+      supported_color_modes:
+      - rgbw
+      color_mode: rgbw
+      brightness: 255
+      hs_color:
+      - 120
+      - 100
+      rgb_color:
+      - 0
+      - 255
+      - 0
+      rgbw_color:
+      - 0
+      - 255
+      - 0
+      - 0
+      xy_color:
+      - 0.172
+      - 0.747
+      effect: 'Off'
+      friendly_name: shellyrgbw2-A8E75D
+      supported_features: 36
+      state: 'on'
+  icon: mdi:chair-rolling
