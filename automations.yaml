@@ -481,7 +481,7 @@
       entity_id: timer.outdoor_motion
   condition: []
   action:
-  - service: script.turn_on_outdoor_security_lights
+  - service: script.turn_off_outdoor_security_lights
     data: {}
   mode: single
 - id: '1644096668891'
