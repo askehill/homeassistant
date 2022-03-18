@@ -1,7 +1,7 @@
 ---
-heating:
-  name: Heating Controls
+security_lights:
+  name: Security Lights
   entities:
-    - switch.hotwater
-    - switch.upstairs
-    - switch.downstairs
+    - light.front_door_light
+    - light.side_door_security
+    - light.back_door_security
