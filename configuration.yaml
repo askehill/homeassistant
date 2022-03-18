@@ -72,7 +72,7 @@ climate:
     hot_tolerance: 0
     initial_hvac_mode: "heat"
     heater: switch.downstairs 
-    target_sensor: sensor.shelly_h_t_9551e9_temperature
+    target_sensor: sensor.sitting_room_sensor
     target_temp: 7
   - platform: generic_thermostat
     name: Upstairs (Study)
@@ -82,7 +82,7 @@ climate:
     hot_tolerance: 0
     initial_hvac_mode: "heat"
     heater: switch.floor1
-    target_sensor: sensor.shelly_h_t_1a9705_temperature
+    target_sensor: sensor.first_floor_temperature
     target_temp: 7
   - platform: generic_thermostat
     name: Upstairs (Master Bedroom)
