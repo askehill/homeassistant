@@ -174,7 +174,6 @@ binary_sensor:
 mqtt:
   cover:
     - name: "Back Blind #4"
-    -platfmr
       command_topic: "cmnd/rfbridge/Backlog"
       state_topic: "home-assistant/cover/state"
       availability:
@@ -187,6 +186,7 @@ mqtt:
       state_open: "open"
       state_opening: "opening"
       state_closed: "closed"
+      state_closing: "closing"
       payload_available: "online"
       payload_not_available: "offline"
       optimistic: false
