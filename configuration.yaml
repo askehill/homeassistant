@@ -171,6 +171,27 @@ binary_sensor:
       payload_off: 0
       device_class: heat
 
+mqtt:
+  cover:
+    - name: "Back Blind #4"
+    -platfmr
+      command_topic: "cmnd/rfbridge/Backlog"
+      state_topic: "home-assistant/cover/state"
+      availability:
+        - topic: "home-assistant/cover/availability"
+      qos: 0
+      retain: true
+      payload_open: "RfRaw AA B0 4C 04 08 1374 0276 012C 13B0 38192A192A19292A1A192A192A1A1A1A19292A1A192A19292A1A192929292929292A1A1A1A192A1A1A1A1A1A1A1A1A1A1A1A1A1A1A192A192929292A1A192A1A1929 55; RfRaw AA B0 4C 04 08 137E 026C 0122 1388 38192A192A19292A1A192A192A1A1A1A19292A1A192A19292A1A192929292929292A1A1A1A192A1A1A1A1A1A1A1A1A1A1A1A1A192A1A192A1A1929292A1A1A192A19 55; RfRaw 0"
+      payload_close: "RfRaw AA B0 4C 04 08 1374 026C 012C 1388 38192A192A19292A1A192A192A1A1A1A19292A1A192A19292A1A192929292929292A1A1A1A192A1A1A1A1A1A1A1A1A1A1A1A192A1A1A1A19292A1A1A1A1A1A1A1929 55; RfRaw AA B0 4C 04 08 136A 026C 012C 1388 38192A192A19292A1A192A192A1A1A1A19292A1A192A19292A1A192929292929292A1A1A1A192A1A1A1A1A1A1A1A1A1A1A1A1A192A1A192A1A1929292A1A1A192A19 55; RfRaw 0"
+      payload_stop: "RfRaw AA B0 4C 04 08 1374 0276 012C 1392 38192A192A19292A1A192A192A1A1A1A19292A1A192A19292A1A192929292929292A1A1A1A192A1A1A1A1A1A1A1A1A1A1A1A1A192A1A1A19292929292A1A1A1A1929 55; RfRaw 0"
+      state_open: "open"
+      state_opening: "opening"
+      state_closed: "closed"
+      payload_available: "online"
+      payload_not_available: "offline"
+      optimistic: false
+      value_template: "{{ value.x }}"
+
 homeassistant:
   customize: !include customize.yaml
 
@@ -179,4 +200,3 @@ group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
-mqtt: !include mqtt.yaml
