@@ -9,6 +9,7 @@
   - service: light.turn_off
     target:
       device_id: cface4cdb90d68175e3a8dcb4f5dcf45
+      entity_id: light.back_door_porch
     data: {}
   - service: input_boolean.turn_off
     data: {}
