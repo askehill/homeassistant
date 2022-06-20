@@ -28,6 +28,7 @@
       entity_id:
       - switch.livingroomlight
       - switch.livingroom3
+      device_id: 8116216e1fec4b79bc4937029c27a975
   mode: single
 - id: '1581724986134'
   alias: Heating on
@@ -450,6 +451,11 @@
     entity_id: binary_sensor.side_door_wc
     from: 'off'
     to: 'on'
+  - platform: state
+    entity_id:
+    - binary_sensor.motion_g3_flex
+    from: 'off'
+    to: 'on'
   condition:
   - condition: state
     entity_id: sun.sun
@@ -465,6 +471,7 @@
       entity_id:
       - light.utility_outside
       - light.front_door_light
+      - light.back_door_security
   - service: timer.start
     data:
       duration: '0'

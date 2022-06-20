@@ -2,12 +2,12 @@
   alias: House Lighting up time
   sequence:
   - data: {}
-    entity_id: switch.livingroomlight
     service: switch.turn_on
-  - service: switch.turn_on
     target:
-      entity_id: switch.livingroom3
-    data: {}
+      entity_id:
+      - switch.livingroomlight
+      - switch.livingroom3
+      device_id: 8116216e1fec4b79bc4937029c27a975
   - service: light.turn_on
     target:
       device_id: 8dd3b302d420f1394f0c1a4b31200497
@@ -16,6 +16,7 @@
   - service: light.turn_on
     target:
       device_id: cface4cdb90d68175e3a8dcb4f5dcf45
+      entity_id: light.back_door_porch
     data: {}
   - service: input_boolean.toggle
     data: {}
@@ -70,7 +71,8 @@ turn_off_outdoor_security_lights:
   - service: light.turn_off
     data: {}
     target:
-      entity_id: light.utility_outside
+      entity_id: light.back_door_security
+      device_id: 3780bf491a1e43bfc38b5918fdac6c96
   - condition: state
     entity_id: input_boolean.house_light_up_time
     state: 'off'
