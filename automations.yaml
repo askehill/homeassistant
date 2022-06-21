@@ -29,7 +29,7 @@
       entity_id:
       - switch.livingroomlight
       - switch.livingroom3
-      device_id: 8116216e1fec4b79bc4937029c27a975
+      - switch.kitchen_floor_light
   mode: single
 - id: '1581724986134'
   alias: Heating on
@@ -470,9 +470,9 @@
     data: {}
     target:
       entity_id:
-      - light.utility_outside
       - light.front_door_light
       - light.back_door_security
+      - light.side_door_security
   - service: timer.start
     data:
       duration: '0'
