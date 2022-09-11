@@ -121,53 +121,45 @@ sensor:
           {{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom(' %I:%M %p') | replace(" 0", "") }}
         icon_template: mdi:weather-sunset-down
 
-binary_sensor:
-    - platform: mqtt
-      state_topic: "tele/rfbridge/RESULT"
-      name: 'Pir Motion'
-      value_template: '{{value_json.RfReceived.Data}}'
-      payload_on: 'E6BC6E'
-      payload_off: 'E6BC6Eoff'
-      device_class: motion
-      qos: 1
-    - platform: mqtt
-      state_topic: "tele/rfbridge/RESULT"
-      name: "Playroom RF Light Switch"
-      value_template: '{{value_json.RfReceived.Data}}'
-      payload_on: '84A794'
-      payload_off: '84A794off'
-    - platform: mqtt
-      state_topic: "tele/rfbridge/RESULT"
-      name: "Shed Door Sensor"
-      value_template: '{{value_json.RfReceived.Data}}'
-      payload_on: '986BA9' 
-      payload_off: '986BA9off'
-    - platform: mqtt
-      state_topic: "shellies/heating2/input/0"
-      name: "Manual Upstairs (Study) Boost"
-      payload_on: 1
-      payload_off: 0
-      device_class: heat
-    - platform: mqtt
-      state_topic: "shellies/heating2/input/1"
-      name: "Manual Upstairs (Master Bedroom) Boost"
-      payload_on: 1
-      payload_off: 0
-      device_class: heat
-    - platform: mqtt
-      state_topic: "shellies/heating1/input/0"
-      name: "Manual Hot Water Boost"
-      payload_on: 1
-      payload_off: 0
-      device_class: heat
-    - platform: mqtt
-      state_topic: "shellies/heating1/input/1"
-      name: "Manual Ground Floor Boost"
-      payload_on: 1
-      payload_off: 0
-      device_class: heat
-
 mqtt:
+  binary_sensor:
+      - name: 'Pir Motion'
+        state_topic: "tele/rfbridge/RESULT"
+        value_template: '{{value_json.RfReceived.Data}}'
+        payload_on: 'E6BC6E'
+        payload_off: 'E6BC6Eoff'
+        device_class: motion
+        qos: 1
+      - name: "Playroom RF Light Switch"
+        state_topic: "tele/rfbridge/RESULT"
+        value_template: '{{value_json.RfReceived.Data}}'
+        payload_on: '84A794'
+        payload_off: '84A794off'
+      - name: "Shed Door Sensor"
+        state_topic: "tele/rfbridge/RESULT"  
+        value_template: '{{value_json.RfReceived.Data}}'
+        payload_on: '986BA9' 
+        payload_off: '986BA9off'
+      - name: "Manual Upstairs (Study) Boost"
+        state_topic: "shellies/heating2/input/0"
+        payload_on: 1
+        payload_off: 0
+        device_class: heat
+      - name: "Manual Upstairs (Master Bedroom) Boost"
+        state_topic: "shellies/heating2/input/1"
+        payload_on: 1
+        payload_off: 0
+        device_class: heat
+      - name: "Manual Hot Water Boost"
+        state_topic: "shellies/heating1/input/0"
+        payload_on: 1
+        payload_off: 0
+        device_class: heat
+      - name: "Manual Ground Floor Boost"
+        state_topic: "shellies/heating1/input/1"
+        payload_on: 1
+        payload_off: 0
+        device_class: heat
   cover:
     - name: "Back Blind #1"
       command_topic: "cmnd/rfbridge/Backlog"
