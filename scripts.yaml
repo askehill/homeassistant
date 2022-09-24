@@ -22,6 +22,8 @@
     data: {}
     target:
       entity_id: input_boolean.house_light_up_time
+  - service: script.close_sitting_room_blind
+    data: {}
   mode: single
 boost_hot_water:
   alias: Boost Hot Water
@@ -82,3 +84,52 @@ turn_off_outdoor_security_lights:
       entity_id: light.front_door_light
   mode: single
   icon: mdi:light-flood-down
+sitting_room_blind_half_height:
+  alias: Sitting Room Blind Half Height
+  sequence:
+  - service: cover.open_cover
+    data: {}
+    target:
+      entity_id: cover.sitting_room_blind
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 17
+      milliseconds: 0
+  - service: cover.stop_cover
+    data: {}
+    target:
+      entity_id: cover.sitting_room_blind
+  mode: restart
+  icon: mdi:blinds-open
+kitchen_blinds_up:
+  alias: Kitchen Blinds Up
+  sequence:
+  - service: cover.open_cover
+    data: {}
+    target:
+      entity_id:
+      - cover.back_blind_1
+  - service: cover.open_cover
+    data: {}
+    target:
+      entity_id: cover.back_blind_2
+  - service: cover.open_cover
+    data: {}
+    target:
+      entity_id: cover.back_blind_3
+  - service: cover.open_cover
+    data: {}
+    target:
+      entity_id: cover.back_blind_4
+  mode: single
+  icon: mdi:blinds-open
+close_sitting_room_blind:
+  alias: Close Sitting Room Blind
+  sequence:
+  - service: cover.close_cover
+    data: {}
+    target:
+      entity_id: cover.sitting_room_blind
+  mode: single
+  icon: mdi:blinds

@@ -38,7 +38,7 @@
   - platform: numeric_state
     entity_id: weather.home
     attribute: temperature
-    below: '15'
+    below: 12
   - platform: sun
     event: sunset
     offset: 00:05:00
@@ -48,14 +48,19 @@
     - condition: numeric_state
       entity_id: weather.home
       attribute: temperature
-      below: '15'
+      below: 12
     - condition: sun
       after: sunset
+    - condition: numeric_state
+      entity_id: climate.downstairs_living_room
+      attribute: current_temperature
+      below: 20
   - condition: time
-    before: '22:30'
+    before: '22:30:00'
+    after: 00:00:00
   action:
   - data:
-      temperature: 21.5
+      temperature: 20
     service: climate.set_temperature
     target:
       entity_id: climate.downstairs_living_room
@@ -291,28 +296,17 @@
         entity_id: light.study
         domain: light
 - id: '1639933719355'
-  alias: Controller - IKEA E1524/E1810 TRÅDFRI Wireless 5-Button Remote
+  alias: Freya's Controller
   description: ''
   use_blueprint:
     path: EPMatt/ikea_e1524_e1810.yaml
     input:
       integration: deCONZ
-      action_button_center_short:
-      - service: light.toggle
-        target:
-          device_id: 600ecb283ab949bf9b1b745403e28974
+      action_button_center_short: []
       controller_device: 999d5983438a25da9f6a81b87421da57
       helper_last_controller_event: input_text.freya_controller
-      action_button_up_short:
-      - device_id: 600ecb283ab949bf9b1b745403e28974
-        domain: light
-        entity_id: light.extended_color_light_3
-        type: brightness_increase
-      action_button_down_short:
-      - device_id: 600ecb283ab949bf9b1b745403e28974
-        domain: light
-        entity_id: light.extended_color_light_3
-        type: brightness_decrease
+      action_button_up_short: []
+      action_button_down_short: []
       action_button_right_short: []
 - id: '1639935890913'
   alias: Study Remote
@@ -457,6 +451,7 @@
     - binary_sensor.motion_g3_flex
     from: 'off'
     to: 'on'
+    enabled: false
   condition:
   - condition: state
     entity_id: sun.sun
@@ -502,4 +497,72 @@
     data: {}
     target:
       entity_id: scene.study_lights_on
+  mode: single
+- id: '1663882381865'
+  alias: Blinds up in the morning
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: 00:15:00
+  condition: []
+  action:
+  - service: script.sitting_room_blind_half_height
+    data: {}
+  - service: script.kitchen_blinds_up
+    data: {}
+  mode: single
+- id: '1664030408335'
+  alias: Davin's Controller
+  description: ''
+  use_blueprint:
+    path: EPMatt/ikea_e1524_e1810.yaml
+    input:
+      integration: deCONZ
+      helper_last_controller_event: input_text.davin_controller
+      controller_device: ccf30eb5e997f830f44067242a9ce49b
+      action_button_left_short: []
+- id: '1664030585857'
+  alias: Davin's Hook
+  description: ''
+  use_blueprint:
+    path: EPMatt/light.yaml
+    input:
+      light: light.color_light_3
+      controller_device: ccf30eb5e997f830f44067242a9ce49b
+      controller_model: IKEA E1524/E1810 TRÅDFRI Wireless 5-Button Remote
+      on_brightness: 255
+      min_brightness: 79
+      force_brightness: true
+- id: '1664031869383'
+  alias: Freya's Hook
+  description: ''
+  use_blueprint:
+    path: EPMatt/light.yaml
+    input:
+      controller_device: 999d5983438a25da9f6a81b87421da57
+      controller_model: IKEA E1524/E1810 TRÅDFRI Wireless 5-Button Remote
+      light: light.extended_color_light_3
+      on_brightness: 200
+      force_brightness: true
+- id: '1664032148317'
+  alias: Turn off Davin's light on a school day
+  description: ''
+  trigger:
+  - platform: time
+    at: 08:45:00
+  condition:
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    before: 00:00:00
+  action:
+  - service: light.turn_off
+    data: {}
+    target:
+      entity_id: light.color_light_3
   mode: single
