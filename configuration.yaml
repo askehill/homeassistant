@@ -45,7 +45,7 @@ template:
           {{ dict(states.light|groupby('state'))['on']|length }}
       - name: Adjusted NSPanel temperature
         state: >
-          {{ states('sensor.nspanel_analog_temperature1')|float * 0.775|round(1, 'common')}}
+          {{ (states('sensor.nspanel_analog_temperature1')|float * 0.765)|round(1, 'common')}}
 
 tplink:
   discovery: false
