@@ -43,7 +43,7 @@ template:
       - name: Number Lights On
         state: >
           {{ dict(states.light|groupby('state'))['on']|length }}
-      - name: Adjusted NSPanel temperature:
+      - name: Adjusted NSPanel temperature
         state: >
           {{ sensor.nspanel_analog_temperature1 * .775 }}
 
