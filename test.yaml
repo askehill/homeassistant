@@ -1,1 +1,0 @@
-{% for device in dict(states.light|groupby('state'))['on'] %}{% if loop.last and loop.length > 1 %} and {% elif not loop.first and loop.length > 1 %}, {% endif %}{{ device.name }}{% endfor %} {% if dict(states.light|groupby('state'))['on']|length == 1 %}is{% else %}are{% endif %} at on.

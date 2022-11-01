@@ -49,11 +49,6 @@ google_assistant:
 tts:
   - platform: google_translate
 
-variable:
-  num_lights_on:
-    value_template: >
-     {{ dict(states.light|groupby('state'))['on']|length }}
-
 
 timer:
   landing_motion:
