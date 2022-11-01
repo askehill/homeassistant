@@ -31,18 +31,18 @@ template:
           {% else %}
             mdi:weather-sunset-down
           {% endif %}
-  # - sensor:
-  #   - name: "Next Sunrise"
-  #     state: >
-  #       {{ as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom(' %I:%M %p') | replace(" 0", "") }}
-  #     icon_template: mdi:weather-sunset-up
-  #   - name: "Next Sunset"
-  #     state: >
-  #       {{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom(' %I:%M %p') | replace(" 0", "") }}
-  #     icon_template: mdi:weather-sunset-down
-  #   - name: Number Lights On
-  #     state: >
-  #       {{ dict(states.light|groupby('state'))['on']|length }}
+  - sensor:
+      - name: "Next Sunrise"
+        state: >
+          {{ as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom(' %I:%M %p') | replace(" 0", "") }}
+        icon_template: mdi:weather-sunset-up
+      - name: "Next Sunset"
+        state: >
+         {{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom(' %I:%M %p') | replace(" 0", "") }}
+        icon_template: mdi:weather-sunset-down
+      - name: Number Lights On
+        state: >
+          {{ dict(states.light|groupby('state'))['on']|length }}
 
 tplink:
   discovery: false
