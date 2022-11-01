@@ -20,7 +20,19 @@ spc:
   api_url: !secret spc_api_url
   ws_url: !secret spc_ws_url
 
-
+template:
+  - sensor:
+      - name: Next Sunrise
+        state: >
+          {{ as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom(' %I:%M %p') | replace(" 0", "") }}
+        icon_template: mdi:weather-sunset-up
+      - name: Next Sunset
+        state: >
+          {{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom(' %I:%M %p') | replace(" 0", "") }}
+        icon_template: mdi:weather-sunset-down
+      - name: Number Lights On
+        state: >
+          {{ dict(states.light|groupby('state'))['on']|length }}
 
 tplink:
   discovery: false
@@ -117,19 +129,7 @@ media_player:
     host: 192.168.1.131
     password: !secret vu_password
 
-sensor:
-  - platform: template
-    sensors:
-      nextsunrise:
-        friendly_name: 'Next Sunrise'
-        value_template: >
-          {{ as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom(' %I:%M %p') | replace(" 0", "") }}
-        icon_template: mdi:weather-sunset-up
-      nextsunset:
-        friendly_name: 'Next Sunset'
-        value_template: >
-          {{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom(' %I:%M %p') | replace(" 0", "") }}
-        icon_template: mdi:weather-sunset-down
+
 
 mqtt:
   binary_sensor:
