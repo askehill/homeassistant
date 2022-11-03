@@ -146,13 +146,20 @@ media_player:
 
 mqtt:
   binary_sensor:
-      - name: 'Pir Motion'
+      - name: 'Landing Motion'
         state_topic: "tele/rfbridge/RESULT"
         value_template: '{{value_json.RfReceived.Data}}'
         payload_on: 'E6BC6E'
         payload_off: 'E6BC6Eoff'
         device_class: motion
         qos: 1
+      - name: 'Playroom Motion'
+        state_topic: "tele/rfbridge/RESULT"
+        value_template: '{{value_json.RfReceived.Data}}'
+        payload_on: 'E6AA3E'
+        payload_off: 'E6AA3Eoff'
+        device_class: motion
+        qos: 1  
       - name: "Playroom RF Light Switch"
         state_topic: "tele/rfbridge/RESULT"
         value_template: '{{value_json.RfReceived.Data}}'
