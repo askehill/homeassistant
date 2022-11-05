@@ -44,6 +44,7 @@ template:
         state: >
           {{ dict(states.light|groupby('state'))['on']|length }}
       - name: Adjusted NSPanel temperature
+        unit_of_measurement: "°C"
         state: >
           {{ (states('sensor.livingroompanel_analog_temperature1')|float * 0.7755)|round(1, 'common')}}
 
