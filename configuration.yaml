@@ -46,7 +46,7 @@ template:
       - name: Adjusted NSPanel temperature
         unit_of_measurement: "°C"
         state: >
-          {{ (states('sensor.livingroompanel_analog_temperature1')|float * 0.805)|round(1, 'common')}}
+          {{ (states('sensor.livingroompanel_analog_temperature1')|float * 0.7755)|round(1, 'common')}}
 
 tplink:
   discovery: false
@@ -108,6 +108,7 @@ climate:
     cold_tolerance: 0.3
     hot_tolerance: 0
     initial_hvac_mode: "heat"
+    heater: switch.floor1
     target_sensor: sensor.first_floor_temperature
     target_temp: 7
   - platform: generic_thermostat
@@ -119,7 +120,6 @@ climate:
     initial_hvac_mode: "heat"
     heater: switch.downstairs 
     target_sensor: sensor.kitchen_sensor_temperature
-    heater: switch.floor1
     target_temp: 7
   - platform: generic_thermostat
     name: Upstairs (Master Bedroom)
