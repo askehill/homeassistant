@@ -129,7 +129,7 @@ climate:
     hot_tolerance: 0
     initial_hvac_mode: "heat"
     heater: switch.floor2
-    target_sensor: sensor.master_bedroom_temperature
+    target_sensor: sensor.master_bedroom_temperature_temperature
     target_temp: 7
  
 media_player:
