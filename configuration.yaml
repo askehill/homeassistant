@@ -119,7 +119,7 @@ climate:
     hot_tolerance: 0
     initial_hvac_mode: "heat"
     heater: switch.downstairs 
-    target_sensor: sensor.0x00124b002517def2_temperature
+    target_sensor: sensor.kitchen_temperature_temperature
     target_temp: 7
   - platform: generic_thermostat
     name: Upstairs (Master Bedroom)
