@@ -1,15 +1,14 @@
 ---
-switch:
-  - platform: template
-    switches:
-      downstairs_template:
-        value_template: "{{ is_state('switch.downstairs', 'on') }}"
-        turn_on:
-          service: switch.turn_on
-          target:
-            entity_id: switch.downstairs
-        turn_off:
-          service: system_log.write
-          data:
-            message: Downstairs Living Room Temp Hit
+- platform: template
+  switches:
+    downstairs_template:
+      value_template: "{{ is_state('switch.downstairs', 'on') }}"
+      turn_on:
+        service: switch.turn_on
+        target:
+          entity_id: switch.downstairs
+      turn_off:
+        service: system_log.write
+        data:
+          message: Downstairs Living Room Temp Hit
           
