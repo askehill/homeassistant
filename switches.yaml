@@ -1,3 +1,15 @@
 ---
-- platform: wake_on_lan
-  mac: a4:83:e7:97:53:c0
+switch:
+  - platform: template
+    switches:
+      downstairs_template:
+        value_template: "{{ is_state('switch.downstairs', 'on') }}"
+        turn_on:
+          service: switch.turn_on
+          target:
+            entity_id: switch.downstairs
+        turn_off:
+          service: system_log.write
+          data:
+            message: Downstairs Living Room Temp Hit
+          

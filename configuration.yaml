@@ -98,18 +98,8 @@ climate:
     cold_tolerance: 0.3
     hot_tolerance: 0
     initial_hvac_mode: "heat"
-    heater: switch.downstairs 
+    heater: switch.downstairs_template 
     target_sensor: sensor.0x00124b0024ce1bc7_temperature
-    target_temp: 7
-  - platform: generic_thermostat
-    name: Upstairs (Study)
-    min_temp: 5
-    max_temp: 30
-    cold_tolerance: 0.3
-    hot_tolerance: 0
-    initial_hvac_mode: "heat"
-    heater: switch.floor1
-    target_sensor: sensor.0x00124b002517def2_temperature
     target_temp: 7
   - platform: generic_thermostat
     name: Kitchen
@@ -120,6 +110,16 @@ climate:
     initial_hvac_mode: "heat"
     heater: switch.downstairs 
     target_sensor: sensor.kitchen_temperature_temperature
+    target_temp: 7
+  - platform: generic_thermostat
+    name: Upstairs (Study)
+    min_temp: 5
+    max_temp: 30
+    cold_tolerance: 0.3
+    hot_tolerance: 0
+    initial_hvac_mode: "heat"
+    heater: switch.floor1
+    target_sensor: sensor.0x00124b002517def2_temperature
     target_temp: 7
   - platform: generic_thermostat
     name: Upstairs (Master Bedroom)
