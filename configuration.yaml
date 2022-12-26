@@ -48,8 +48,8 @@ template:
           {{ (states('sensor.livingroompanel_analog_temperature1')|float * 0.7755)|round(1, 'common')}}
       - name: Gas Usage
         state_class: measurement
-        unit_of_measurement: kWh
-        device_class: energy
+        unit_of_measurement: kW
+        device_class: power
         state: >
           {% if states('sensor.upstairs_power')|float > 0 or 
             states('sensor.downstairs_power')|float > 0 or
@@ -81,7 +81,6 @@ google_assistant:
 # Text to speech
 tts:
   - platform: google_translate
-
 
 timer:
   landing_motion:
