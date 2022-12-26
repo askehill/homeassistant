@@ -60,6 +60,7 @@ template:
           {%- else %}
             0
           {%- endif %}
+
 google_assistant:
  project_id: fruitfield-5db56
  service_account: !include service_account.json
