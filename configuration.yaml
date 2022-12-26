@@ -46,7 +46,7 @@ template:
         unit_of_measurement: "°C"
         state: >
           {{ (states('sensor.livingroompanel_analog_temperature1')|float * 0.7755)|round(1, 'common')}}
-      - name: "Gas Usage"
+      - name: Gas Usage
         state_class: measurement
         unit_of_measurement: KW
         device_class: power
