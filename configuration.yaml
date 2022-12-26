@@ -50,6 +50,7 @@ template:
         state_class: measurement
         unit_of_measurement: kWh
         device_class: energy
+        last_reset: None
         state: >
           {% if states('sensor.upstairs_power')|float > 0 or 
             states('sensor.downstairs_power')|float > 0 or
