@@ -60,6 +60,13 @@ template:
             0
           {%- endif %}
 
+sensor:
+  - platform: integration
+    source: sensor.gas_usage
+    name: gas_used
+    unit_prefix: k
+    round: 2
+
 google_assistant:
  project_id: fruitfield-5db56
  service_account: !include service_account.json
