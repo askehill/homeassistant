@@ -1,4 +1,3 @@
-
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
@@ -48,11 +47,6 @@ template:
         state: >
           {{ (states('sensor.livingroompanel_analog_temperature1')|float * 0.7755)|round(1, 'common')}}
 
-tplink:
-  discovery: false
-  light:
-    - host: 192.168.1.141
-
 google_assistant:
  project_id: fruitfield-5db56
  service_account: !include service_account.json
@@ -85,10 +79,6 @@ timer:
     duration: '01:00:00'
   heating_boost:
     duration: '01:00:00'
-  bread:
-    duration: '00:01:00'
-  stew:
-    duration: '00:02:30'
 
 climate:
   - platform: generic_thermostat
@@ -102,7 +92,7 @@ climate:
     target_sensor: sensor.0x00124b0024ce1bc7_temperature
     target_temp: 7
   - platform: generic_thermostat
-    name: Kitchen
+    name: Downstairs (Kitchen)
     min_temp: 5
     max_temp: 30
     cold_tolerance: 0.3
