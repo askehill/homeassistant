@@ -50,7 +50,6 @@ template:
         state_class: measurement
         unit_of_measurement: kWh
         device_class: power
-        friendly_name: Gas Usage
         state: >
           {% if is_state('sensor.upstairs_power', 'power') > 0 or 
             is_state('sensor.downstairs_power', 'power') > 0 or
