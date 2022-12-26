@@ -46,7 +46,20 @@ template:
         unit_of_measurement: "°C"
         state: >
           {{ (states('sensor.livingroompanel_analog_temperature1')|float * 0.7755)|round(1, 'common')}}
-
+      - name: "Gas Usage"
+        state_class: measurement
+        unit_of_measurement: KW
+        device_class: power
+        friendly_name: Gas Usage
+        state: >
+          {% if is_state('sensor.upstairs_power', 'power') > 0 or 
+            is_state('sensor.downstairs_power', 'power') > 0 or
+            is_state('sensor.heating2_channel_1_power', 'power') > 0 or
+            is_state('sensor.heating2_channel_2_power', 'power') > 0 -%}
+            30
+          {%- else %}
+            0
+          {%- endif %}
 google_assistant:
  project_id: fruitfield-5db56
  service_account: !include service_account.json
