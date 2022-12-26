@@ -51,10 +51,10 @@ template:
         unit_of_measurement: kWh
         device_class: power
         state: >
-          {% if is_state('sensor.upstairs_power', 'power') > 0 or 
-            is_state('sensor.downstairs_power', 'power') > 0 or
-            is_state('sensor.heating2_channel_1_power', 'power') > 0 or
-            is_state('sensor.heating2_channel_2_power', 'power') > 0 -%}
+          {% if states('sensor.upstairs_power')|float > 0 or 
+            states('sensor.downstairs_power')|float > 0 or
+            states('sensor.heating2_channel_1_power')|float > 0 or
+            states('sensor.heating2_channel_2_power')|float > 0 -%}
             30
           {%- else %}
             0
