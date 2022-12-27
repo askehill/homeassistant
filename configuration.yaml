@@ -64,6 +64,7 @@ sensor:
   - platform: integration
     source: sensor.gas_usage
     name: gas_used
+    method: left
     round: 2
 
 google_assistant:
