@@ -127,3 +127,23 @@
       supported_features: 36
       state: 'on'
   icon: mdi:chair-rolling
+- id: '1666458200868'
+  name: All Lights Off
+  entities:
+    switch.livingroom3:
+      friendly_name: Living room light 3
+      state: 'off'
+    switch.livingroomlight:
+      friendly_name: LivingRoomLight
+      state: 'off'
+    switch.kitchen_floor_light:
+      icon: mdi:floor-lamp
+      friendly_name: Kitchen Floor Light
+      state: 'off'
+    light.kitchen_floor_light:
+      supported_color_modes:
+      - onoff
+      friendly_name: Kitchen Floor Light
+      supported_features: 0
+      state: 'off'
+  metadata: {}

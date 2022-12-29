@@ -12,18 +12,33 @@
     target:
       device_id: 8dd3b302d420f1394f0c1a4b31200497
     data: {}
+  - if:
+    - type: is_open
+      condition: device
+      device_id: 0e5761e9a3d32ffa37deb53c4fb7a6f3
+      entity_id: binary_sensor.0x00124b00251952eb_contact
+      domain: binary_sensor
+    then:
+    - service: light.turn_on
+      data: {}
+      target:
+        entity_id: light.pantry
   - delay: 00:10:00
   - service: light.turn_on
     target:
       device_id: cface4cdb90d68175e3a8dcb4f5dcf45
-      entity_id: light.back_door_porch
+      entity_id:
+      - light.back_door_porch
+      - light.veranda
     data: {}
   - service: input_boolean.toggle
     data: {}
     target:
       entity_id: input_boolean.house_light_up_time
-  - service: script.close_sitting_room_blind
+  - service: switch.turn_on
     data: {}
+    target:
+      entity_id: switch.outdoorsocket
   mode: single
 boost_hot_water:
   alias: Boost Hot Water
@@ -122,8 +137,9 @@ kitchen_blinds_up:
     data: {}
     target:
       entity_id: cover.back_blind_4
-  mode: single
+  mode: queued
   icon: mdi:blinds-open
+  max: 3
 close_sitting_room_blind:
   alias: Close Sitting Room Blind
   sequence:
@@ -131,5 +147,77 @@ close_sitting_room_blind:
     data: {}
     target:
       entity_id: cover.sitting_room_blind
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - service: cover.close_cover
+    data: {}
+    target:
+      entity_id: cover.sitting_room_blind
   mode: single
   icon: mdi:blinds
+kitchen_blinds_down:
+  alias: Kitchen Blinds Down
+  sequence:
+  - repeat:
+      count: 2
+      sequence:
+      - service: cover.close_cover
+        data: {}
+        target:
+          entity_id: cover.back_blind_1
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 1
+          milliseconds: 0
+      - service: cover.close_cover
+        data: {}
+        target:
+          entity_id: cover.back_blind_2
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 1
+          milliseconds: 0
+      - service: cover.close_cover
+        data: {}
+        target:
+          entity_id: cover.back_blind_3
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 1
+          milliseconds: 0
+      - service: cover.close_cover
+        data: {}
+        target:
+          entity_id: cover.back_blind_4
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 1
+          milliseconds: 0
+  mode: single
+  icon: mdi:roller-shade-closed
+  max: 3
+downstairs_conditional_off:
+  alias: Downstairs Conditional Off
+  sequence:
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ state_attr(''climate.downstairs_kitchen'', ''current_temperature'')
+          > state_attr(''climate.downstairs_kitchen'', ''temperature'')}}'
+      - condition: template
+        value_template: '{{ state_attr(''climate.downstairs_living_room'', ''current_temperature'')
+          > state_attr(''climate.downstairs_living_room'', ''temperature'')}}'
+      sequence:
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id: switch.downstairs
+  mode: single
+  icon: mdi:water-boiler-off
