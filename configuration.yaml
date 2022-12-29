@@ -113,7 +113,7 @@ climate:
     cold_tolerance: 0.3
     hot_tolerance: 0
     initial_hvac_mode: "heat"
-    heater: switch.downstairs_template 
+    heater: switch.downstairs_living_room
     target_sensor: sensor.0x00124b0024ce1bc7_temperature
     target_temp: 7
   - platform: generic_thermostat
@@ -123,7 +123,7 @@ climate:
     cold_tolerance: 0.3
     hot_tolerance: 0
     initial_hvac_mode: "heat"
-    heater: switch.downstairs 
+    heater: switch.downstairs_kitchen
     target_sensor: sensor.kitchen_temperature_temperature
     target_temp: 7
   - platform: generic_thermostat
