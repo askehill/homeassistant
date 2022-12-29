@@ -11,4 +11,23 @@
         service: system_log.write
         data:
           message: Downstairs Living Room Temp Hit
-          
+    downstairs_living_room:
+      value_template: "{{ {{ is_state('switch.downstairs', 'on') and is_state_attr('climate.downstairs_kitchen', 'hvac_action','idle') }} }}"
+      turn_on:
+        service: switch.turn_on
+        target:
+          entity_id: switch.downstairs
+      turn_off:
+        service: system_log.write
+        data:
+          message: Downstairs Living Room Temp Hit       
+    downstairs_kitchen:
+      value_template: "{{ is_state('switch.downstairs', 'on') }}"
+      turn_on:
+        service: switch.turn_on
+        target:
+          entity_id: switch.downstairs
+      turn_off:
+        service: switch.turn_off
+        target:
+          entity_id: switch.downstairs
