@@ -56,13 +56,13 @@ template:
             {% set kwh_usage = kwh_usage + 10 %}
           {%- endif %}
           {% if states('sensor.downstairs_power')|float >0 -%}
-            {% set kwh_usage = kwh_usage + 9 %}
+            {% set kwh_usage = kwh_usage + 12 %}
           {%- endif %}
           {% if states('sensor.heating2_channel_1_power')|float >0 -%}
-            {% set kwh_usage = kwh_usage + 7 %}
+            {% set kwh_usage = kwh_usage + 9 %}
           {%- endif %}
           {% if states('sensor.heating2_channel_2_power')|float >0 -%}
-            {% set kwh_usage = kwh_usage + 6 %}
+            {% set kwh_usage = kwh_usage + 7 %}
           {%- endif %}
           {{kwh_usage if kwh_usage < 22 else 22}}
 
