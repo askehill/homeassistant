@@ -104,6 +104,8 @@ timer:
     duration: '01:00:00'
   heating_boost:
     duration: '01:00:00'
+  pantry_light_timer:
+    duration: '00:10:00'
 
 climate:
   - platform: generic_thermostat
