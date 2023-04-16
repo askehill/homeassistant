@@ -6,3 +6,19 @@ security_lights:
     - light.side_door_security
     - light.back_door_security
   all: true
+living_room_lights:
+  name: Living Room Lights
+  entities:
+    - switch.livingroom3
+    - switch.livingroomlight
+kitchen_lights:
+  name: Kitchen Lights
+  entities:
+    - switch.kitchen_corner
+outdoor_lights:
+  name: Outdoor Lights
+  entities:
+    - light.front_door_light
+    - switch.veranda
+    - switch.pathlights
+    - light.back_door_porch
