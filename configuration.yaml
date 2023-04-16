@@ -241,7 +241,7 @@ homeassistant:
   customize: !include customize.yaml
 
 switch: !include switches.yaml
-group: !include groups.yaml
+light: !include ligths.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
