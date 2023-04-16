@@ -2,7 +2,7 @@
   - platform: group
     name: "Kitchen Lights"
     entities:
-      - switch.kitchen_corner
+      - light.kitchen_corner
   - platform: group
     name: Security Lights
     icon: mdi:light-flood-down
