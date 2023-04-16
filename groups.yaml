@@ -1,6 +1,7 @@
 ---
 security_lights:
   name: Security Lights
+  icon: mdi:light-flood-down
   entities:
     - light.front_door_light
     - light.side_door_security
@@ -8,6 +9,7 @@ security_lights:
   all: true
 living_room_lights:
   name: Living Room Lights
+  icon: mdi:floor-lamp
   entities:
     - switch.livingroom3
     - switch.livingroomlight
@@ -17,8 +19,15 @@ kitchen_lights:
     - switch.kitchen_corner
 outdoor_lights:
   name: Outdoor Lights
+  icon: mdi:outdoor-lamp
   entities:
     - light.front_door_light
     - switch.veranda
     - switch.pathlights
     - light.back_door_porch
+study_lights:
+  name: Study lights
+  icon: mdi:lightbulb-group
+  entities:
+    - light.study
+    - light.shellyrgbw2_a8e75d
