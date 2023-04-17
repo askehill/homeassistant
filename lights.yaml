@@ -13,7 +13,7 @@
   - platform: group
     name: Living Room Lights
     entities:
-      - light.livingroom3
+      - light.living_room_light_3
       - light.livingroomlight
   - platform: group
     name: Outdoor Lights
