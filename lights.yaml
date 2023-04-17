@@ -13,14 +13,14 @@
   - platform: group
     name: Living Room Lights
     entities:
-      - switch.livingroom3
-      - switch.livingroomlight
+      - light.livingroom3
+      - light.livingroomlight
   - platform: group
     name: Outdoor Lights
     entities:
       - light.front_door_light
-      - switch.veranda
-      - switch.pathlights
+      - light.veranda
+      - light.pathlights
       - light.back_door_porch
   - platform: group
     name: Study lights
