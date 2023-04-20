@@ -3,6 +3,7 @@
     name: "Kitchen Lights"
     entities:
       - light.kitchen_corner
+      - light.pantry
   - platform: group
     name: Security Lights
     entities:
