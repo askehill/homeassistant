@@ -214,7 +214,7 @@ mqtt:
         state_topic: "tele/zbbridge/SENSOR"
         value_template: "{{ value_json['ZbReceived']['Living Room Sensor']['Temperature'] }}"
         device_class: temperature
-      - name: 'Master Bedroom Humidity'
+      - name: 'Living Room Humidity'
         unit_of_measurement: "%"
         state_topic: "tele/zbbridge/SENSOR"
         value_template: "{{ value_json['ZbReceived']['Living Room Sensor']['Humidity'] }}"
