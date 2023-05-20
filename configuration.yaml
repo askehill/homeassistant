@@ -258,7 +258,7 @@ mqtt:
       availability_topic: "tele/zbbridge/LWT"
       payload_available: "Online"
       payload_not_available: "Offline"
-      entity_category: "default"
+      entity_category: "config"
       device_class: "restart"
   cover:
     - name: "Back Blind #1"
