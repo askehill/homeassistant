@@ -182,50 +182,84 @@ mqtt:
         state_topic: "tele/zbbridge/SENSOR"
         value_template: "{{ value_json['ZbReceived']['Pantry Door Sensor']['Contact'] }}"
         device_class: door
-
+        payload_on: 1
+        payload_off: 0 
   sensor:
       - name: 'Office Temperature'
         unit_of_measurement: '°C'
+        availability_topic: "tele/zbbridge/LWT"
+        payload_available: "Online"
+        payload_not_available: "Offline"
         state_topic: "tele/zbbridge/SENSOR"
         value_template: "{{ value_json['ZbReceived']['Office Sensor']['Temperature'] }}"
         device_class: temperature
       - name: 'Office Humidity'
         unit_of_measurement: "%"
+        availability_topic: "tele/zbbridge/LWT"
+        payload_available: "Online"
+        payload_not_available: "Offline"
         state_topic: "tele/zbbridge/SENSOR"
         value_template: "{{ value_json['ZbReceived']['Office Sensor']['Humidity'] }}"
         device_class: humidity
       - name: 'Master Bedroom Temperature'
         unit_of_measurement: '°C'
+        availability_topic: "tele/zbbridge/LWT"
+        payload_available: "Online"
+        payload_not_available: "Offline"
         state_topic: "tele/zbbridge/SENSOR"
         value_template: "{{ value_json['ZbReceived']['Master Bedroom Sensor']['Temperature'] }}"
         device_class: temperature
       - name: 'Master Bedroom Humidity'
         unit_of_measurement: "%"
+        availability_topic: "tele/zbbridge/LWT"
+        payload_available: "Online"
+        payload_not_available: "Offline"
         state_topic: "tele/zbbridge/SENSOR"
         value_template: "{{ value_json['ZbReceived']['Master Bedroom Sensor']['Humidity'] }}"
         device_class: humidity
       - name: 'Kitchen Temperature'
         unit_of_measurement: '°C'
+        availability_topic: "tele/zbbridge/LWT"
+        payload_available: "Online"
+        payload_not_available: "Offline"
         state_topic: "tele/zbbridge/SENSOR"
         value_template: "{{ value_json['ZbReceived']['Kitchen Sensor']['Temperature'] }}"
         device_class: temperature
       - name: 'Kitchen Humidity'
         unit_of_measurement: "%"
+        availability_topic: "tele/zbbridge/LWT"
+        payload_available: "Online"
+        payload_not_available: "Offline"
         state_topic: "tele/zbbridge/SENSOR"
         value_template: "{{ value_json['ZbReceived']['Kitchen Sensor']['Humidity'] }}"
         device_class: humidity
       - name: 'Living Room Temperature'
         unit_of_measurement: '°C'
+        availability_topic: "tele/zbbridge/LWT"
+        payload_available: "Online"
+        payload_not_available: "Offline"
         state_topic: "tele/zbbridge/SENSOR"
         value_template: "{{ value_json['ZbReceived']['Living Room Sensor']['Temperature'] }}"
         device_class: temperature
       - name: 'Living Room Humidity'
         unit_of_measurement: "%"
+        availability_topic: "tele/zbbridge/LWT"
+        payload_available: "Online"
+        payload_not_available: "Offline"
         state_topic: "tele/zbbridge/SENSOR"
         value_template: "{{ value_json['ZbReceived']['Living Room Sensor']['Humidity'] }}"
         device_class: humidity
       
-
+  button:
+    - unique_id: z2t_enable_join
+      name: "Zigbee2Tasmota enable join"
+      command_topic: "cmnd/zbbridge/ZbPermitJoin" 
+      payload_press: "1"
+      availability_topic: "tele/zbbridge/LWT"
+      payload_available: "Online"
+      payload_not_available: "Offline"
+      entity_category: "default"
+      device_class: "restart"
   cover:
     - name: "Back Blind #1"
       command_topic: "cmnd/rfbridge/Backlog0"
