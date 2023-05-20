@@ -178,6 +178,12 @@ mqtt:
         payload_off: 'E6AA3Eoff'
         device_class: motion
         qos: 1  
+  sensor:
+      - name: 'Office Sensor'
+        state_topic: "tele/zbbridge/SENSOR"
+        value_template: '{{value_json.RfReceived.Data}}'
+        device_class: sensor
+        qos: 1
       
   cover:
     - name: "Back Blind #1"
