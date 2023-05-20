@@ -178,7 +178,52 @@ mqtt:
         payload_off: 'E6AA3Eoff'
         device_class: motion
         qos: 1  
- 
+  sensor:
+      - name: 'Office Temperature'
+        unit_of_measurement: '°C'
+        state_topic: "tele/zbbridge/SENSOR"
+        value_template: "{{ value_json['ZbReceived']['Office Sensor']['Temperature'] }}"
+        device_class: temperature
+      - name: 'Office Humidity'
+        unit_of_measurement: "%"
+        state_topic: "tele/zbbridge/SENSOR"
+        value_template: "{{ value_json['ZbReceived']['Office Sensor']['Humidity'] }}"
+        device_class: humidity
+      - name: 'Master Bedroom Temperature'
+        unit_of_measurement: '°C'
+        state_topic: "tele/zbbridge/SENSOR"
+        value_template: "{{ value_json['ZbReceived']['Master Bedroom Sensor']['Temperature'] }}"
+        device_class: temperature
+      - name: 'Master Bedroom Humidity'
+        unit_of_measurement: "%"
+        state_topic: "tele/zbbridge/SENSOR"
+        value_template: "{{ value_json['ZbReceived']['Master Bedroom Sensor']['Humidity'] }}"
+        device_class: humidity
+      - name: 'Kitchen Temperature'
+        unit_of_measurement: '°C'
+        state_topic: "tele/zbbridge/SENSOR"
+        value_template: "{{ value_json['ZbReceived']['Kitchen Sensor']['Temperature'] }}"
+        device_class: temperature
+      - name: 'Kitchen Humidity'
+        unit_of_measurement: "%"
+        state_topic: "tele/zbbridge/SENSOR"
+        value_template: "{{ value_json['ZbReceived']['Kitchen Sensor']['Humidity'] }}"
+        device_class: humidity
+      - name: 'Living Room Temperature'
+        unit_of_measurement: '°C'
+        state_topic: "tele/zbbridge/SENSOR"
+        value_template: "{{ value_json['ZbReceived']['Living Room Sensor']['Temperature'] }}"
+        device_class: temperature
+      - name: 'Living Room Humidity'
+        unit_of_measurement: "%"
+        state_topic: "tele/zbbridge/SENSOR"
+        value_template: "{{ value_json['ZbReceived']['Living Room Sensor']['Humidity'] }}"
+        device_class: humidity
+      - name: 'Pantry Door'
+        state_topic: "tele/zbbridge/SENSOR"
+        value_template: "{{ value_json['ZbReceived']['Pantry Door Sensor']['Contact'] }}"
+        device_class: door
+
 
   cover:
     - name: "Back Blind #1"
