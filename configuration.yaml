@@ -178,6 +178,11 @@ mqtt:
         payload_off: 'E6AA3Eoff'
         device_class: motion
         qos: 1  
+      - name: 'Pantry Door'
+        state_topic: "tele/zbbridge/SENSOR"
+        value_template: "{{ value_json['ZbReceived']['Pantry Door Sensor']['Contact'] }}"
+        device_class: door
+
   sensor:
       - name: 'Office Temperature'
         unit_of_measurement: '°C'
@@ -219,11 +224,7 @@ mqtt:
         state_topic: "tele/zbbridge/SENSOR"
         value_template: "{{ value_json['ZbReceived']['Living Room Sensor']['Humidity'] }}"
         device_class: humidity
-      - name: 'Pantry Door'
-        state_topic: "tele/zbbridge/SENSOR"
-        value_template: "{{ value_json['ZbReceived']['Pantry Door Sensor']['Contact'] }}"
-        device_class: door
-
+      
 
   cover:
     - name: "Back Blind #1"
