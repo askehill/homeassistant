@@ -182,7 +182,7 @@ mqtt:
       - name: 'Office Sensor'
         state_topic: "tele/zbbridge/SENSOR"
         value_template: '{{value_json.RfReceived.Data}}'
-        device_class: sensor
+        device_class: temperature
         qos: 1
       
   cover:
