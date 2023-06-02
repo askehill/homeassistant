@@ -85,6 +85,20 @@ sensor:
       state_topic: "tele/zbbridge/SENSOR"
       value_template: "{{ value_json['ZbReceived']['Living Room Sensor']['Humidity'] }}"
       device_class: humidity
+    - name: 'Living Room Motion'
+      availability_topic: "tele/zbbridge/LWT"
+      payload_available: "Online"
+      payload_not_available: "Offline"
+      state_topic: "tele/zbbridge/SENSOR"
+      value_template: "{{ value_json['ZbReceived']['Living Room Motion']['Occupancy'] }}"
+      device_class: motion
+    - name: 'Pantry Motion'
+      availability_topic: "tele/zbbridge/LWT"
+      payload_available: "Online"
+      payload_not_available: "Offline"
+      state_topic: "tele/zbbridge/SENSOR"
+      value_template: "{{ value_json['ZbReceived']['Pantry Motion']['Occupancy'] }}"
+      device_class: motion
 switch:
    - unique_id: kitchen_corner
      name: "Kitchen Corner"
