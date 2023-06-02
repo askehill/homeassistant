@@ -104,7 +104,7 @@ sensor:
       value_template: "{{ value_json['ZbReceived']['Living Room Sensor']['Humidity'] }}"
       device_class: humidity
 switch:
-   - unique_id: kitchen_corner
+  - unique_id: kitchen_corner
      name: "Kitchen Corner"
      availability_topic: "tele/zbbridge/LWT"
      payload_available: "Online"
