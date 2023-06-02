@@ -91,13 +91,13 @@ switch:
      availability_topic: "tele/zbbridge/LWT"
      payload_available: "Online"
      payload_not_available: "Offline"
-     command_topic: cmnd/zbbridge/ZbSend
+     command_topic: "cmnd/zbbridge/ZbSend"
      payload_on: '{"device":"0x20EC","send":{"Power":"On"} }' 
      payload_off: '{"device":"0x20EC","send":{"Power":"Off"} }'  
      qos: 1
      retain: false
-     state_on: '{{value_json.ZbReceived["Kitchen Corner Socket"].Power == 1}'
-     state_off: '{{value_json.ZbReceived["Kitchen Corner Socket"].Power == 0}'
+     state_topic: "tele/zbbridge/SENSOR"
+     value_template: "{{ value_json['ZbReceived']['Kitchen Corner Socket']['Power'] }}"
      icon: mdi:floor-lamp
 button:
   - unique_id: z2t_enable_join
