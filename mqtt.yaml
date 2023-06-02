@@ -87,7 +87,6 @@ sensor:
       device_class: humidity
 light:
    - unique_id: kitchen_corner
-     schema: default
      name: "Kitchen Corner"
      availability_topic: "tele/zbbridge/LWT"
      payload_available: "Online"
