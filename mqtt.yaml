@@ -96,7 +96,8 @@ switch:
      payload_off: '{"device":"0x20EC","send":{"Power":"Off"} }'  
      qos: 1
      retain: false
-     state_template: '{{value_json.ZbReceived["0x20EC"].Power|replace("1","on")|replace("0","off")}}'
+    #  {"ZbReceived":{"Kitchen Corner Socket":{"Device":"0x20EC","Name":"Kitchen Corner Socket","Power":1,"Endpoint":1,"LinkQuality":61}}}
+    #  state_on: '{{value_json.ZbReceived["0x20EC"].Power|replace("1","on")|replace("0","off")}}'
      icon: mdi:light-switch
 button:
   - unique_id: z2t_enable_join
