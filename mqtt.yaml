@@ -91,13 +91,13 @@ switch:
     availability_topic: "tele/zbbridge/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
-    command_topic: cmnd/z2tgf/ZbSend
-    command_on_template: '{"Device":"0x20EC","Send":{"Power":1}}'
-    command_off_template: '{"Device":"0x20EC","Send":{"Power":0}}'
-    optimistic: false
-    qos: 1
-    retain: false
-    state_template: '{{value_json.ZbReceived["0x20EC"].Power|replace("1","on")|replace("0","off")}}'
+    # command_topic: cmnd/z2tgf/ZbSend
+    # command_on_template: '{"Device":"0x20EC","Send":{"Power":1}}'
+    # command_off_template: '{"Device":"0x20EC","Send":{"Power":0}}'
+    # optimistic: false
+    # qos: 1
+    # retain: false
+    # state_template: '{{value_json.ZbReceived["0x20EC"].Power|replace("1","on")|replace("0","off")}}'
     icon: mdi:light-switch
 button:
   - unique_id: z2t_enable_join
