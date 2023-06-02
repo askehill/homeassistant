@@ -119,6 +119,21 @@ switch:
      state_topic: "tele/zbbridge/SENSOR"
      value_template: "{{ value_json['ZbReceived']['Kitchen Corner Socket']['Power'] }}"
      icon: mdi:floor-lamp
+  - unique_id: office_socket
+     name: "Office Socket"
+     availability_topic: "tele/zbbridge/LWT"
+     payload_available: "Online"
+     payload_not_available: "Offline"
+     command_topic: "cmnd/zbbridge/ZbSend"
+     payload_on: '{"device":"0x280F8","send":{"Power":"On"} }' 
+     payload_off: '{"device":"0x80F8","send":{"Power":"Off"} }'  
+     qos: 1
+     retain: false
+     state_on: '1'
+     state_off: '0'
+     state_topic: "tele/zbbridge/SENSOR"
+     value_template: "{{ value_json['ZbReceived']['Office Socket']['Power'] }}"
+     icon: mdi:power-socket-uk
 button:
   - unique_id: z2t_enable_join
     name: "Zigbee2Tasmota enable join"
