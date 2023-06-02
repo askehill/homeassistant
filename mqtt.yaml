@@ -25,6 +25,8 @@ binary_sensor:
       payload_available: "Online"
       payload_not_available: "Offline"
       state_topic: "tele/zbbridge/SENSOR"
+      payload_on: 1
+      payload_off: 0
       value_template: "{{ value_json['ZbReceived']['Living Room Motion']['Occupancy'] }}"
       device_class: motion
     - name: 'Pantry Motion'
@@ -32,6 +34,8 @@ binary_sensor:
       payload_available: "Online"
       payload_not_available: "Offline"
       state_topic: "tele/zbbridge/SENSOR"
+      payload_on: 1
+      payload_off: 0
       value_template: "{{ value_json['ZbReceived']['Pantry Motion']['Occupancy'] }}"
       device_class: motion
 sensor:
