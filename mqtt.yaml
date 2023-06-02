@@ -85,8 +85,9 @@ sensor:
       state_topic: "tele/zbbridge/SENSOR"
       value_template: "{{ value_json['ZbReceived']['Living Room Sensor']['Humidity'] }}"
       device_class: humidity
-switch:
+light:
    - unique_id: kitchen_corner
+     schema: default
      name: "Kitchen Corner"
      availability_topic: "tele/zbbridge/LWT"
      payload_available: "Online"
