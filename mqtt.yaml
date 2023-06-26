@@ -140,8 +140,8 @@ light:
     payload_available: "Online"
     payload_not_available: "Offline"
     command_topic: "cmnd/zbbridge/ZbSend"
-    payload_on: '{"device":"0xCDF4","send":{"Power":1} }' 
-    payload_off: '{"device":"0xCDF4","send":{"Power":0} }'  
+    payload_on: '{"device":"0xCDF4","send":{"power":1}}' 
+    payload_off: '{"device":"0xCDF4","send":{"power":0}}'  
     qos: 1
     retain: false
     payload_on: 1
