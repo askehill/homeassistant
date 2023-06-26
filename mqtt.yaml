@@ -140,12 +140,12 @@ light:
     payload_available: "Online"
     payload_not_available: "Offline"
     command_topic: "cmnd/zbbridge/ZbSend"
-    payload_on: '{"device":"0xCDF4","send":{"Power":"On"} }' 
-    payload_off: '{"device":"0xCDF4","send":{"Power":"Off"} }'  
+    payload_on: '{"device":"0xCDF4","send":{"Power":1} }' 
+    payload_off: '{"device":"0xCDF4","send":{"Power":0} }'  
     qos: 1
     retain: false
-    payload_on: '1'
-    payload_off: '0'
+    payload_on: 1
+    payload_off: 0
     state_topic: "tele/zbbridge/SENSOR"
     state_value_template: "{{ value_json['ZbReceived']['Davins Light']['Power'] }}"
     optimistic: false
