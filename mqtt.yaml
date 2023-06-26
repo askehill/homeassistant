@@ -147,7 +147,7 @@ light:
     payload_on: '1'
     payload_off: '0'
     state_topic: "tele/zbbridge/SENSOR"
-    value_template: "{{ value_json['ZbReceived']['Davins Light']['Power'] }}"
+    state_value_template: "{{ value_json['ZbReceived']['Davins Light']['Power'] }}"
     optimistic: false
 button:
   - unique_id: z2t_enable_join
