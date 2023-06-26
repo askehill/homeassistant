@@ -109,12 +109,6 @@ timer:
 
  
 media_player:
-  - platform: androidtv
-    name: Philips OLED
-    host: 192.168.1.209
-  - platform: braviatv
-    name: Garden room TV
-    host: 192.168.1.224
   - platform: enigma2
     host: 192.168.1.131
     password: !secret vu_password
