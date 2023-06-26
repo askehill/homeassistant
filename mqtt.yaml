@@ -135,7 +135,7 @@ switch:
      value_template: "{{ value_json['ZbReceived']['Office Socket']['Power'] }}"
      icon: mdi:power-socket-uk
 light:
-  - name: "Davins Light"
+    - name: "Davins Light"
      availability_topic: "tele/zbbridge/LWT"
      payload_available: "Online"
      payload_not_available: "Offline"
