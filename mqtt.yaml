@@ -20,6 +20,12 @@ binary_sensor:
       device_class: door
       payload_on: 1
       payload_off: 0 
+    - name: 'Kitchen Door'
+      state_topic: "tele/zbbridge/SENSOR"
+      value_template: "{{ value_json['ZbReceived']['Kitchen Door Sensor']['Contact'] }}"
+      device_class: door
+      payload_on: 1
+      payload_off: 0 
     - name: 'Living Room Motion'
       availability_topic: "tele/zbbridge/LWT"
       payload_available: "Online"
