@@ -72,7 +72,7 @@ media_player:
 homeassistant:
   customize: !include customize.yaml
 
-template: !include templates.yaml
+template: !include_dir_merge_list template
 switch: !include switches.yaml
 light: !include lights.yaml
 automation: !include automations.yaml
