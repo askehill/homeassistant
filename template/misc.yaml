@@ -1,0 +1,12 @@
+- sensor: 
+  - unique_id: number_lights_on
+    name: Number Lights On
+    state: >
+      {{ dict(states.light|groupby('state'))['on']|length }}
+      
+  - unique_id: adjusted_nspanel_temperature
+    name: Adjusted NSPanel temperature
+    unit_of_measurement: "°C"
+    state: >
+      {{ (states('sensor.livingroompanel_analog_temperature1')|float * 0.7755)|round(1, 'common')}}
+  

@@ -1,0 +1,21 @@
+- sensor:
+  - unique_id: gas_usage
+    name: Gas Usage
+    state_class: measurement
+    unit_of_measurement: kW
+    device_class: power
+    state: >
+      {% set kwh_usage = 0 %}
+      {% if states('sensor.hotwater_power')|float >0 -%}
+        {% set kwh_usage = kwh_usage + 10 %}
+      {%- endif %}
+      {% if states('sensor.downstairs_power')|float >0 -%}
+        {% set kwh_usage = kwh_usage + 13 %}
+      {%- endif %}
+      {% if states('sensor.heating2_channel_1_power')|float >0 -%}
+        {% set kwh_usage = kwh_usage + 10 %}
+      {%- endif %}
+      {% if states('sensor.heating2_channel_2_power')|float >0 -%}
+        {% set kwh_usage = kwh_usage + 8 %}
+      {%- endif %}
+      {{kwh_usage if kwh_usage < 23 else 23}}
