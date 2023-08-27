@@ -6,7 +6,7 @@
       {% set time = { "month": (now().strftime('%m') | int), "hour": (now().strftime('%H') | int), "weekday": (now().weekday() | int ) } %}
       {% set tariff = { "Peak": 0.48, "Weekend": 0.0, "OffPeak": 0.48 } %}
 
-      {%if ( (time.weekday = 6) and (time.hour > 8) and (time.hour < 23)
+      {%if ( (time.weekday = 6) and (time.hour > 8) and (time.hour < 23) %}
           {{ tariff.Weekend }}
       {%else%}
           {{ tariff.Peak }}
