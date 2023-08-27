@@ -1,8 +1,6 @@
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
-discovery:
-
 python_script:
 
 http:
@@ -19,52 +17,7 @@ spc:
   api_url: !secret spc_api_url
   ws_url: !secret spc_ws_url
 
-template:
-  - binary_sensor:
-      - name: Sun Up
-        state: >
-          {{ is_state("sun.sun", "above_horizon") }}
-        icon: >
-          {% if is_state("binary_sensor.sun_up", "on") %}
-            mdi:weather-sunset-up
-          {% else %}
-            mdi:weather-sunset-down
-          {% endif %}
-  - sensor:
-      - name: Next Sunrise
-        state: >
-          {{ as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom(' %I:%M %p') | replace(" 0", "") }}
-        icon: mdi:weather-sunset-up
-      - name: Next Sunset
-        state: >
-         {{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom(' %I:%M %p') | replace(" 0", "") }}
-        icon: mdi:weather-sunset-down
-      - name: Number Lights On
-        state: >
-          {{ dict(states.light|groupby('state'))['on']|length }}
-      - name: Adjusted NSPanel temperature
-        unit_of_measurement: "°C"
-        state: >
-          {{ (states('sensor.livingroompanel_analog_temperature1')|float * 0.7755)|round(1, 'common')}}
-      - name: Gas Usage
-        state_class: measurement
-        unit_of_measurement: kW
-        device_class: power
-        state: >
-          {% set kwh_usage = 0 %}
-          {% if states('sensor.hotwater_power')|float >0 -%}
-            {% set kwh_usage = kwh_usage + 10 %}
-          {%- endif %}
-          {% if states('sensor.downstairs_power')|float >0 -%}
-            {% set kwh_usage = kwh_usage + 13 %}
-          {%- endif %}
-          {% if states('sensor.heating2_channel_1_power')|float >0 -%}
-            {% set kwh_usage = kwh_usage + 10 %}
-          {%- endif %}
-          {% if states('sensor.heating2_channel_2_power')|float >0 -%}
-            {% set kwh_usage = kwh_usage + 8 %}
-          {%- endif %}
-          {{kwh_usage if kwh_usage < 23 else 23}}
+  
 
 sensor:
   - platform: integration
@@ -119,6 +72,7 @@ media_player:
 homeassistant:
   customize: !include customize.yaml
 
+template: !include templates.yaml
 switch: !include switches.yaml
 light: !include lights.yaml
 automation: !include automations.yaml
