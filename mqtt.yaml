@@ -99,7 +99,7 @@ sensor:
       payload_available: "Online"
       payload_not_available: "Offline"
       state_topic: "tele/zbbridge/SENSOR"
-      value_template: "{{ value_json['ZbReceived']['Living Room Sensor']['Temperature'] }}"
+      value_template: "{{ value_json['ZbReceived']['0x70A8']['Temperature'] }}"
       device_class: temperature
     - name: 'Living Room Humidity'
       unit_of_measurement: "%"
@@ -107,7 +107,7 @@ sensor:
       payload_available: "Online"
       payload_not_available: "Offline"
       state_topic: "tele/zbbridge/SENSOR"
-      value_template: "{{ value_json['ZbReceived']['Living Room Sensor']['Humidity'] }}"
+      value_template: "{{ value_json['ZbReceived']['0x70A8']['Humidity'] }}"
       device_class: humidity
 switch:
    - unique_id: kitchen_corner
