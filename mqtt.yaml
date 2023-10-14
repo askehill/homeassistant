@@ -51,7 +51,7 @@ sensor:
       payload_available: "Online"
       payload_not_available: "Offline"
       state_topic: "tele/zbbridge/SENSOR"
-      value_template: "{{ value_json['ZbReceived']['Office Sensor']['Temperature'] }}"
+      value_template: "{{ value_json['ZbReceived']['0xACC4']['Temperature'] }}"
       device_class: temperature
     - name: 'Office Humidity'
       unit_of_measurement: "%"
@@ -59,7 +59,7 @@ sensor:
       payload_available: "Online"
       payload_not_available: "Offline"
       state_topic: "tele/zbbridge/SENSOR"
-      value_template: "{{ value_json['ZbReceived']['Office Sensor']['Humidity'] }}"
+      value_template: "{{ value_json['ZbReceived']['0xACC4']['Humidity'] }}"
       device_class: humidity
     - name: 'Master Bedroom Temperature'
       unit_of_measurement: '°C'
@@ -67,7 +67,7 @@ sensor:
       payload_available: "Online"
       payload_not_available: "Offline"
       state_topic: "tele/zbbridge/SENSOR"
-      value_template: "{{ value_json['ZbReceived']['Master Bedroom Sensor']['Temperature'] }}"
+      value_template: "{{ value_json['ZbReceived']['0x91A8']['Temperature'] }}"
       device_class: temperature
     - name: 'Master Bedroom Humidity'
       unit_of_measurement: "%"
@@ -75,7 +75,7 @@ sensor:
       payload_available: "Online"
       payload_not_available: "Offline"
       state_topic: "tele/zbbridge/SENSOR"
-      value_template: "{{ value_json['ZbReceived']['Master Bedroom Sensor']['Humidity'] }}"
+      value_template: "{{ value_json['ZbReceived']['0x91A8']['Humidity'] }}"
       device_class: humidity
     - name: 'Kitchen Temperature'
       unit_of_measurement: '°C'
@@ -83,7 +83,7 @@ sensor:
       payload_available: "Online"
       payload_not_available: "Offline"
       state_topic: "tele/zbbridge/SENSOR"
-      value_template: "{{ value_json['ZbReceived']['Kitchen Sensor']['Temperature'] }}"
+      value_template: "{{ value_json['ZbReceived']['0x0807']['Temperature'] }}"
       device_class: temperature
     - name: 'Kitchen Humidity'
       unit_of_measurement: "%"
@@ -91,7 +91,7 @@ sensor:
       payload_available: "Online"
       payload_not_available: "Offline"
       state_topic: "tele/zbbridge/SENSOR"
-      value_template: "{{ value_json['ZbReceived']['Kitchen Sensor']['Humidity'] }}"
+      value_template: "{{ value_json['ZbReceived']['0x0807']['Humidity'] }}"
       device_class: humidity
     - name: 'Living Room Temperature'
       unit_of_measurement: '°C'
