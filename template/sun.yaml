@@ -1,0 +1,24 @@
+- binary_sensor:
+  - unique_id: sun_up
+    name: Sun Up
+    state: >
+      {{ is_state("sun.sun", "above_horizon") }}
+    icon: >
+      {% if is_state("binary_sensor.sun_up", "on") %}
+        mdi:weather-sunset-up
+      {% else %}
+        mdi:weather-sunset-down
+      {% endif %}
+
+- sensor:
+  - unique_id: next_sunrise
+    name: Next Sunrise
+    state: >
+      {{ as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom(' %I:%M %p') | replace(" 0", "") }}
+    icon: mdi:weather-sunset-up
+  
+  - unique_id: next_sunset
+    name: Next Sunset
+    state: >
+      {{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom(' %I:%M %p') | replace(" 0", "") }}
+    icon: mdi:weather-sunset-down
