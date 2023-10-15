@@ -123,7 +123,7 @@ switch:
      state_on: '1'
      state_off: '0'
      state_topic: "tele/zbbridge/SENSOR"
-     value_template: "{{ value_json['ZbReceived']['Kitchen Corner Socket']['Power'] }}"
+     value_template: "{{ value_json['ZbReceived']['0xEBD3']['Power'] }}"
      icon: mdi:floor-lamp
    - unique_id: office_socket
      name: "Office Socket"
