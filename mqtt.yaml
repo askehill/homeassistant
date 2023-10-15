@@ -116,8 +116,8 @@ switch:
      payload_available: "Online"
      payload_not_available: "Offline"
      command_topic: "cmnd/zbbridge/ZbSend"
-     payload_on: '{"device":"0x20EC","send":{"Power":"On"} }' 
-     payload_off: '{"device":"0x20EC","send":{"Power":"Off"} }'  
+     payload_on: '{"device":"0xEBD3","send":{"Power":"On"} }' 
+     payload_off: '{"device":"0xEBD3","send":{"Power":"Off"} }'  
      qos: 1
      retain: false
      state_on: '1'
