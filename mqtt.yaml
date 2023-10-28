@@ -22,7 +22,7 @@ binary_sensor:
       qos: 1  
     - name: 'Pantry Door'
       state_topic: "tele/zbbridge/SENSOR"
-      value_template: "{{ value_json['ZbReceived']['Pantry Door Sensor']['ZoneStatusChange'] }}"
+      value_template: "{{ value_json['ZbReceived']['0x62BB']['ZoneStatusChange'] }}"
       device_class: door
       payload_on: 1
       payload_off: 0 
