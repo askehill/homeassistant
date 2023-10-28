@@ -28,7 +28,7 @@ binary_sensor:
       payload_off: 0 
     - name: 'Kitchen Door'
       state_topic: "tele/zbbridge/SENSOR"
-      value_template: "{{ value_json['ZbReceived']['Kitchen Door Sensor']['ZoneStatusChange'] }}"
+      value_template: "{{ value_json['ZbReceived']['0x6050']['ZoneStatusChange'] }}"
       device_class: door
       payload_on: 1
       payload_off: 0 
