@@ -39,7 +39,7 @@ binary_sensor:
       state_topic: "tele/zbbridge/SENSOR"
       payload_on: 1
       payload_off: 0
-      value_template: "{{ value_json['ZbReceived']['Living Room Motion']['ZoneStatusChange'] }}"
+      value_template: "{{ value_json['ZbReceived']['0x1C57']['ZoneStatusChange'] }}"
       device_class: motion
     - name: 'Pantry Motion'
       availability_topic: "tele/zbbridge/LWT"
