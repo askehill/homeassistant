@@ -170,8 +170,6 @@ light:
     payload_off: '{"device":"0xCDF4","send":{"power":0}}'  
     qos: 1
     retain: false
-    payload_on: 1
-    payload_off: 0
     state_topic: "tele/zbbridge/SENSOR"
     state_value_template: "{{ value_json['ZbReceived']['Davins Light']['Power'] }}"
     optimistic: false
