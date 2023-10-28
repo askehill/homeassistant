@@ -5,18 +5,18 @@
       delay_off:
         minutes: 3
       state: >
-        {{ is_state('binary_sensor.playroom_motion', 'Detected') }} 
+        {{ is_state('binary_sensor.playroom_motion', 'on') }} 
     - unique_id: living_room_occupied
       name: Living Room Occupied
       device_class: occupancy
       delay_off:
         minutes: 3
       state: >
-        {{ is_state('binary_sensor.living_room_motion', 'Detected') }}
+        {{ is_state('binary_sensor.living_room_motion', 'on') }}
     - unique_id: kitchen_occupied
       name: Kitchen Occupied
       device_class: occupancy
       delay_off:
         minutes: 3
       state: >
-        {{ is_state('binary_sensor.pantry_motion', 'Detected') }}
+        {{ is_state('binary_sensor.pantry_motion', 'on') }}
