@@ -7,9 +7,8 @@ binary_sensor:
       payload_off: 'E6BC6Eoff'
       device_class: motion
       qos: 1
-    - name: 'Hotpress Switch'
+    - name: 'Hotpress RF Switch'
       state_topic: "tele/rfbridge/RESULT"
-      name: "Hotpress RF Light Switch"
       value_template: '{{value_json.RfReceived.Data}}'
       payload_on: '84A794'
       payload_off: '84A794off'
