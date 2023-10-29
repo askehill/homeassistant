@@ -7,22 +7,18 @@
       entity_id:
       - switch.livingroomlight
       - switch.livingroom3
-      - switch.kitchen_floor_light
+      - switch.0x00124b0026b86159
+      - switch.kitchen_corner_2
   - service: light.turn_on
     target:
       device_id: 8dd3b302d420f1394f0c1a4b31200497
+      entity_id:
+      - light.pantry
     data: {}
-  - if:
-    - type: is_open
-      condition: device
-      device_id: 0e5761e9a3d32ffa37deb53c4fb7a6f3
-      entity_id: binary_sensor.0x00124b00251952eb_contact
-      domain: binary_sensor
-    then:
-    - service: light.turn_on
-      data: {}
-      target:
-        entity_id: light.pantry
+  - service: timer.start
+    data: {}
+    target:
+      entity_id: timer.pantry_light_timer
   - delay: 00:10:00
   - service: light.turn_on
     target:
@@ -31,14 +27,14 @@
       - light.back_door_porch
       - light.veranda
     data: {}
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id: switch.path_lights
   - service: input_boolean.toggle
     data: {}
     target:
       entity_id: input_boolean.house_light_up_time
-  - service: switch.turn_on
-    data: {}
-    target:
-      entity_id: switch.outdoorsocket
   mode: single
 boost_hot_water:
   alias: Boost Hot Water

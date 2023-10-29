@@ -147,3 +147,194 @@
       supported_features: 0
       state: 'off'
   metadata: {}
+- id: '1679772238019'
+  name: Full Heating
+  entities:
+    climate.downstairs_kitchen:
+      hvac_modes:
+      - heat
+      - 'off'
+      min_temp: 5
+      max_temp: 30
+      target_temp_step: 0.1
+      current_temperature: 18.8
+      temperature: 19
+      hvac_action: heating
+      friendly_name: Downstairs (Kitchen)
+      supported_features: 1
+      state: heat
+    climate.downstairs_living_room:
+      hvac_modes:
+      - heat
+      - 'off'
+      min_temp: 5
+      max_temp: 32
+      target_temp_step: 0.1
+      current_temperature: 21.5
+      temperature: 20.5
+      hvac_action: heating
+      friendly_name: Downstairs (Living Room)
+      supported_features: 1
+      state: heat
+    climate.upstairs_study:
+      hvac_modes:
+      - heat
+      - 'off'
+      min_temp: 5
+      max_temp: 30
+      target_temp_step: 0.1
+      current_temperature: 19.1
+      temperature: 19
+      hvac_action: idle
+      friendly_name: Upstairs (Study)
+      supported_features: 1
+      state: heat
+    climate.upstairs_master_bedroom:
+      hvac_modes:
+      - heat
+      - 'off'
+      min_temp: 5
+      max_temp: 30
+      target_temp_step: 0.1
+      current_temperature: 19.3
+      temperature: 19
+      hvac_action: idle
+      friendly_name: Upstairs (Master Bedroom)
+      supported_features: 1
+      state: heat
+  icon: mdi:heat-wave
+  metadata:
+    climate.downstairs_kitchen:
+      entity_only: true
+    climate.downstairs_living_room:
+      entity_only: true
+    climate.upstairs_study:
+      entity_only: true
+    climate.upstairs_master_bedroom:
+      entity_only: true
+- id: '1679772296335'
+  name: Night Heating
+  entities:
+    climate.downstairs_living_room:
+      hvac_modes:
+      - heat
+      - 'off'
+      min_temp: 5
+      max_temp: 32
+      target_temp_step: 0.1
+      current_temperature: 22.6
+      temperature: 20.5
+      hvac_action: idle
+      friendly_name: Downstairs (Living Room)
+      supported_features: 1
+      state: heat
+    climate.downstairs_kitchen:
+      hvac_modes:
+      - heat
+      - 'off'
+      min_temp: 5
+      max_temp: 30
+      target_temp_step: 0.1
+      current_temperature: 19.2
+      temperature: 18
+      hvac_action: idle
+      friendly_name: Downstairs (Kitchen)
+      supported_features: 1
+      state: heat
+  icon: mdi:heat-wave
+  metadata:
+    climate.downstairs_living_room:
+      entity_only: true
+    climate.downstairs_kitchen:
+      entity_only: true
+- id: '1679772543529'
+  name: Heating Off
+  entities:
+    climate.downstairs_kitchen:
+      hvac_modes:
+      - heat
+      - 'off'
+      min_temp: 5
+      max_temp: 30
+      target_temp_step: 0.1
+      current_temperature: 19
+      temperature: 7
+      hvac_action: idle
+      friendly_name: Downstairs (Kitchen)
+      supported_features: 1
+      state: heat
+    climate.downstairs_living_room:
+      hvac_modes:
+      - heat
+      - 'off'
+      min_temp: 5
+      max_temp: 32
+      target_temp_step: 0.1
+      current_temperature: 20.9
+      temperature: 7
+      hvac_action: idle
+      friendly_name: Downstairs (Living Room)
+      supported_features: 1
+      state: heat
+    climate.upstairs_study:
+      hvac_modes:
+      - heat
+      - 'off'
+      min_temp: 5
+      max_temp: 30
+      target_temp_step: 0.1
+      current_temperature: 19.5
+      temperature: 7
+      hvac_action: idle
+      friendly_name: Upstairs (Study)
+      supported_features: 1
+      state: heat
+    climate.upstairs_master_bedroom:
+      hvac_modes:
+      - heat
+      - 'off'
+      min_temp: 5
+      max_temp: 30
+      target_temp_step: 0.1
+      current_temperature: 18.9
+      temperature: 7
+      hvac_action: idle
+      friendly_name: Upstairs (Master Bedroom)
+      supported_features: 1
+      state: heat
+    switch.heater_socket:
+      icon: mdi:radiator
+      friendly_name: Heater Socket
+      state: 'off'
+  icon: mdi:hvac-off
+  metadata:
+    climate.downstairs_kitchen:
+      entity_only: true
+    climate.downstairs_living_room:
+      entity_only: true
+    climate.upstairs_study:
+      entity_only: true
+    climate.upstairs_master_bedroom:
+      entity_only: true
+    switch.heater_socket:
+      entity_only: true
+- id: '1679773105216'
+  name: Early Evening Heating
+  entities:
+    climate.downstairs_kitchen:
+      hvac_modes:
+      - heat
+      - 'off'
+      min_temp: 5
+      max_temp: 30
+      target_temp_step: 0.1
+      current_temperature: 19.2
+      temperature: 19.5
+      hvac_action: heating
+      friendly_name: Downstairs (Kitchen)
+      supported_features: 1
+      state: heat
+  icon: mdi:heat-wave
+  metadata:
+    climate.downstairs_kitchen:
+      entity_only: true

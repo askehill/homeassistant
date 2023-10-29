@@ -14,14 +14,16 @@
       - light.back_door_porch
       - light.veranda
     data: {}
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id:
+      - switch.path_lights
+      - switch.outdoorsocket
   - service: input_boolean.turn_off
     data: {}
     target:
       entity_id: input_boolean.house_light_up_time
-  - service: switch.turn_off
-    data: {}
-    target:
-      device_id: 771c8bca17c1cdcb7af215b299d6fe7d
 - id: '1579910576936'
   alias: Lights off 23:30
   description: ''
@@ -36,80 +38,68 @@
       entity_id:
       - switch.livingroomlight
       - switch.livingroom3
-      - switch.kitchen_floor_light
+      - switch.0x00124b0026b86159
+      - switch.kitchen_corner_2
+      device_id: 1f26ce993e19ded83db08ec50768423b
   - service: light.turn_off
     data: {}
     target:
       entity_id:
       - light.pantry
+      - light.kitchen_lights
   mode: single
 - id: '1581724986134'
-  alias: Heating on
-  description: Turn all heating on from 5 mins after sunset if its cold outside
+  alias: Heating on (Winter Time)
+  description: Turn all heating on from 5 mins after sunset if its Winter Time
   trigger:
   - platform: sun
     event: sunset
     offset: 00:05:00
-  condition: []
+  condition:
+  - condition: template
+    value_template: '{{ now().astimezone().tzinfo | string == "GMT" }}'
   action:
-  - data:
-      temperature: 19
-    service: climate.set_temperature
-    target:
-      entity_id: climate.downstairs_kitchen
-  - data:
-      temperature: 19
-    service: climate.set_temperature
-    target:
-      entity_id:
-      - climate.upstairs_master_bedroom
-      - climate.upstairs_study
   - service: input_boolean.toggle
     data: {}
     target:
       entity_id: input_boolean.house_heating_time
+  - service: scene.turn_on
+    target:
+      entity_id: scene.full_heating
+    metadata: {}
   mode: single
 - id: '1581725082327'
   alias: Upstairs Off
   description: Turn off heating upstairs at 18:45
   trigger:
-  - at: '18:45:00'
+  - at: '19:00:00'
     platform: time
-  condition: []
+  condition:
+  - condition: state
+    entity_id: input_boolean.house_heating_time
+    state: 'on'
   action:
-  - data:
-      temperature: 7
-    service: climate.set_temperature
+  - service: scene.turn_on
     target:
-      entity_id:
-      - climate.upstairs_master_bedroom
-      - climate.upstairs_study
+      entity_id: scene.downstairs_heating_living_room
+    metadata: {}
   mode: single
 - id: '1581725156741'
-  alias: Nightly Heating Power Down
+  alias: Heating Off
   description: Turn off anything heating related at 22:30
   trigger:
   - at: '22:30:00'
     platform: time
   condition: []
   action:
-  - data:
-      temperature: 7
-    service: climate.set_temperature
-    target:
-      entity_id:
-      - climate.downstairs_living_room
-      - climate.upstairs_study
-      - climate.upstairs_master_bedroom
-      - climate.downstairs_kitchen
-  - service: switch.turn_off
-    data: {}
-    target:
-      entity_id: switch.heater_socket
   - service: input_boolean.turn_off
     data: {}
     target:
       entity_id: input_boolean.house_heating_time
+  - service: scene.turn_on
+    target:
+      entity_id: scene.heating_off
+    metadata: {}
   mode: single
 - id: '1581803790658'
   alias: Landing Light off at 23:45
@@ -213,7 +203,7 @@
   description: ''
   trigger:
   - platform: time
-    at: 06:00
+    at: 05:00:00
   condition: []
   action:
   - service: script.boost_hot_water
@@ -322,6 +312,10 @@
     data:
       payload: E6AA3Eoff
       topic: tele/rfbridge/RESULT
+  - service: mqtt.publish
+    data:
+      payload: 84A794off
+      topic: tele/rfbridge/RESULT
   mode: single
 - id: '1641751162690'
   alias: Study Lights
@@ -398,7 +392,7 @@
   trigger:
   - platform: state
     entity_id:
-    - binary_sensor.front_of_house_motion
+    - binary_sensor.front_of_house_person_detected
     from: 'off'
     to: 'on'
   - platform: state
@@ -533,11 +527,24 @@
   alias: 'Pantry Light on '
   description: Turn on pantry light if the door is opened and it's dark
   trigger:
-  - type: opened
-    platform: device
-    device_id: 0e5761e9a3d32ffa37deb53c4fb7a6f3
-    entity_id: binary_sensor.0x00124b00251952eb_contact
-    domain: binary_sensor
+  - platform: state
+    entity_id:
+    - binary_sensor.pantry_door
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
+  - platform: state
+    entity_id:
+    - binary_sensor.pantry_motion
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
   condition:
   - condition: or
     conditions:
@@ -550,20 +557,28 @@
     data: {}
     target:
       entity_id: light.pantry
+  - service: timer.start
+    data: {}
+    target:
+      entity_id: timer.pantry_light_timer
   mode: single
 - id: '1666457494514'
   alias: Pantry Light Off
   description: Turn off pantry light after doors close
   trigger:
-  - type: not_opened
-    platform: device
-    device_id: 0e5761e9a3d32ffa37deb53c4fb7a6f3
-    entity_id: binary_sensor.0x00124b00251952eb_contact
-    domain: binary_sensor
   - platform: sun
     event: sunrise
     offset: 0
-  condition: []
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: pantry_light_timer
+  condition:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: input_boolean.house_light_up_time
+      state: 'on'
   action:
   - service: light.turn_off
     data: {}
@@ -620,7 +635,12 @@
     device_id: 157d5e14767e47a58d7894e7ee228828
     entity_id: switch.study_light
     domain: switch
-  condition: []
+  condition:
+  - condition: time
+    before: '22:30:00'
+  - condition: numeric_state
+    entity_id: sensor.shellyht_9551e9_temperature
+    below: 15
   action:
   - service: switch.turn_on
     data: {}
@@ -658,12 +678,224 @@
     entity_id: input_boolean.house_heating_time
     state: 'on'
   action:
-  - service: climate.set_temperature
-    data:
-      temperature: 19
+  - service: scene.turn_on
     target:
-      entity_id: climate.downstairs_kitchen
-  - service: climate.set_temperature
+      entity_id: scene.downstairs_heating_living_room
+    metadata: {}
+  mode: single
+- id: '1676233497274'
+  alias: Pantry Light off on Door Close
+  description: Turn off pantry light after doors close
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.pantry_door
+    from: 'on'
+    to: 'off'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    target:
+      entity_id: light.pantry
+  mode: single
+- id: '1679352135203'
+  alias: Turn on Davin's light on a school morning
+  description: ''
+  trigger:
+  - platform: time
+    at: 07:20:00
+  condition:
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: light.turn_on
+    data: {}
+    target:
+      entity_id: light.davin_s_light
+  mode: single
+- id: '1679773598221'
+  alias: Heating On (Summer Time)
+  description: Turn downstairs heating on from 5 mins if it's summer time
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: 00:05:00
+  condition:
+  - condition: template
+    value_template: '{{ now().astimezone().tzinfo | string == "IST" }}'
+  action:
+  - service: input_boolean.toggle
+    data: {}
+    target:
+      entity_id: input_boolean.house_heating_time
+  - service: scene.turn_on
+    target:
+      entity_id: scene.downstairs_heating_living_room
+    metadata: {}
+  mode: single
+- id: '1681682024756'
+  alias: Pantry Light off after motion
+  description: ''
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: pantry_light_timer
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    target:
+      entity_id: light.pantry
+  mode: single
+- id: '1687007484926'
+  alias: Front Door Notification
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.front_of_house_person_detected
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
+    from: 'off'
+  condition: []
+  action:
+  - service: notify.mobile_app_oneplus_a6013
     data:
-      temperature: 20
+      message: Somebody outside front door
+  mode: single
+- id: '1688311968665'
+  alias: Disarm Alarm after 06:00 and Landing Motion
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.landing_motion
+    from: 'off'
+    to: 'on'
+  condition:
+  - condition: time
+    after: 05:30:00
+    before: 09:00:00
+  - condition: state
+    entity_id: alarm_control_panel.home
+    state: armed_away
+  action:
+  - service: alarm_control_panel.alarm_disarm
+    data: {}
+    target:
+      entity_id: alarm_control_panel.home
+  mode: single
+- id: '1694289245169'
+  alias: Retry Alarm when windows closed
+  description: If it's after 11, the alarm isn't on, try again if there was a window
+    open
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.upstairs_fr_side
+    - binary_sensor.sitting_room
+    from: 'on'
+    to: 'off'
+  condition:
+  - condition: and
+    conditions:
+    - condition: time
+      after: '23:00:00'
+      before: 06:00:00
+    - condition: state
+      entity_id: alarm_control_panel.home
+      state: disarmed
+  action:
+  - service: alarm_control_panel.alarm_arm_away
+    data: {}
+    target:
+      entity_id: alarm_control_panel.home
+  mode: single
+- id: '1695594207787'
+  alias: Retry alarm after side door closed for 3 mins
+  description: If it's after 11, the alarm isn't on, try again if the side door was
+    used and playroom light is now off
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.side_door_wc
+    from: 'on'
+    to: 'off'
+    for:
+      hours: 0
+      minutes: 3
+      seconds: 0
+  condition:
+  - condition: and
+    conditions:
+    - condition: time
+      after: '23:00:00'
+      before: 06:00:00
+    - condition: state
+      entity_id: alarm_control_panel.home
+      state: disarmed
+    - condition: state
+      entity_id: switch.study_light
+      state: 'off'
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 5
+  action:
+  - service: alarm_control_panel.alarm_arm_away
+    data: {}
+    target:
+      entity_id: alarm_control_panel.home
+  mode: single
+- id: '1698442599651'
+  alias: Reset Hotpress Switch
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.hotpress_rf_light_switch
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+  condition: []
+  action:
+  - service: mqtt.publish
+    data:
+      qos: 0
+      retain: false
+      topic: tele/rfbridge/RESULT
+      payload: 84A794off
+  mode: single
+- id: '1698442844572'
+  alias: Toggle Hotpress Light
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.hotpress_rf_light_switch
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: switch.toggle
+    data: {}
+    target:
+      entity_id: switch.shelly1_a4cf12f45f9c
   mode: single
