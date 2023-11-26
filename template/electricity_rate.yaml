@@ -1,8 +1,8 @@
 - sensor:
     - unique_id: electricity_rate
-        name: Electric Ireland Weekender (Sunday)
-        unit_of_measurement: 'EUR/kWh'
-        state: >
+      name: Electric Ireland Weekender (Sunday)
+      unit_of_measurement: 'EUR/kWh'
+      state: >
         {% set time = { "month": (now().strftime('%m') | int), "hour": (now().strftime('%H') | int), "weekday": (now().weekday() | int ) } %}
         {% set tariff = { "Peak": 0.40, "Weekend": 0.0, "OffPeak": 0.40 } %}
 
@@ -11,10 +11,11 @@
         {%else%}
             {{ tariff.Peak }}
         {%endif%}
+    
     - unique_id: bge_rate
-        name: Bord Gáis Weekend Smart Dual Fuel
-        unit_of_measurement: 'EUR/kWh'
-        state: >
+      name: Bord Gáis Weekend Smart Dual Fuel
+      unit_of_measurement: 'EUR/kWh'
+      state: >
         {% set time = { "month": (now().strftime('%m') | int), "hour": (now().strftime('%H') | int), "weekday": (now().weekday() | int ) } %}
         {% set tariff = { "Peak": 0.3920, "Weekend": 0.2874, "OffPeak": 0.3214, "Night": 0.2874 } %}
 
