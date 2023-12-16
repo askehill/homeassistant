@@ -144,7 +144,7 @@ switch:
      state_on: '1'
      state_off: '0'
      state_topic: "tele/zbbridge/SENSOR"
-     value_template: "{{ value_json['ZbReceived']['Office Socket']['Power'] }}"
+     value_template: "{{ value_json['ZbReceived']['0x80F8']['Power'] }}"
      icon: mdi:power-socket-uk
    - unique_id: extra_socket
      name: "Extra Socket"
