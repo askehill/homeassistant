@@ -161,7 +161,7 @@ switch:
      state_topic: "tele/zbbridge/SENSOR"
      value_template: "{{ value_json['ZbReceived']['0x2E67']['Power'] }}"
      icon: mdi:power-socket-uk
-  - unique_id: living_room4
+   - unique_id: living_room4
      name: "Living Room Extra Socket"
      availability_topic: "tele/zbbridge/LWT"
      payload_available: "Online"
