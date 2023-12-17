@@ -23,9 +23,9 @@
             {%if ( ((time.hour >= 8) and (time.hour < 17)) or  ((time.hour >= 19) and (time.hour <23)) ) %}
                 {{ tariff.OffPeak }}
             {%elif ( (time.hour >= 5) and (time.hour < 7) )%}
-                {{ tarrif.Peak }}
+                {{ tariff.Peak }}
             {%else%}
-                {{ tarrif.Night }}
+                {{ tariff.Night }}
             {%endif%}
         {%else%}
           {{ tariff.Weekend }}
