@@ -1,5 +1,4 @@
----
-switch:
+- switch:
    - unique_id: kitchen_corner
      name: "Kitchen Corner"
      availability_topic: "tele/zbbridge/LWT"

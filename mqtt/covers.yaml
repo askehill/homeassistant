@@ -1,4 +1,4 @@
----cover:
+- cover:
   - name: "Back Blind #1"
     command_topic: "cmnd/rfbridge/Backlog0"
     state_topic: "stat/rfbridge/blind1"

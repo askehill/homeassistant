@@ -1,5 +1,4 @@
----
-sensor:
+- sensor:
     - name: 'Office Temperature'
       unit_of_measurement: '°C'
       availability_topic: "tele/zbbridge/LWT"

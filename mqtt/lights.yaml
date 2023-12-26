@@ -1,5 +1,4 @@
----
-light:
+- light:
   - name: "Davins Light"
     availability_topic: "tele/zbbridge/LWT"
     payload_available: "Online"

@@ -1,4 +1,4 @@
-button:
+- button:
   - unique_id: z2t_enable_join
     name: "Zigbee2Tasmota enable join"
     command_topic: "cmnd/zbbridge/ZbPermitJoin" 

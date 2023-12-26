@@ -1,5 +1,4 @@
----
-binary_sensor:
+- binary_sensor:
     - name: 'Landing Motion'
       state_topic: "tele/rfbridge/RESULT"
       value_template: '{{value_json.RfReceived.Data}}'
