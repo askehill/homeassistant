@@ -12,3 +12,18 @@
     retain: false
     state_template: '{% if value_json.ZbReceived["0x1102"].Power == 1 %} on {% else %} off {% endif %}'
     optimistic: false
+  - name: "Freyas Light"
+    schema: template
+    availability_topic: "tele/zbbridge/LWT"
+    state_topic: "tele/zbbridge/SENSOR"
+    command_topic: "cmnd/zbbridge/ZbSend"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    command_on_template: '{"Device": "0xACE9", "send":{"Power": 1}}'
+    command_off_template: '{"Device": "0xACE9", "send":{"Power": 0}}'
+    qos: 1
+    retain: false
+    state_template: '{% if value_json.ZbReceived["0xACE9"].Power == 1 %} on {% else %} off {% endif %}'
+    optimistic: false
+
+
