@@ -1,13 +1,14 @@
 - light:
   - name: "Davins Light"
+    schema: template
     availability_topic: "tele/zbbridge/LWT"
+    state_topic: "tele/zbbridge/SENSOR"
+    command_topic: "cmnd/zbbridge/ZbSend"
     payload_available: "Online"
     payload_not_available: "Offline"
-    command_topic: "cmnd/zbbridge/ZbSend"
-    payload_on: 1 
-    payload_off: 0
+    command_on_template: '{"Device": "0x1102", "send":{"Power": 1}}'
+    command_off_template: '{"Device": "0x1102", "send":{"Power": 0}}'
     qos: 1
     retain: false
-    state_topic: "tele/zbbridge/SENSOR"
-    state_value_template: "{{ value_json['ZbReceived']['0x1102']['Power'] }}"
+    state_template: '{% if value_json.ZbReceived["0x1102"].Power == 1 %} on {% else %} off {% endif %}'
     optimistic: false

@@ -9,6 +9,8 @@
       - switch.livingroom3
       - switch.0x00124b0026b86159
       - switch.kitchen_corner_2
+      - switch.living_room_extra_socket
+      - switch.playroom_fridge
   - service: light.turn_on
     target:
       device_id: 8dd3b302d420f1394f0c1a4b31200497
@@ -30,7 +32,11 @@
   - service: switch.turn_on
     data: {}
     target:
-      entity_id: switch.path_lights
+      entity_id:
+      - switch.path_lights
+      - switch.extra_socket
+      - switch.playroom_fridge
+      device_id: 771c8bca17c1cdcb7af215b299d6fe7d
   - service: input_boolean.toggle
     data: {}
     target:
@@ -217,3 +223,19 @@ downstairs_conditional_off:
           entity_id: switch.downstairs
   mode: single
   icon: mdi:water-boiler-off
+boost_1st_floor_heating:
+  alias: Boost 1st Floor Heating
+  sequence:
+  - service: climate.set_temperature
+    data:
+      temperature: 21
+    target:
+      entity_id:
+      - climate.upstairs_study
+  - service: timer.start
+    data:
+      duration: '0'
+    target:
+      entity_id: timer.heating_boost
+  mode: single
+  icon: mdi:radiator

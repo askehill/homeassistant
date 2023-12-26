@@ -222,7 +222,7 @@
       min_temp: 5
       max_temp: 32
       target_temp_step: 0.1
-      current_temperature: 22.6
+      current_temperature: 20.9
       temperature: 20.5
       hvac_action: idle
       friendly_name: Downstairs (Living Room)
@@ -235,10 +235,36 @@
       min_temp: 5
       max_temp: 30
       target_temp_step: 0.1
-      current_temperature: 19.2
+      current_temperature: 19.9
       temperature: 18
       hvac_action: idle
       friendly_name: Downstairs (Kitchen)
+      supported_features: 1
+      state: heat
+    climate.upstairs_study:
+      hvac_modes:
+      - heat
+      - 'off'
+      min_temp: 5
+      max_temp: 30
+      target_temp_step: 0.1
+      current_temperature: 19.7
+      temperature: 7
+      hvac_action: idle
+      friendly_name: Upstairs (Study)
+      supported_features: 1
+      state: heat
+    climate.upstairs_master_bedroom:
+      hvac_modes:
+      - heat
+      - 'off'
+      min_temp: 5
+      max_temp: 30
+      target_temp_step: 0.1
+      current_temperature: 19.6
+      temperature: 7
+      hvac_action: idle
+      friendly_name: Upstairs (Master Bedroom)
       supported_features: 1
       state: heat
   icon: mdi:heat-wave
@@ -246,6 +272,10 @@
     climate.downstairs_living_room:
       entity_only: true
     climate.downstairs_kitchen:
+      entity_only: true
+    climate.upstairs_study:
+      entity_only: true
+    climate.upstairs_master_bedroom:
       entity_only: true
 - id: '1679772543529'
   name: Heating Off

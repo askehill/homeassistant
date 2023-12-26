@@ -20,6 +20,8 @@
       entity_id:
       - switch.path_lights
       - switch.outdoorsocket
+      - switch.extra_socket
+      - switch.playroom_fridge
   - service: input_boolean.turn_off
     data: {}
     target:
@@ -40,6 +42,7 @@
       - switch.livingroom3
       - switch.0x00124b0026b86159
       - switch.kitchen_corner_2
+      - switch.living_room_extra_socket
       device_id: 1f26ce993e19ded83db08ec50768423b
   - service: light.turn_off
     data: {}
@@ -47,6 +50,7 @@
       entity_id:
       - light.pantry
       - light.kitchen_lights
+      - light.hotwatersensor
   mode: single
 - id: '1581724986134'
   alias: Heating on (Winter Time)
@@ -235,7 +239,9 @@
   action:
   - service: climate.set_temperature
     target:
-      entity_id: climate.downstairs_living_room
+      entity_id:
+      - climate.downstairs_living_room
+      - climate.upstairs_study
     data:
       temperature: 7
   mode: single
@@ -695,7 +701,7 @@
     for:
       hours: 0
       minutes: 0
-      seconds: 5
+      seconds: 2
   condition: []
   action:
   - service: light.turn_off
@@ -867,7 +873,7 @@
   trigger:
   - platform: state
     entity_id:
-    - binary_sensor.hotpress_rf_light_switch
+    - binary_sensor.hotpress_rf_switch
     from: 'off'
     to: 'on'
     for:
@@ -889,7 +895,7 @@
   trigger:
   - platform: state
     entity_id:
-    - binary_sensor.hotpress_rf_light_switch
+    - binary_sensor.hotpress_rf_switch
     from: 'off'
     to: 'on'
   condition: []
@@ -898,4 +904,19 @@
     data: {}
     target:
       entity_id: switch.shelly1_a4cf12f45f9c
+  mode: single
+- id: '1698622120406'
+  alias: Heating for winter downstairs
+  description: ''
+  trigger:
+  - platform: time
+    at: '19:45:00'
+  condition:
+  - condition: template
+    value_template: '{{ now().astimezone().tzinfo | string == "GMT" }}'
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.downstairs_heating_living_room
+    metadata: {}
   mode: single
