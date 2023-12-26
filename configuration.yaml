@@ -52,7 +52,7 @@ timer:
   landing_motion:
     duration: '00:03:00'
   outdoor_motion:
-    duration: '00:02:00'
+    duration: '00:03:00'
   hotwater_boost:
     duration: '01:00:00'
   heating_boost:
@@ -73,10 +73,11 @@ homeassistant:
   customize: !include customize.yaml
 
 template: !include_dir_merge_list template
+mqtt: !include_dir_merge_list mqtt
+
 switch: !include switches.yaml
 light: !include lights.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
-mqtt: !include mqtt.yaml
 climate: !include climate.yaml
