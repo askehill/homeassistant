@@ -1,0 +1,14 @@
+---
+light:
+  - name: "Davins Light"
+    availability_topic: "tele/zbbridge/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    command_topic: "cmnd/zbbridge/ZbSend"
+    payload_on: '{"device":"0x1102","send":{"power":1}}' 
+    payload_off: '{"device":"0x1102","send":{"power":0}}'  
+    qos: 1
+    retain: false
+    state_topic: "tele/zbbridge/SENSOR"
+    state_value_template: "{{ value_json['ZbReceived']['0x1102'] }}"
+    optimistic: false

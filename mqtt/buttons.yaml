@@ -1,0 +1,10 @@
+button:
+  - unique_id: z2t_enable_join
+    name: "Zigbee2Tasmota enable join"
+    command_topic: "cmnd/zbbridge/ZbPermitJoin" 
+    payload_press: "1"
+    availability_topic: "tele/zbbridge/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    entity_category: "config"
+    device_class: "restart"

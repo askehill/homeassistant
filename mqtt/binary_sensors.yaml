@@ -1,0 +1,51 @@
+---
+binary_sensor:
+    - name: 'Landing Motion'
+      state_topic: "tele/rfbridge/RESULT"
+      value_template: '{{value_json.RfReceived.Data}}'
+      payload_on: 'E6BC6E'
+      payload_off: 'E6BC6Eoff'
+      device_class: motion
+      qos: 1
+    - name: 'Hotpress RF Light Switch'
+      state_topic: "tele/rfbridge/RESULT"
+      value_template: '{{value_json.RfReceived.Data}}'
+      payload_on: '84A794'
+      payload_off: '84A794off'
+    - name: 'Playroom Motion'
+      state_topic: "tele/rfbridge/RESULT"
+      value_template: '{{value_json.RfReceived.Data}}'
+      payload_on: 'E6AA3E'
+      payload_off: 'E6AA3Eoff'
+      device_class: motion
+      qos: 1  
+    - name: 'Pantry Door'
+      state_topic: "tele/zbbridge/SENSOR"
+      value_template: "{{ value_json['ZbReceived']['0x62BB']['ZoneStatusChange'] }}"
+      device_class: door
+      payload_on: 1
+      payload_off: 0 
+    - name: 'Kitchen Door'
+      state_topic: "tele/zbbridge/SENSOR"
+      value_template: "{{ value_json['ZbReceived']['0x6050']['ZoneStatusChange'] }}"
+      device_class: door
+      payload_on: 1
+      payload_off: 0 
+    - name: 'Living Room Motion'
+      availability_topic: "tele/zbbridge/LWT"
+      payload_available: "Online"
+      payload_not_available: "Offline"
+      state_topic: "tele/zbbridge/SENSOR"
+      payload_on: 1
+      payload_off: 0
+      value_template: "{{ value_json['ZbReceived']['0x1C57']['ZoneStatusChange'] }}"
+      device_class: motion
+    - name: 'Pantry Motion'
+      availability_topic: "tele/zbbridge/LWT"
+      payload_available: "Online"
+      payload_not_available: "Offline"
+      state_topic: "tele/zbbridge/SENSOR"
+      payload_on: 1
+      payload_off: 0
+      value_template: "{{ value_json['ZbReceived']['0xEA86']['ZoneStatusChange'] }}"
+      device_class: motion

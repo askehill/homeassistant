@@ -1,0 +1,62 @@
+---
+switch:
+   - unique_id: kitchen_corner
+     name: "Kitchen Corner"
+     availability_topic: "tele/zbbridge/LWT"
+     payload_available: "Online"
+     payload_not_available: "Offline"
+     command_topic: "cmnd/zbbridge/ZbSend"
+     payload_on: '{"device":"0xEBD3","send":{"Power":"On"} }' 
+     payload_off: '{"device":"0xEBD3","send":{"Power":"Off"} }'  
+     qos: 1
+     retain: false
+     state_on: '1'
+     state_off: '0'
+     state_topic: "tele/zbbridge/SENSOR"
+     value_template: "{{ value_json['ZbReceived']['0xEBD3']['Power'] }}"
+     icon: mdi:floor-lamp
+   - unique_id: office_socket
+     name: "Office Socket"
+     availability_topic: "tele/zbbridge/LWT"
+     payload_available: "Online"
+     payload_not_available: "Offline"
+     command_topic: "cmnd/zbbridge/ZbSend"
+     payload_on: '{"device":"0x280F8","send":{"Power":"On"} }' 
+     payload_off: '{"device":"0x80F8","send":{"Power":"Off"} }'  
+     qos: 1
+     retain: false
+     state_on: '1'
+     state_off: '0'
+     state_topic: "tele/zbbridge/SENSOR"
+     value_template: "{{ value_json['ZbReceived']['0x80F8']['Power'] }}"
+     icon: mdi:power-socket-uk
+   - unique_id: extra_socket
+     name: "Extra Socket"
+     availability_topic: "tele/zbbridge/LWT"
+     payload_available: "Online"
+     payload_not_available: "Offline"
+     command_topic: "cmnd/zbbridge/ZbSend"
+     payload_on: '{"device":"0x6C50","send":{"Power":"On"} }' 
+     payload_off: '{"device":"0x6C50","send":{"Power":"Off"} }'  
+     qos: 1
+     retain: false
+     state_on: '1'
+     state_off: '0'
+     state_topic: "tele/zbbridge/SENSOR"
+     value_template: "{{ value_json['ZbReceived']['0x6C50']['Power'] }}"
+     icon: mdi:power-socket-uk
+   - unique_id: living_room4
+     name: "Living Room Extra Socket"
+     availability_topic: "tele/zbbridge/LWT"
+     payload_available: "Online"
+     payload_not_available: "Offline"
+     command_topic: "cmnd/zbbridge/ZbSend"
+     payload_on: '{"device":"0x357A","send":{"Power":"On"} }' 
+     payload_off: '{"device":"0x357A","send":{"Power":"Off"} }'  
+     qos: 1
+     retain: false
+     state_on: '1'
+     state_off: '0'
+     state_topic: "tele/zbbridge/SENSOR"
+     value_template: "{{ value_json['ZbReceived']['0x357A']['Power'] }}"
+     icon: mdi:power-socket-uk
