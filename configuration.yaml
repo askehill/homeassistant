@@ -17,8 +17,99 @@ spc:
   api_url: !secret spc_api_url
   ws_url: !secret spc_ws_url
 
-  
+utility_meter:
+  energy:
+    name: Mains Meter 
+    source: sensor.shellyem_c7faf3_channel_1_energy
+    tariffs:
+    - peak
+    - offpeak
+    - night
+    - weekend
 
+# Example configuration.yaml entry
+schedule:
+  electricity_peak:
+    name: "Peak Electrcity Times"
+    monday:
+      - from: "17:00:00"
+        to: "19:00:00"
+    tuesday:
+      - from: "17:00:00"
+        to: "19;00:00"
+    wednesday:
+      - from: "17:00:00"
+        to: "19:00:00"
+    thursday:
+      - from: "17:00:00"
+        to: "19:00:00"
+    friday:
+      - from: "17:00:00"
+        to: "19:00:00"
+  electricity_offpeak:
+    name: "Off Peak Electricity Times"
+    monday:
+      - from: "08:00:00"
+        to: "17:00:00"
+      - from: "19:00:00"
+        to: "23:00:00"
+    tuesday:
+      - from: "08:00:00"
+        to: "17:00:00"
+      - from: "19:00:00"
+        to: "23:00:00"
+    wednesday:
+      - from: "08:00:00"
+        to: "17:00:00"
+      - from: "19:00:00"
+        to: "23:00:00"
+    thursday:
+      - from: "08:00:00"
+        to: "17:00:00"
+      - from: "19:00:00"
+        to: "23:00:00"
+    friday:
+      - from: "08:00:00"
+        to: "17:00:00"
+      - from: "19:00:00"
+        to: "23:00:00"
+electricity_night:
+    name: "Nighttime Electrcity Times"
+    monday:
+      - from: "23:00:00"
+        to: "00:00:00"
+    tuesday:
+      - from: "00:00:00"
+        to: "08:00:00"
+      - from: "23:00:00"
+        to: "00:00:00"
+    wednesday:
+      - from: "00:00:00"
+        to: "08:00:00"
+      - from: "23:00:00"
+        to: "00:00:00"
+    thursday:
+      - from: "00:00:00"
+        to: "08:00:00"
+      - from: "23:00:00"
+        to: "00:00:00"
+   friday:
+      - from: "00:00:00"
+        to: "08:00:00"
+      - from: "23:00:00"
+        to: "00:00:00"
+electricity_weekend:
+    name: "Weekend Electrcity Times"
+    saturday:
+      - from: "08:00:00"
+        to: "00:00:00"
+    sunday:
+      - from: "00:00:00"
+        to: "00:00:00"     
+    monday:
+      - from: "00:00:00"
+        to: "08:00:00"
+    
 sensor:
   - platform: integration
     source: sensor.gas_usage
