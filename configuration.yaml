@@ -35,7 +35,7 @@ schedule:
         to: "19:00:00"
     tuesday:
       - from: "17:00:00"
-        to: "19;00:00"
+        to: "19:00:00"
     wednesday:
       - from: "17:00:00"
         to: "19:00:00"
