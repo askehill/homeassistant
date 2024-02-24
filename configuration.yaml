@@ -27,7 +27,6 @@ utility_meter:
     - night
     - weekend
 
-# Example configuration.yaml entry
 schedule:
   electricity_peak:
     name: "Peak Electrcity Times"
@@ -93,7 +92,7 @@ schedule:
         to: "08:00:00"
       - from: "23:00:00"
         to: "00:00:00"
-   friday:
+    friday:
       - from: "00:00:00"
         to: "08:00:00"
       - from: "23:00:00"
