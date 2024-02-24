@@ -17,16 +17,6 @@ spc:
   api_url: !secret spc_api_url
   ws_url: !secret spc_ws_url
 
-utility_meter:
-  energy:
-    name: House Smart Mains Meter
-    source: sensor.shellyem_c7faf3_channel_1_energy
-    tariffs:
-      - peak
-      - offpeak
-      - night
-      - weekend
-
 schedule:
   electricity_peak:
     name: "Peak Electrcity Times"
