@@ -19,13 +19,13 @@ spc:
 
 utility_meter:
   energy:
-    name: Mains Meter 
+    name: House Smart Mains Meter
     source: sensor.shellyem_c7faf3_channel_1_energy
     tariffs:
-    - peak
-    - offpeak
-    - night
-    - weekend
+      - peak
+      - offpeak
+      - night
+      - weekend
 
 schedule:
   electricity_peak:
