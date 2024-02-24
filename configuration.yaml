@@ -76,35 +76,35 @@ schedule:
     name: "Nighttime Electrcity Times"
     monday:
       - from: "23:00:00"
-        to: "00:00:00"
+        to: "24:00:00"
     tuesday:
       - from: "00:00:00"
         to: "08:00:00"
       - from: "23:00:00"
-        to: "00:00:00"
+        to: "24:00:00"
     wednesday:
       - from: "00:00:00"
         to: "08:00:00"
       - from: "23:00:00"
-        to: "00:00:00"
+        to: "24:00:00"
     thursday:
       - from: "00:00:00"
         to: "08:00:00"
       - from: "23:00:00"
-        to: "00:00:00"
+        to: "24:00:00"
     friday:
       - from: "00:00:00"
         to: "08:00:00"
       - from: "23:00:00"
-        to: "00:00:00"
+        to: "24:00:00"
   electricity_weekend:
     name: "Weekend Electrcity Times"
     saturday:
       - from: "08:00:00"
-        to: "00:00:00"
+        to: "24:00:00"
     sunday:
       - from: "00:00:00"
-        to: "00:00:00"     
+        to: "24:00:00"     
     monday:
       - from: "00:00:00"
         to: "08:00:00"
