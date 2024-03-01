@@ -17,7 +17,7 @@
       unit_of_measurement: 'EUR/kWh'
       state: >
         {% set time = { "month": (now().strftime('%m') | int), "hour": (now().strftime('%H') | int), "weekday": (now().weekday() | int ) } %}
-        {% set tariff = { "Peak": 0.3920, "Weekend": 0.2874, "OffPeak": 0.3214, "Night": 0.2874 } %}
+        {% set tariff = { "Peak": 0.3538, "Weekend": 0.2587, "OffPeak": 0.2893, "Night": 0.2587 } %}
         {% set carbon_tax = 0.00877 %}
 
         {%if ( (time.weekday >= 0 ) and (time.weekday <= 4) ) %}

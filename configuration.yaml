@@ -108,7 +108,7 @@ schedule:
     monday:
       - from: "00:00:00"
         to: "08:00:00"
-    
+  
 sensor:
   - platform: integration
     source: sensor.gas_usage
