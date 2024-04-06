@@ -1,0 +1,12 @@
+- binary_sensor:
+  - unique_id: tumble_dryer_state
+    name: Tumble Dryer
+    icon: mdi:tumble-dryer
+    state: >
+      {{ 'off' }}
+
+  - unique_id: washing_machine_state
+    name: Washing Machine
+    icon: mdi:washing-machine
+    state: >
+      {{ 'off' }}
