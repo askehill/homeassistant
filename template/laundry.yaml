@@ -21,4 +21,9 @@
     name: Hotwater Tap
     icon: mdi:water-pump
     state: > 
-      {{ 'off' }}
+      {% set current_power = states('sensor.shellypmmini_543204b7d0c0_power') | float}
+      {% if 1200 < current_power < 1400 %}
+      On
+      {% else %}
+      Off
+      {%endif%}
