@@ -3,19 +3,42 @@
     name: Tumble Dryer
     icon: mdi:tumble-dryer
     state: >
-      {{ 'off' }}
+      {% set current_power = states('sensor.laundry_power') | float}
+      {% if 450 < current_power < 600 %}
+      On
+      {% elif 450 < (current_power - 500) < 600 }
+      On
+      {% elif 450 < {current_power - 2000 ) < 450 }
+      {% else %}
+      Off
 
   - unique_id: washing_machine_state
     name: Washing Machine
     icon: mdi:washing-machine
     state: >
-      {{ 'off' }}
+      {% set current_power = states('sensor.laundry_power') | float}
+      {% if 2000 < current_power < 2100 %}
+      On
+      {% elif 0 < current_power < 450 %}
+      On
+      {% elif 2000 < (current_power - 500) < 2100 }
+      On
+      {% elif 0 < {current_power - 500) < 450 }
+      {% else %}
+      Off
 
   - unique_id: dishwasher_state
     name: Dishwasher
     icon: mdi:dishwasher
     state: >
-      {{ 'off' }}
+      {% set current_power = states('sensor.shellypmmini_543204b7d0c0_power') | float}
+      {% if 1950 < current_power < 3350 %}
+      On
+      {% elif 0 < current_power < 50 %}
+      On
+      {% else %}
+      Off
+      {% endif %}
 
   - unique_id: hotwater_tap_state
     name: Hotwater Tap
@@ -26,4 +49,19 @@
       On
       {% else %}
       Off
-      {%endif%}
+      {% endif %}
+
+  - unique_id: tumble_dryer_finished
+    name: Tumble Dryer Complete
+    delay_on:
+      minutes: 3
+    state: >
+      {{ is_state('tumble_dryer_state', 'Off')  }}
+
+  - unique_id: washing_machine_finished
+    name: Washing Machine Complete
+    delay_on:
+      minutes: 3
+    state: >
+      {{ is_state('washing_machine_state', 'Off')  }}
+
