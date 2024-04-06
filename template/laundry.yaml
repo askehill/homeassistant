@@ -3,35 +3,37 @@
     name: Tumble Dryer
     icon: mdi:tumble-dryer
     state: >
-      {% set current_power = states('sensor.laundry_power') | float}
+      {% set current_power = states('sensor.laundry_power') | float %}
       {% if 450 < current_power < 600 %}
       on
-      {% elif 450 < (current_power - 500) < 600 }
+      {% elif 450 < (current_power - 500) < 600 %}
       on
-      {% elif 450 < {current_power - 2000 ) < 450 }
+      {% elif 450 < (current_power - 2000 ) < 450 %}
       {% else %}
       off
+      {% endif %}
 
   - unique_id: washing_machine_state
     name: Washing Machine
     icon: mdi:washing-machine
     state: >
-      {% set current_power = states('sensor.laundry_power') | float}
+      {% set current_power = states('sensor.laundry_power') | float %}
       {% if 2000 < current_power < 2100 %}
       on
       {% elif 0 < current_power < 450 %}
       on
-      {% elif 2000 < (current_power - 500) < 2100 }
+      {% elif 2000 < (current_power - 500) < 2100 %}
       on
-      {% elif 0 < {current_power - 500) < 450 }
+      {% elif 0 < (current_power - 500) < 450 %}
       {% else %}
       off
+      {% endif %}
 
   - unique_id: dishwasher_state
     name: Dishwasher
     icon: mdi:dishwasher
     state: >
-      {% set current_power = states('sensor.shellypmmini_543204b7d0c0_power') | float}
+      {% set current_power = states('sensor.shellypmmini_543204b7d0c0_power') | float %}
       {% if 1950 < current_power < 3350 %}
       on
       {% elif 0 < current_power < 50 %}
@@ -44,7 +46,7 @@
     name: Hotwater Tap
     icon: mdi:water-pump
     state: > 
-      {% set current_power = states('sensor.shellypmmini_543204b7d0c0_power') | float}
+      {% set current_power = states('sensor.shellypmmini_543204b7d0c0_power') | float %}
       {% if 1200 < current_power < 1400 %}
       on
       {% else %}
