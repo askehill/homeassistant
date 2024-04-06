@@ -20,11 +20,11 @@
       {% set current_power = states('sensor.laundry_power') | float %}
       {% if 2000 < current_power < 2100 %}
       on
-      {% elif 0 < current_power < 450 %}
+      {% elif 2 < current_power < 450 %}
       on
       {% elif 2000 < (current_power - 500) < 2100 %}
       on
-      {% elif 0 < (current_power - 500) < 450 %}
+      {% elif 2 < (current_power - 500) < 450 %}
       {% else %}
       off
       {% endif %}
@@ -36,7 +36,7 @@
       {% set current_power = states('sensor.shellypmmini_543204b7d0c0_power') | float %}
       {% if 1950 < current_power < 3350 %}
       on
-      {% elif 0 < current_power < 50 %}
+      {% elif 2 < current_power < 50 %}
       on
       {% else %}
       off
