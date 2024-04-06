@@ -10,3 +10,15 @@
     icon: mdi:washing-machine
     state: >
       {{ 'off' }}
+
+  - unique_id: dishwasher_state
+    name: Dishwasher
+    icon: mdi:dishwasher
+    state: >
+      {{ 'off' }}
+
+  - unique_id: hotwater_tap_state
+    name: Hotwater Tap
+    icon: mdi:water-pump
+    state: > 
+      {{ 'off' }}
