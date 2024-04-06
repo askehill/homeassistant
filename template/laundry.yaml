@@ -5,12 +5,12 @@
     state: >
       {% set current_power = states('sensor.laundry_power') | float}
       {% if 450 < current_power < 600 %}
-      On
+      on
       {% elif 450 < (current_power - 500) < 600 }
-      On
+      on
       {% elif 450 < {current_power - 2000 ) < 450 }
       {% else %}
-      Off
+      off
 
   - unique_id: washing_machine_state
     name: Washing Machine
@@ -18,14 +18,14 @@
     state: >
       {% set current_power = states('sensor.laundry_power') | float}
       {% if 2000 < current_power < 2100 %}
-      On
+      on
       {% elif 0 < current_power < 450 %}
-      On
+      on
       {% elif 2000 < (current_power - 500) < 2100 }
-      On
+      on
       {% elif 0 < {current_power - 500) < 450 }
       {% else %}
-      Off
+      off
 
   - unique_id: dishwasher_state
     name: Dishwasher
@@ -33,11 +33,11 @@
     state: >
       {% set current_power = states('sensor.shellypmmini_543204b7d0c0_power') | float}
       {% if 1950 < current_power < 3350 %}
-      On
+      on
       {% elif 0 < current_power < 50 %}
-      On
+      on
       {% else %}
-      Off
+      off
       {% endif %}
 
   - unique_id: hotwater_tap_state
@@ -46,9 +46,9 @@
     state: > 
       {% set current_power = states('sensor.shellypmmini_543204b7d0c0_power') | float}
       {% if 1200 < current_power < 1400 %}
-      On
+      on
       {% else %}
-      Off
+      off
       {% endif %}
 
   - unique_id: tumble_dryer_finished
@@ -56,12 +56,12 @@
     delay_on:
       minutes: 3
     state: >
-      {{ is_state('tumble_dryer_state', 'Off')  }}
+      {{ is_state('tumble_dryer_state', 'off')  }}
 
   - unique_id: washing_machine_finished
     name: Washing Machine Complete
     delay_on:
       minutes: 3
     state: >
-      {{ is_state('washing_machine_state', 'Off')  }}
+      {{ is_state('washing_machine_state', 'off')  }}
 
