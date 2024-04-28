@@ -12,6 +12,7 @@ frontend:
   themes: !include_dir_merge_named themes   
 
 stream:
+wake_on_lan: 
 
 spc:
   api_url: !secret spc_api_url
@@ -158,12 +159,6 @@ media_player:
     mac_address: 00:1d:ec:0e:5f:01
     deep_standby: true
     password: !secret vu_password
-
-switch:
-  - platform: wake_on_lan
-    name: Satellite & Saorview Receiver Switch
-    host: 192.168.1.131
-    mac: 00:1d:ec:0e:5f:01
 
 
 homeassistant:
