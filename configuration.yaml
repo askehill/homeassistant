@@ -159,7 +159,9 @@ media_player:
     deep_standby: true
     password: !secret vu_password
 
-
+switch:
+  - platform: wake_on_lan
+    mac: 00:1d:ec:0e:5f:01
 
 
 homeassistant:
