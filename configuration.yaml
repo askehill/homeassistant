@@ -161,9 +161,8 @@ media_player:
     password: !secret vu_password
 
 switch:
-  - unique_id: satellite_receiver_wol
+  - platform: wake_on_lan
     name: Satellite & Saorview Receiver Switch
-    platform: wake_on_lan
     host: 192.168.1.131
     mac: 00:1d:ec:0e:5f:01
 
