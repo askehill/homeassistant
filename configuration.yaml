@@ -152,13 +152,13 @@ timer:
     duration: '00:10:00'
 
  
-media_player:
-  - platform: enigma2
-    name: Satellite & Saroview Receiver
-    host: 192.168.1.131
-    mac_address: 00:1d:ec:0e:5f:01
-    deep_standby: true
-    password: !secret vu_password
+# media_player:
+#   - platform: enigma2
+#     name: Satellite & Saroview Receiver
+#     host: 192.168.1.131
+#     mac_address: 00:1d:ec:0e:5f:01
+#     deep_standby: true
+#     password: !secret vu_password
 
 homeassistant:
   customize: !include customize.yaml
