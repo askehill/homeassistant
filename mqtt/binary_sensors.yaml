@@ -9,8 +9,8 @@
     - name: 'Hotpress RF Light Switch'
       state_topic: "tele/rfbridge/RESULT"
       value_template: '{{value_json.RfReceived.Data}}'
-      payload_on: '84A794'
-      payload_off: '84A794off'
+      payload_on: 'E6BC6E'
+      payload_off: 'E6BC6Eoff'
     - name: 'Playroom Motion'
       state_topic: "tele/rfbridge/RESULT"
       value_template: '{{value_json.RfReceived.Data}}'
