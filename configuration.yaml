@@ -117,7 +117,7 @@ sensor:
     method: left
     round: 2
   - platform: worldtidesinfo
-    api_key: 122f5c26-a9be-4184-942a-cde314ce4cc9
+    api_key: !secret tide_key
 
 
 google_assistant:
