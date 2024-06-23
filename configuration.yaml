@@ -14,10 +14,6 @@ frontend:
 stream:
 wake_on_lan: 
 
-sensor:
-  - platform: worldtidesinfo
-    api_key: 122f5c26-a9be-4184-942a-cde314ce4cc9
-
 spc:
   api_url: !secret spc_api_url
   ws_url: !secret spc_ws_url
@@ -120,6 +116,9 @@ sensor:
     name: gas_used
     method: left
     round: 2
+  - platform: worldtidesinfo
+    api_key: 122f5c26-a9be-4184-942a-cde314ce4cc9
+
 
 google_assistant:
  project_id: fruitfield-5db56
