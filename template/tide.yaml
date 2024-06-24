@@ -1,0 +1,14 @@
+- sensor:
+  - unique_id: tide_status
+    state: >
+       {% if as_timestamp(state_attr("sensor.worldtidesinfo", "high_tide_time_utc")) <= as_timestamp(state_attr("sensor.worldtidesinfo", "low_tide_time_utc")) %}
+        High Tide Next in {{ ((state_attr("sensor.worldtidesinfo", "high_tide_time_utc") | as_timestamp) - (now() | as_timestamp) )| timestamp_custom("%H:%M", false) }}
+      {% else %}
+        High Tide Next in {{ ((state_attr("sensor.worldtidesinfo", "low_tide_time_utc") | as_timestamp) - (now() | as_timestamp) )| timestamp_custom("%H:%M", false) }}
+      {% endif %}
+      icon: >
+        {% if as_timestamp(state_attr("sensor.worldtidesinfo", "high_tide_time_utc")) <= as_timestamp(state_attr("sensor.worldtidesinfo", "low_tide_time_utc")) %}
+          mdi:waves-arrow-left
+        {% else %}
+          mdi:waves-arrow-right
+        {% endif %}
