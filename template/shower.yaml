@@ -1,11 +1,10 @@
---
 - binary_sensor:
- - unique_id: shower_running
-      name: Shower Running
-      device_class: running
-      state: >
-        {% if states('sensor.shower_pump_switch_0_power') | float  > 5 %}
-        on
-        {% else %}
-        off
-        {% endif %} 
+  - unique_id: shower_running
+    name: Shower Running
+    device_class: running
+    state: >
+      {% if states('sensor.shower_pump_switch_0_power') | float  > 5 %}
+      on
+      {% else %}
+      off
+      {% endif %} 

@@ -117,7 +117,6 @@ sensor:
     method: left
     round: 2
   - platform: worldtidesinfo
-    scan_interval: 
     api_key: !secret tide_key
     latitude: 53.441452
     longitude: -6.122185
