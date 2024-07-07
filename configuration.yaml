@@ -113,7 +113,7 @@ schedule:
 sensor:
   - platform: integration
     source: sensor.gas_usage
-    name: gas_used
+    name: Gas Used
     method: left
     round: 2
   - platform: worldtidesinfo
