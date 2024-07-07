@@ -127,6 +127,13 @@ sensor:
     type: time
     start: "{{ today_at() }}"
     end: "{{ now() }}"
+  - platform: history_stats
+    name: Number of Showers Today
+    entity_id: binary_sensor.shower_running
+    state: "on"
+    type: count
+    start: "{{ today_at() }}"
+    end: "{{ now() }}"
 
 
 
