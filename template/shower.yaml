@@ -1,6 +1,8 @@
 - binary_sensor:
   - unique_id: shower_running
     name: Shower Running
+    delay_on:
+      seconds: 20
     device_class: running
     state: >
       {% if states('sensor.shower_pump_switch_0_power') | float  > 5 %}
