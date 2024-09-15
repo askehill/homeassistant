@@ -124,17 +124,6 @@ schedule:
         to: "08:00:00"
       - from: "23:00:00"
         to: "24:00:00"
-  electricity_weekend:
-    name: "Weekend Electrcity Times (Not In Use)"
-    saturday:
-      - from: "08:00:00"
-        to: "24:00:00"
-    sunday:
-      - from: "00:00:00"
-        to: "24:00:00"     
-    monday:
-      - from: "00:00:00"
-        to: "08:00:00"
   
 sensor:
   - platform: integration
