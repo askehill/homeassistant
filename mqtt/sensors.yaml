@@ -5,7 +5,7 @@
       payload_available: "Online"
       payload_not_available: "Offline"
       state_topic: "tele/zbbridge/SENSOR"
-      value_template: "{{ value_json['ZbReceived']['0xACC4']['Temperature'] }}"
+      value_template: "{{ value_json['ZbReceived']['0x95FE']['Temperature'] }}"
       device_class: temperature
     - name: 'Office Humidity'
       unit_of_measurement: "%"
