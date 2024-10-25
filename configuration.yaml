@@ -131,9 +131,6 @@ sensor:
     name: Gas Used
     method: left
     round: 2
-  - platform: integration
-    source: 
-    unit_prefix: k
   - platform: worldtidesinfo
     api_key: !secret tide_key
     latitude: 53.441452
