@@ -19,9 +19,6 @@
     target:
       entity_id:
       - switch.path_lights
-      - switch.outdoorsocket
-      - switch.extra_socket
-      - switch.playroom_fridge
   - service: input_boolean.turn_off
     data: {}
     target:
@@ -130,35 +127,35 @@
 - id: '1586039347252'
   alias: Landing Motion
   description: ''
-  trigger:
+  triggers:
   - entity_id:
     - binary_sensor.landing_motion
-    platform: state
     to: 'on'
     from: 'off'
-  condition:
+    trigger: state
+  conditions:
   - condition: or
     conditions:
     - condition: time
-      after: '23:45:00'
+      after: input_datetime.light_down_time
       before: 00:00:00
     - condition: sun
       before: sunrise
-  action:
-  - service: light.turn_on
-    target:
+  actions:
+  - target:
       device_id: 8dd3b302d420f1394f0c1a4b31200497
     data: {}
-  - service: timer.start
-    data:
+    action: light.turn_on
+  - data:
       duration: '0'
     target:
       entity_id: timer.landing_motion
+    action: timer.start
   mode: restart
 - id: '1586113907411'
   alias: Reset Landing PIR
   description: ''
-  trigger:
+  triggers:
   - entity_id:
     - binary_sensor.landing_motion
     for:
@@ -166,14 +163,18 @@
       minutes: 0
       seconds: 15
     from: 'off'
-    platform: state
     to: 'on'
-  condition: []
-  action:
+    trigger: state
+  - trigger: homeassistant
+    event: start
+  - trigger: time
+    at: input_datetime.light_down_time
+  conditions: []
+  actions:
   - data:
       payload: E6BC6Eoff
       topic: tele/rfbridge/RESULT
-    service: mqtt.publish
+    action: mqtt.publish
 - id: '1586113907412'
   alias: Reset Shed Door Sensor
   description: ''
@@ -395,17 +396,22 @@
 - id: '1644091533856'
   alias: Security Lights at night
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.front_of_house_person_detected
     from: 'off'
     to: 'on'
-  - platform: state
-    entity_id: binary_sensor.side_door_wc
+    trigger: state
+  - entity_id: binary_sensor.side_door_wc
     from: 'off'
     to: 'on'
-  condition:
+    trigger: state
+  - trigger: state
+    entity_id:
+    - switch.g3_flex_detections_motion
+    from: 'off'
+    to: 'on'
+  conditions:
   - condition: state
     entity_id: sun.sun
     state: below_horizon
@@ -413,19 +419,19 @@
       hours: 0
       minutes: 20
       seconds: 0
-  action:
-  - service: light.turn_on
-    data: {}
+  actions:
+  - data: {}
     target:
       entity_id:
       - light.front_door_light
       - light.back_door_security
       - light.side_door_security
-  - service: timer.start
-    data:
+    action: light.turn_on
+  - data:
       duration: '0'
     target:
       entity_id: timer.outdoor_motion
+    action: timer.start
   mode: single
 - id: '1644092087858'
   alias: Reset security light
@@ -446,10 +452,11 @@
   trigger: []
   condition: []
   action:
-  - service: scene.turn_on
-    data: {}
-    target:
-      entity_id: scene.study_lights_on
+  - device_id: 545a1a7a336d118575b03afc7ebf75b5
+    domain: select
+    entity_id: ddfa59260e2cb18afd5695cdc82640fb
+    type: select_option
+    option: Stopped
   mode: single
 - id: '1663882381865'
   alias: Blinds up in the morning
@@ -784,26 +791,26 @@
       message: Somebody outside front door
   mode: single
 - id: '1688311968665'
-  alias: Disarm Alarm after 06:00 and Landing Motion
+  alias: Disarm Alarm in the morning when Landing Motion
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.landing_motion
     from: 'off'
     to: 'on'
-  condition:
+    trigger: state
+  conditions:
   - condition: time
-    after: 05:30:00
-    before: 09:00:00
+    after: 05:45:00
+    before: '11:00:00'
   - condition: state
     entity_id: alarm_control_panel.home
     state: armed_away
-  action:
-  - service: alarm_control_panel.alarm_disarm
-    data: {}
+  actions:
+  - data: {}
     target:
       entity_id: alarm_control_panel.home
+    action: alarm_control_panel.alarm_disarm
   mode: single
 - id: '1694289245169'
   alias: Retry Alarm when windows closed
@@ -873,8 +880,7 @@
   trigger:
   - platform: state
     entity_id:
-    - binary_sensor.hotpress_rf_switch
-    from: 'off'
+    - binary_sensor.hotpress_rf_light_switch
     to: 'on'
     for:
       hours: 0
@@ -895,7 +901,7 @@
   trigger:
   - platform: state
     entity_id:
-    - binary_sensor.hotpress_rf_switch
+    - binary_sensor.hotpress_rf_light_switch
     from: 'off'
     to: 'on'
   condition: []
@@ -919,4 +925,117 @@
     target:
       entity_id: scene.downstairs_heating_living_room
     metadata: {}
+  mode: single
+- id: '1708790114261'
+  alias: 'Electricity @ Night '
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - schedule.electricity_night
+    to: 'on'
+  condition: []
+  action:
+  - metadata: {}
+    data:
+      option: night
+    target:
+      entity_id: select.energy
+    action: select.select_option
+  - device_id: 545a1a7a336d118575b03afc7ebf75b5
+    domain: select
+    entity_id: ddfa59260e2cb18afd5695cdc82640fb
+    type: select_option
+    option: Fast
+  mode: single
+- id: '1708794366178'
+  alias: Electricity @ Weekend
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - schedule.electricity_weekend
+    to: 'on'
+  condition: []
+  action:
+  - service: select.select_option
+    metadata: {}
+    data:
+      option: weekend
+    target:
+      entity_id: select.energy
+  mode: single
+- id: '1708794468723'
+  alias: Electricity @ Off Peak
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - schedule.electricity_offpeak
+    to: 'on'
+  condition: []
+  action:
+  - metadata: {}
+    data:
+      option: offpeak
+    target:
+      entity_id: select.energy
+    action: select.select_option
+  - device_id: 545a1a7a336d118575b03afc7ebf75b5
+    domain: select
+    entity_id: ddfa59260e2cb18afd5695cdc82640fb
+    type: select_option
+    option: Stopped
+  mode: single
+- id: '1708794531449'
+  alias: Electricity @ Peak
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - schedule.electricity_peak
+    to: 'on'
+  condition: []
+  action:
+  - metadata: {}
+    data:
+      option: peak
+    target:
+      entity_id: select.energy
+    action: select.select_option
+  - device_id: 545a1a7a336d118575b03afc7ebf75b5
+    domain: select
+    entity_id: ddfa59260e2cb18afd5695cdc82640fb
+    type: select_option
+    option: Stopped
+  mode: single
+- id: '1708814827972'
+  alias: Lights Off - Phase 1
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.light_down_time
+  condition: []
+  action:
+  - service: homeassistant.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - light.living_room_lights
+      - light.pantry
+      - light.kitchen_corner_2
+      - light.back_door_porch
+  mode: single
+- id: '1728740086483'
+  alias: Zappi To Fast Charger
+  description: ''
+  triggers: []
+  conditions: []
+  actions:
+  - device_id: 545a1a7a336d118575b03afc7ebf75b5
+    domain: select
+    entity_id: ddfa59260e2cb18afd5695cdc82640fb
+    type: select_option
+    option: Fast
   mode: single

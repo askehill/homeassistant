@@ -222,9 +222,9 @@
       min_temp: 5
       max_temp: 32
       target_temp_step: 0.1
-      current_temperature: 20.9
-      temperature: 20.5
-      hvac_action: idle
+      current_temperature: 18.5
+      temperature: 21.5
+      hvac_action: heating
       friendly_name: Downstairs (Living Room)
       supported_features: 1
       state: heat
@@ -235,9 +235,9 @@
       min_temp: 5
       max_temp: 30
       target_temp_step: 0.1
-      current_temperature: 19.9
+      current_temperature: 17.9
       temperature: 18
-      hvac_action: idle
+      hvac_action: heating
       friendly_name: Downstairs (Kitchen)
       supported_features: 1
       state: heat
@@ -248,7 +248,7 @@
       min_temp: 5
       max_temp: 30
       target_temp_step: 0.1
-      current_temperature: 19.7
+      current_temperature: 17
       temperature: 7
       hvac_action: idle
       friendly_name: Upstairs (Study)
@@ -261,7 +261,7 @@
       min_temp: 5
       max_temp: 30
       target_temp_step: 0.1
-      current_temperature: 19.6
+      current_temperature: 16.2
       temperature: 7
       hvac_action: idle
       friendly_name: Upstairs (Master Bedroom)
@@ -367,4 +367,22 @@
   icon: mdi:heat-wave
   metadata:
     climate.downstairs_kitchen:
+      entity_only: true
+- id: '1708817263350'
+  name: Phase 1 Lights Off
+  entities:
+    light.living_room_lights:
+      supported_color_modes:
+      - onoff
+      color_mode: onoff
+      entity_id:
+      - light.living_room_light_3
+      - light.livingroomlight
+      icon: mdi:lightbulb-group
+      friendly_name: Living Room Lights
+      supported_features: 0
+      state: 'on'
+  icon: mdi:lamps
+  metadata:
+    light.living_room_lights:
       entity_only: true
