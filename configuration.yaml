@@ -46,6 +46,12 @@ schedule:
     friday:
       - from: "17:00:00"
         to: "19:00:00"
+    saturday:
+      - from: "17:00:00"
+        to: "19:00:00"
+    sunday:
+      - from: "17:00:00"
+        to: "19:00:00"
   electricity_offpeak:
     name: "Off Peak Electricity Times"
     monday:
@@ -69,6 +75,16 @@ schedule:
       - from: "19:00:00"
         to: "23:00:00"
     friday:
+      - from: "08:00:00"
+        to: "17:00:00"
+      - from: "19:00:00"
+        to: "23:00:00"
+    saturday:
+      - from: "08:00:00"
+        to: "17:00:00"
+      - from: "19:00:00"
+        to: "23:00:00"
+    sunday:
       - from: "08:00:00"
         to: "17:00:00"
       - from: "19:00:00"
@@ -98,17 +114,16 @@ schedule:
         to: "08:00:00"
       - from: "23:00:00"
         to: "24:00:00"
-  electricity_weekend:
-    name: "Weekend Electrcity Times"
     saturday:
-      - from: "08:00:00"
+      - from: "00:00:00"
+        to: "08:00:00"
+      - from: "23:00:00"
         to: "24:00:00"
     sunday:
       - from: "00:00:00"
-        to: "24:00:00"     
-    monday:
-      - from: "00:00:00"
         to: "08:00:00"
+      - from: "23:00:00"
+        to: "24:00:00"
   
 sensor:
   - platform: integration
