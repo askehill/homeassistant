@@ -39,3 +39,4 @@
   heater: switch.floor2
   target_sensor: sensor.master_bedroom_temperature_2
   target_temp: 7
+  
