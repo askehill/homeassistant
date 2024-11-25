@@ -9,8 +9,6 @@
       - switch.livingroom3
       - switch.0x00124b0026b86159
       - switch.kitchen_corner_2
-      - switch.living_room_extra_socket
-      - switch.playroom_fridge
   - service: light.turn_on
     target:
       device_id: 8dd3b302d420f1394f0c1a4b31200497
@@ -34,9 +32,6 @@
     target:
       entity_id:
       - switch.path_lights
-      - switch.extra_socket
-      - switch.playroom_fridge
-      device_id: 771c8bca17c1cdcb7af215b299d6fe7d
   - service: input_boolean.toggle
     data: {}
     target:
