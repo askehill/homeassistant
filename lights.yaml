@@ -14,8 +14,8 @@
 - platform: group
   name: Living Room Lights
   entities:
-    - light.living_room_light_3
-    - light.livingroomlight
+    - light.livingroomlight_1
+    - light.livingroomlight_2
 - platform: group
   name: Outdoor Lights
   entities:
