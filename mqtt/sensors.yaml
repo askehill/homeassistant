@@ -38,7 +38,7 @@
       payload_not_available: "Offline"
       state_topic: "tele/zbbridge/SENSOR"
       value_template: "{{ value_json['ZbReceived']['0xF964']['Pressure'] }}"
-      device_class: humidity
+      device_class: pressure
     - name: 'Kitchen Temperature'
       unit_of_measurement: '°C'
       availability_topic: "tele/zbbridge/LWT"
