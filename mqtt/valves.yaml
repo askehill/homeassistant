@@ -6,8 +6,8 @@
     reports_position: false
     payload_available: "Online"
     payload_not_available: "Offline"
-    payload_open: '{"device":"0xC3BB","send":{"Power":"On"} }' 
-    payload_close: '{"device":"0xC3BB","send":{"Power":"Off"} }'  
+    payload_open: '{"device":"0xB515","send":{"Power":"On"} }' 
+    payload_close: '{"device":"0xB515","send":{"Power":"Off"} }'  
     qos: 1
     retain: false
     state_open: 1
