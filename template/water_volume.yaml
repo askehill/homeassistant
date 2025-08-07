@@ -5,5 +5,5 @@
      unit_of_measurement: L
      device_class: volume_storage
      state: >
-       {% set empty_voltage = 7.24 %}
-       {{ (states('sensor.shellyuni_c45bbe5f76f8_adc')|float - empty_voltage) / 0.0866 }}
+       {% set empty_voltage = .25 %}
+       {{ (states('sensor.shellyuni_c45bbe5f76f8_adc')|float - empty_voltage) * 150 }}
