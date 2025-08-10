@@ -5,4 +5,4 @@
      unit_of_measurement: L
      device_class: volume_storage
      state: >
-      {{ states('sensor.shellyuni_c45bbe5f76f8_adc') |float * 140 }}
+      {{ states('sensor.shellyuni_c45bbe5f76f8_adc') |float * 100 }}
