@@ -5,7 +5,7 @@
       payload_available: "Online"
       payload_not_available: "Offline"
       state_topic: "tele/zbbridge/SENSOR"
-      value_template: "{{ value_json['ZbReceived']['0x8745']['Temperature'] }}"
+      value_template: "{{ value_json['ZbReceived']['0x167A']['Temperature'] }}"
       device_class: temperature
     - name: 'Office Humidity'
       unit_of_measurement: "%"
@@ -13,8 +13,16 @@
       payload_available: "Online"
       payload_not_available: "Offline"
       state_topic: "tele/zbbridge/SENSOR"
-      value_template: "{{ value_json['ZbReceived']['0x8745']['Humidity'] }}"
+      value_template: "{{ value_json['ZbReceived']['0x167A']['Humidity'] }}"
       device_class: humidity
+    - name: 'Office Pressure'
+      unit_of_measurement: "kPa"
+      availability_topic: "tele/zbbridge/LWT"
+      payload_available: "Online"
+      payload_not_available: "Offline"
+      state_topic: "tele/zbbridge/SENSOR"
+      value_template: "{{ value_json['ZbReceived']['0x167A']['Pressure'] }}"
+      device_class: pressure
     - name: 'Master Bedroom Temperature'
       unit_of_measurement: '°C'
       availability_topic: "tele/zbbridge/LWT"
