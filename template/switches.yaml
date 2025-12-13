@@ -28,18 +28,18 @@
     default_entity_id: switch.downstairs_living_room
     state: '{{ is_state(''switch.downstairs'', ''on'') }}'
     name: downstairs_living_room
--switch:
-- turn_on:
-    - target:
-        entity_id:
-        - switch.downstairs
-      action: switch.turn_on
+- switch:
+  - turn_on:
+      - target:
+          entity_id:
+          - switch.downstairs
+        action: switch.turn_on
     turn_off:
-    - target:
-        entity_id:
-        - script.downstairs_conditional_off
-      action: script.turn_on
+      - target:
+          entity_id:
+          - script.downstairs_conditional_off
+        action: script.turn_on
     default_entity_id: switch.downstairs_kitchen
     state: '{{ is_state(''switch.downstairs'', ''on'') }}'
     name: downstairs_kitchen
-   
+  
