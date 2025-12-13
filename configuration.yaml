@@ -182,7 +182,6 @@ timer:
   pantry_light_timer:
     duration: '00:10:00'
 
- 
 # media_player:
 #   - platform: enigma2
 #     name: Satellite & Saroview Receiver

@@ -1,38 +1,6 @@
 ---
+
 - platform: wake_on_lan
   name: Satellite & Saorview Receiver Switch
   host: 192.168.1.131
   mac: 00:1d:ec:0e:5f:01
-
-- platform: template
-  switches:
-    downstairs_template:
-      value_template: "{{ is_state('switch.downstairs', 'on') }}"
-      turn_on:
-        service: switch.turn_on
-        target:
-          entity_id: switch.downstairs
-      turn_off:
-        service: script.turn_on
-        target:
-          entity_id: script.downstairs_conditional_off   
-    downstairs_living_room:
-      value_template: "{{ is_state('switch.downstairs', 'on') }}"
-      turn_on:
-        service: switch.turn_on
-        target:
-          entity_id: switch.downstairs
-      turn_off:
-        service: script.turn_on
-        target:
-          entity_id: script.downstairs_conditional_off   
-    downstairs_kitchen:
-      value_template: "{{ is_state('switch.downstairs', 'on') }}"
-      turn_on:
-        service: switch.turn_on
-        target:
-          entity_id: switch.downstairs
-      turn_off:
-        service: script.turn_on
-        target:
-          entity_id: script.downstairs_conditional_off 
