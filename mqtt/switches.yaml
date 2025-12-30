@@ -29,6 +29,21 @@
      state_topic: "tele/zbbridge/SENSOR"
      value_template: "{{ value_json['ZbReceived']['0x80F8']['Power'] }}"
      icon: mdi:power-socket-uk
+   - unique_id: sonoff_pm_socket
+     name: "Power Monitoring Socket 1"
+     availability_topic: "tele/zbbridge/LWT"
+     payload_available: "Online"
+     payload_not_available: "Offline"
+     command_topic: "cmnd/zbbridge/ZbSend"
+     payload_on: '{"device":"0xB081","send":{"Power":"On"} }' 
+     payload_off: '{"device":"0xB081","send":{"Power":"Off"} }'  
+     qos: 1
+     retain: false
+     state_on: '1'
+     state_off: '0'
+     state_topic: "tele/zbbridge/SENSOR"
+     value_template: "{{ value_json['ZbReceived']['0xB081']['Power'] }}"
+     icon: mdi:power-socket-uk
    - unique_id: extra_socket
      name: "Extra Socket"
      availability_topic: "tele/zbbridge/LWT"
