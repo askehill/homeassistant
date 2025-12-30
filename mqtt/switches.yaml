@@ -35,14 +35,14 @@
      payload_available: "Online"
      payload_not_available: "Offline"
      command_topic: "cmnd/zbbridge/ZbSend"
-     payload_on: '{"device":"0xB081","send":{"Power":"On"} }' 
-     payload_off: '{"device":"0xB081","send":{"Power":"Off"} }'  
+     payload_on: '{"device":"0xF884","send":{"Power":"On"} }' 
+     payload_off: '{"device":"0xF884","send":{"Power":"Off"} }'  
      qos: 1
      retain: false
      state_on: '1'
      state_off: '0'
      state_topic: "tele/zbbridge/SENSOR"
-     value_template: "{{ value_json['ZbReceived']['0xB081']['Power'] }}"
+     value_template: "{{ value_json['ZbReceived']['0xF884']['Power'] }}"
      icon: mdi:power-socket-uk
    - unique_id: extra_socket
      name: "Extra Socket"
