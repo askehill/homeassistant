@@ -87,7 +87,7 @@
       state_topic: "tele/zbbridge/SENSOR"
       value_template: "{{ value_json['ZbReceived']['0x2645']['Temperature'] }}"
       device_class: temperature
-    - name: 'Living Room Humidity'
+    - name: '1st Floor Humidity'
       unit_of_measurement: "%"
       availability_topic: "tele/zbbridge/LWT"
       payload_available: "Online"
