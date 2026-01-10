@@ -12,6 +12,6 @@
  
   - unique_id: adjusted_cooking_power
     name: Adjusted Cooking Power Consumption
-    unit_of_measurement: "kW"
+    unit_of_measurement: "W"
     state: >
       {{ (states('sensor.shellyem_c7faf3_channel_1_power')|float | abs )}}  
