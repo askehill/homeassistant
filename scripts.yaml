@@ -1,53 +1,53 @@
 '1581804598858':
   alias: House Lighting up time
   sequence:
-  - data: {}
-    service: switch.turn_on
-    target:
-      entity_id:
-      - switch.livingroomlight
-      - switch.livingroom3
-      - switch.0x00124b0026b86159
-      - switch.kitchen_corner_2
-  - service: light.turn_on
-    target:
+  - target:
       device_id: 8dd3b302d420f1394f0c1a4b31200497
       entity_id:
-      - light.pantry
+      - light.kitchen_lights
+      - light.living_room_lights
     data: {}
-  - service: timer.start
+    action: light.turn_on
+  - action: switch.turn_on
+    metadata: {}
+    target:
+      label_id: christmas_indoor
     data: {}
+  - data: {}
     target:
       entity_id: timer.pantry_light_timer
+    action: timer.start
   - delay: 00:10:00
-  - service: light.turn_on
-    target:
+  - target:
       device_id: cface4cdb90d68175e3a8dcb4f5dcf45
       entity_id:
       - light.back_door_porch
       - light.veranda
     data: {}
-  - service: switch.turn_on
-    data: {}
+    action: light.turn_on
+  - data: {}
     target:
       entity_id:
       - switch.path_lights
-  - service: input_boolean.toggle
-    data: {}
+      label_id: christmas
+    action: switch.turn_on
+  - data: {}
     target:
       entity_id: input_boolean.house_light_up_time
+    action: input_boolean.toggle
   mode: single
+  description: ''
 boost_hot_water:
   alias: Boost Hot Water
   sequence:
-  - service: switch.turn_on
-    data: {}
+  - data: {}
+    action: switch.turn_on
     target:
       entity_id: switch.hotwater
-  - service: timer.start
-    data: {}
+  - data: {}
     target:
       entity_id: timer.hotwater_boost
+    action: timer.start
   mode: single
   icon: mdi:water-boiler
 boost_downstairs_heating:
@@ -234,3 +234,35 @@ boost_1st_floor_heating:
       entity_id: timer.heating_boost
   mode: single
   icon: mdi:radiator
+bbc_radio_1_on_kitchen_display:
+  sequence:
+  - action: media_player.play_media
+    target:
+      entity_id: media_player.kitchen_display
+    data:
+      media_content_id: media-source://radio_browser/f11919a5-3545-47a9-a420-80c5be17fe38
+      media_content_type: audio/aac
+    metadata:
+      title: RTÉ 2FM
+      thumbnail: ''
+      media_class: music
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: app
+        media_content_id: media-source://radio_browser
+      - media_content_type: music
+        media_content_id: media-source://radio_browser/country/IE
+  alias: BBC Radio 1 on Kitchen Display
+  description: ''
+'1766341273540':
+  sequence:
+  - action: switch.turn_on
+    metadata: {}
+    target:
+      label_id:
+      - christmas_indoor
+      - christmas
+    data: {}
+  alias: "Christmas Lights \U0001F384✨"
+  description: ''

@@ -1,28 +1,29 @@
 - id: '1579368286267'
   alias: Turn outdoor lights off
   description: ''
-  trigger:
+  triggers:
   - at: '23:35:00'
-    platform: time
-  condition: []
-  action:
-  - service: light.turn_off
-    target:
+    trigger: time
+  conditions: []
+  actions:
+  - target:
       device_id:
       - cface4cdb90d68175e3a8dcb4f5dcf45
       entity_id:
       - light.back_door_porch
       - light.veranda
     data: {}
-  - service: switch.turn_off
-    data: {}
+    action: light.turn_off
+  - data: {}
     target:
       entity_id:
       - switch.path_lights
-  - service: input_boolean.turn_off
-    data: {}
+      label_id: christmas
+    action: switch.turn_off
+  - data: {}
     target:
       entity_id: input_boolean.house_light_up_time
+    action: input_boolean.turn_off
 - id: '1579910576936'
   alias: Lights off 23:30
   description: ''
@@ -103,16 +104,17 @@
     metadata: {}
   mode: single
 - id: '1581803790658'
-  alias: Landing Light off at 23:45
+  alias: Landing Light off at 23:30
   description: ''
-  trigger:
-  - at: '23:45:00'
-    platform: time
-  condition: []
-  action:
-  - service: light.turn_off
-    target:
+  triggers:
+  - at: input_datetime.light_down_time
+    trigger: time
+  conditions: []
+  actions:
+  - target:
       device_id: 8dd3b302d420f1394f0c1a4b31200497
+    action: light.turn_off
+    data: {}
   mode: single
 - id: '1581804716802'
   alias: Lights On
@@ -206,13 +208,17 @@
 - id: '1608424917760'
   alias: Hot Water in the morning
   description: ''
-  trigger:
-  - platform: time
-    at: 05:00:00
-  condition: []
-  action:
-  - service: script.boost_hot_water
-    data: {}
+  triggers:
+  - at: 05:00:00
+    trigger: time
+  - trigger: time
+    at: 04:30:00
+    weekday:
+    - thu
+  conditions: []
+  actions:
+  - data: {}
+    action: script.boost_hot_water
   mode: single
 - id: '1612026197579'
   alias: Landing lights off after motion
@@ -289,20 +295,6 @@
         device_id: dbb60cf9c35969d0ac5a6caacc3894eb
         entity_id: light.study
         domain: light
-- id: '1639933719355'
-  alias: Freya's Controller
-  description: ''
-  use_blueprint:
-    path: EPMatt/ikea_e1524_e1810.yaml
-    input:
-      integration: Zigbee2MQTT
-      action_button_center_short: []
-      helper_last_controller_event: input_text.freya_controller
-      action_button_up_short: []
-      action_button_down_short: []
-      action_button_right_short: []
-      controller_entity: sensor.freya_s_remote_action
-      button_left_long_max_loop_repeats: 653
 - id: '1640031148188'
   alias: Reset things on restart
   description: ''
@@ -324,74 +316,21 @@
       payload: 84A794off
       topic: tele/rfbridge/RESULT
   mode: single
-- id: '1641751162690'
-  alias: Study Lights
-  description: ''
-  use_blueprint:
-    path: EPMatt/ikea_e1524_e1810.yaml
-    input:
-      integration: Zigbee2MQTT
-      helper_last_controller_event: input_text.new_study_controller
-      action_button_center_short:
-      - service: light.toggle
-        target:
-          device_id:
-          - 49aef742c747f12a3e8c7946b5f3c7b4
-          - dbb60cf9c35969d0ac5a6caacc3894eb
-        data: {}
-      action_button_left_short:
-      - service: light.turn_on
-        target:
-          device_id: 49aef742c747f12a3e8c7946b5f3c7b4
-        data_template:
-          hs_color:
-          - '{{ (30 + (state_attr(''light.shellyrgbw2_a8e75d'', ''hs_color'')[0] or
-            0)) % 360 }}'
-          - 100
-          brightness_pct: 100
-          transition: 1
-      action_button_right_short:
-      - service: light.turn_on
-        target:
-          device_id: 49aef742c747f12a3e8c7946b5f3c7b4
-        data_template:
-          hs_color:
-          - '{{ ((state_attr(''light.shellyrgbw2_a8e75d'', ''hs_color'')[0] or 30)
-            - 30) % 360 }}'
-          - 100
-          brightness_pct: 100
-          transition: 1
-      action_button_center_long: []
-      action_button_center_double:
-      - service: light.turn_off
-        target:
-          device_id: dbb60cf9c35969d0ac5a6caacc3894eb
-        data: {}
-      button_center_double_press: true
-      action_button_down_short:
-      - service: light.turn_off
-        target:
-          device_id: 49aef742c747f12a3e8c7946b5f3c7b4
-        data: {}
-      action_button_up_short:
-      - service: light.turn_on
-        target:
-          device_id: 49aef742c747f12a3e8c7946b5f3c7b4
-        data: {}
-      controller_entity: sensor.study_remote_action
 - id: '1642377899412'
   alias: Turn off hot water after boost
   description: ''
-  trigger:
-  - platform: event
-    event_type: timer.finished
+  triggers:
+  - event_type: timer.finished
     event_data:
       entity_id: timer.hotwater_boost
-  condition: []
-  action:
-  - service: switch.turn_off
+    trigger: event
+  conditions: []
+  actions:
+  - action: switch.turn_off
+    data: {}
     target:
-      entity_id: switch.hotwater
+      entity_id:
+      - switch.hotwater
   mode: single
 - id: '1644091533856'
   alias: Security Lights at night
@@ -458,62 +397,6 @@
     type: select_option
     option: Stopped
   mode: single
-- id: '1663882381865'
-  alias: Blinds up in the morning
-  description: ''
-  trigger:
-  - platform: time
-    at: 07:45:00
-  condition: []
-  action:
-  - service: script.sitting_room_blind_half_height
-    data: {}
-  - repeat:
-      count: 2
-      sequence:
-      - service: script.kitchen_blinds_up
-        data: {}
-      - delay:
-          hours: 0
-          minutes: 0
-          seconds: 2
-          milliseconds: 0
-  mode: single
-- id: '1664030408335'
-  alias: Davin's Controller
-  description: ''
-  use_blueprint:
-    path: EPMatt/ikea_e1524_e1810.yaml
-    input:
-      integration: Zigbee2MQTT
-      helper_last_controller_event: input_text.davin_controller
-      action_button_left_short: []
-      controller_entity: sensor.davin_s_remote_action
-- id: '1664030585857'
-  alias: Davin's Hook
-  description: ''
-  use_blueprint:
-    path: EPMatt/light.yaml
-    input:
-      light: light.davin_s_light
-      controller_device: ccf30eb5e997f830f44067242a9ce49b
-      controller_model: IKEA E1524/E1810 TRÅDFRI Wireless 5-Button Remote
-      on_brightness: 255
-      min_brightness: 79
-      force_brightness: true
-      controller_entity: sensor.davin_s_remote_action
-- id: '1664031869383'
-  alias: Freya's Hook
-  description: ''
-  use_blueprint:
-    path: EPMatt/light.yaml
-    input:
-      controller_device: 98377b3502f5045311e5472b018273a7
-      controller_model: IKEA E1524/E1810 TRÅDFRI Wireless 5-Button Remote
-      light: light.freya_s_light
-      on_brightness: 200
-      force_brightness: true
-      controller_entity: sensor.freya_s_remote_action
 - id: '1664032148317'
   alias: Turn off Davin's light on a school day
   description: ''
@@ -577,26 +460,23 @@
   mode: single
 - id: '1666457494514'
   alias: Pantry Light Off
-  description: Turn off pantry light after doors close
-  trigger:
-  - platform: sun
-    event: sunrise
-    offset: 0
-  - platform: event
+  description: Turn off pantry light (sunrise, 10 mins after motion)
+  triggers:
+  - trigger: event
     event_type: timer.finished
     event_data:
-      entity_id: pantry_light_timer
-  condition:
+      entity_id: timer.pantry_light_timer
+  conditions:
   - condition: not
     conditions:
     - condition: state
       entity_id: input_boolean.house_light_up_time
       state: 'on'
-  action:
-  - service: light.turn_off
-    data: {}
+  actions:
+  - data: {}
     target:
       entity_id: light.pantry
+    action: light.turn_off
   mode: single
 - id: '1666458373744'
   alias: Alarm house at 23:00
@@ -663,22 +543,22 @@
 - id: '1672224143025'
   alias: Hot Water Off at 50 degrees
   description: ''
-  trigger:
+  triggers:
   - type: temperature
-    platform: device
-    device_id: 04d61e2dfaff64d90a59d87b70846aeb
-    entity_id: sensor.shelly1_a4cf12f45f9c_temperature_3
+    device_id: 32f4ba9c1f102c21cdd036dcc68776de
+    entity_id: 313ad140345bb2e9ca08d274a44b09b5
     domain: sensor
+    trigger: device
     above: 50
-  condition:
+  conditions:
   - condition: state
     entity_id: switch.hotwater
     state: 'on'
-  action:
-  - service: switch.turn_off
-    data: {}
+  actions:
+  - data: {}
     target:
       entity_id: switch.hotwater
+    action: switch.turn_off
   mode: single
 - id: '1672348619169'
   alias: Living Room Boost
@@ -755,21 +635,6 @@
     target:
       entity_id: scene.downstairs_heating_living_room
     metadata: {}
-  mode: single
-- id: '1681682024756'
-  alias: Pantry Light off after motion
-  description: ''
-  trigger:
-  - platform: event
-    event_type: timer.finished
-    event_data:
-      entity_id: pantry_light_timer
-  condition: []
-  action:
-  - service: light.turn_off
-    data: {}
-    target:
-      entity_id: light.pantry
   mode: single
 - id: '1687007484926'
   alias: Front Door Notification
@@ -898,18 +763,19 @@
 - id: '1698442844572'
   alias: Toggle Hotpress Light
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.hotpress_rf_light_switch
     from: 'off'
     to: 'on'
-  condition: []
-  action:
-  - service: switch.toggle
-    data: {}
+    trigger: state
+  conditions: []
+  actions:
+  - data: {}
     target:
-      entity_id: switch.shelly1_a4cf12f45f9c
+      entity_id:
+      - switch.shellyplus1pm_e465b8faef78
+    action: switch.toggle
   mode: single
 - id: '1698622120406'
   alias: Heating for winter downstairs
@@ -1012,13 +878,12 @@
 - id: '1708814827972'
   alias: Lights Off - Phase 1
   description: ''
-  trigger:
-  - platform: time
-    at: input_datetime.light_down_time
-  condition: []
-  action:
-  - service: homeassistant.turn_off
-    metadata: {}
+  triggers:
+  - at: input_datetime.light_down_time
+    trigger: time
+  conditions: []
+  actions:
+  - metadata: {}
     data: {}
     target:
       entity_id:
@@ -1026,11 +891,19 @@
       - light.pantry
       - light.kitchen_corner_2
       - light.back_door_porch
+    action: homeassistant.turn_off
+  - action: switch.turn_off
+    metadata: {}
+    target:
+      label_id: christmas_indoor
+    data: {}
   mode: single
 - id: '1728740086483'
   alias: Zappi To Fast Charger
   description: ''
-  triggers: []
+  triggers:
+  - trigger: time
+    at: '23:00:00'
   conditions: []
   actions:
   - device_id: 545a1a7a336d118575b03afc7ebf75b5
@@ -1038,4 +911,136 @@
     entity_id: ddfa59260e2cb18afd5695cdc82640fb
     type: select_option
     option: Fast
+  mode: single
+- id: '1740179121351'
+  alias: Zappi to stop
+  description: ''
+  triggers:
+  - trigger: time
+    at: 08:00:00
+  conditions: []
+  actions:
+  - device_id: 545a1a7a336d118575b03afc7ebf75b5
+    domain: select
+    entity_id: ddfa59260e2cb18afd5695cdc82640fb
+    type: select_option
+    option: Stopped
+  mode: single
+- id: '1748208950255'
+  alias: Lights off in Kitchen when not occupied
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.0x00124b0025440693_occupancy
+    to: 'off'
+  conditions: []
+  actions:
+  - action: timer.start
+    metadata: {}
+    data: {}
+    target:
+      entity_id: timer.pantry_light_timer
+  mode: single
+- id: '1748209134102'
+  alias: Reset Timer if kitchen occupied
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.0x00124b0025440693_occupancy
+    to: 'on'
+  conditions: []
+  actions:
+  - action: timer.cancel
+    metadata: {}
+    data: {}
+    target:
+      entity_id: timer.pantry_light_timer
+  mode: single
+- id: '1752306783671'
+  alias: Ev6 battery limit to 100% when in ITC
+  description: ''
+  triggers:
+  - trigger: zone
+    entity_id: device_tracker.ev6_location
+    zone: zone.boi_cabinteely
+    event: enter
+  conditions: []
+  actions:
+  - device_id: 7700466f6a621a07d36a398d22b94116
+    domain: number
+    entity_id: d2df2e7076df6e7959916bfbcc24debb
+    type: set_value
+    value: 100
+  mode: single
+- id: '1752316083991'
+  alias: Ev6 back to 80% leaving BOI ITC
+  description: ''
+  triggers:
+  - trigger: zone
+    entity_id: device_tracker.ev6_location
+    zone: zone.boi_cabinteely
+    event: leave
+  conditions: []
+  actions:
+  - device_id: 7700466f6a621a07d36a398d22b94116
+    domain: number
+    entity_id: d2df2e7076df6e7959916bfbcc24debb
+    type: set_value
+    value: 80
+  mode: single
+- id: '1756563525020'
+  alias: Turn water butt pump off after 5 mins
+  description: ''
+  triggers:
+  - type: turned_on
+    device_id: b8801aeea04b902ec99288ca554282a6
+    entity_id: ce1b3ee597c2450baacf27d07de95fd4
+    domain: switch
+    trigger: device
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+  conditions:
+  - condition: state
+    entity_id: valve.mqtt_sonoff_valve_1
+    state: closed
+  actions:
+  - type: turn_off
+    device_id: b8801aeea04b902ec99288ca554282a6
+    entity_id: ce1b3ee597c2450baacf27d07de95fd4
+    domain: switch
+  mode: single
+- id: '1759071908742'
+  alias: Pump on with hose opened
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - valve.mqtt_sonoff_valve_1
+    from: closed
+    to: open
+  conditions: []
+  actions:
+  - type: turn_on
+    device_id: b8801aeea04b902ec99288ca554282a6
+    entity_id: ce1b3ee597c2450baacf27d07de95fd4
+    domain: switch
+  mode: single
+- id: '1766170147358'
+  alias: Early on for internal Christmas Lights
+  description: ''
+  triggers:
+  - trigger: time
+    at: '15:30:00'
+  conditions: []
+  actions:
+  - action: switch.turn_on
+    metadata: {}
+    target:
+      label_id:
+      - christmas_indoor
+    data: {}
   mode: single
