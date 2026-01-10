@@ -9,4 +9,9 @@
     unit_of_measurement: "°C"
     state: >
       {{ (states('sensor.livingroompanel_analog_temperature1')|float * 0.7755)|round(1, 'common')}}
-  
+ 
+  - unique_id: adjusted_cooking_power
+    name: Adjusted Cooking Power Consumption
+    unit_of_measurement: "kW"
+    state: >
+      {{ (states('sensor.shellyem_c7faf3_channel_1_power')|float | abs )}}  
