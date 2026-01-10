@@ -29,7 +29,7 @@
       payload_available: "Online"
       payload_not_available: "Offline"
       state_topic: "tele/zbbridge/SENSOR"
-      value_template: "{{ value_json['ZbReceived']['0xF964']['Temperature'] }}"
+      value_template: "{{ value_json['ZbReceived']['0x99E2']['Temperature'] }}"
       device_class: temperature
     - name: 'Master Bedroom Humidity'
       unit_of_measurement: "%"
@@ -37,7 +37,7 @@
       payload_available: "Online"
       payload_not_available: "Offline"
       state_topic: "tele/zbbridge/SENSOR"
-      value_template: "{{ value_json['ZbReceived']['0xF964']['Humidity'] }}"
+      value_template: "{{ value_json['ZbReceived']['0x99E2']['Humidity'] }}"
       device_class: humidity
     - name: 'Master Bedroom Pressure'
       unit_of_measurement: "kPa"
@@ -45,7 +45,7 @@
       payload_available: "Online"
       payload_not_available: "Offline"
       state_topic: "tele/zbbridge/SENSOR"
-      value_template: "{{ value_json['ZbReceived']['0xF964']['Pressure'] }}"
+      value_template: "{{ value_json['ZbReceived']['0x99E2']['Pressure'] }}"
       device_class: pressure
     - name: 'Kitchen Temperature'
       unit_of_measurement: '°C'
