@@ -69,7 +69,7 @@
       payload_available: "Online"
       payload_not_available: "Offline"
       state_topic: "tele/zbbridge/SENSOR"
-      value_template: "{{ value_json['ZbReceived']['0x70A8']['Temperature'] }}"
+      value_template: "{{ value_json['ZbReceived']['0xA076']['Temperature'] }}"
       device_class: temperature
     - name: 'Living Room Humidity'
       unit_of_measurement: "%"
@@ -77,7 +77,7 @@
       payload_available: "Online"
       payload_not_available: "Offline"
       state_topic: "tele/zbbridge/SENSOR"
-      value_template: "{{ value_json['ZbReceived']['0x70A8']['Humidity'] }}"
+      value_template: "{{ value_json['ZbReceived']['0xA076']['Humidity'] }}"
       device_class: humidity
     - name: '1st Floor Temperature'
       unit_of_measurement: '°C'
