@@ -3,6 +3,7 @@ default_config:
 
 python_script:
 
+
 http:
   use_x_forwarded_for: true
   trusted_proxies:    
@@ -126,6 +127,11 @@ schedule:
         to: "24:00:00"
   
 sensor:
+  - platform: met_ie_buoy
+    buoy_id: M2
+    name: "M2 Buoy"        # optional — prefix for all sensor names
+    scan_interval: 3600    # optional — seconds between buoy refreshes (default: 3600)
+    tide_port: dublin      # optional — enables tide sensors (see ports below)
   - platform: integration
     source: sensor.gas_usage
     name: Gas Used
