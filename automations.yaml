@@ -18,7 +18,10 @@
     target:
       entity_id:
       - switch.path_lights
-      label_id: christmas
+      - switch.shed_outdoor_lights
+      label_id:
+      - christmas
+      - outdoor_light
     action: switch.turn_off
   - data: {}
     target:
@@ -481,23 +484,24 @@
 - id: '1666458373744'
   alias: Alarm house at 23:00
   description: ''
-  trigger:
-  - platform: time
-    at: '23:00:00'
-  condition:
+  triggers:
+  - at: '23:00:00'
+    trigger: time
+  conditions:
   - condition: not
     conditions:
     - condition: state
       entity_id: alarm_control_panel.home
       state: armed_away
     - condition: state
-      entity_id: switch.study_light
-      state: 'on'
-  action:
-  - service: alarm_control_panel.alarm_arm_away
-    data: {}
+      entity_id: switch.none_hall
+      state:
+      - 'on'
+  actions:
+  - data: {}
     target:
       entity_id: alarm_control_panel.home
+    action: alarm_control_panel.alarm_arm_away
   mode: single
 - id: '1667512788847'
   alias: Reset Playroom PIR
@@ -522,23 +526,23 @@
 - id: '1671634357272'
   alias: Heater socket enabled with lights turned on
   description: ''
-  trigger:
-  - platform: device
-    type: turned_on
-    device_id: 157d5e14767e47a58d7894e7ee228828
-    entity_id: switch.study_light
+  triggers:
+  - type: turned_on
+    device_id: 7f891ad2baa54e668db929b31446d864
+    entity_id: e5239693eeda50bf14b8e93a1e3dc28e
     domain: switch
-  condition:
+    trigger: device
+  conditions:
   - condition: time
     before: '22:30:00'
   - condition: numeric_state
     entity_id: sensor.shellyht_9551e9_temperature
     below: 15
-  action:
-  - service: switch.turn_on
-    data: {}
+  actions:
+  - data: {}
     target:
       entity_id: switch.heater_socket
+    action: switch.turn_on
   mode: single
 - id: '1672224143025'
   alias: Hot Water Off at 50 degrees
@@ -707,9 +711,8 @@
   alias: Retry alarm after side door closed for 3 mins
   description: If it's after 11, the alarm isn't on, try again if the side door was
     used and playroom light is now off
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.side_door_wc
     from: 'on'
     to: 'off'
@@ -717,7 +720,8 @@
       hours: 0
       minutes: 3
       seconds: 0
-  condition:
+    trigger: state
+  conditions:
   - condition: and
     conditions:
     - condition: time
@@ -727,17 +731,18 @@
       entity_id: alarm_control_panel.home
       state: disarmed
     - condition: state
-      entity_id: switch.study_light
-      state: 'off'
+      entity_id: switch.none_hall
+      state:
+      - 'off'
       for:
         hours: 0
         minutes: 0
         seconds: 5
-  action:
-  - service: alarm_control_panel.alarm_arm_away
-    data: {}
+  actions:
+  - data: {}
     target:
       entity_id: alarm_control_panel.home
+    action: alarm_control_panel.alarm_arm_away
   mode: single
 - id: '1698442599651'
   alias: Reset Hotpress Switch
@@ -1043,4 +1048,48 @@
       label_id:
       - christmas_indoor
     data: {}
+  mode: single
+- id: '1771362480742'
+  alias: Security lights on coming from shed
+  description: ''
+  triggers:
+  - type: changed_states
+    device_id: 7f891ad2baa54e668db929b31446d864
+    entity_id: af2796c116fec88ff95bf43fe0874975
+    domain: switch
+    trigger: device
+  conditions:
+  - condition: state
+    entity_id: light.side_door_security
+    state:
+    - 'off'
+  - condition: sun
+    after: sunset
+    after_offset: 00:20:00
+  actions:
+  - action: light.toggle
+    metadata: {}
+    target:
+      entity_id:
+      - light.side_door_security
+      - light.back_door_security
+    data: {}
+  - action: timer.start
+    metadata: {}
+    target:
+      entity_id: timer.outdoor_motion
+    data: {}
+  mode: single
+- id: '1779317558503'
+  alias: Tag Water Butt Pump is scanned
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: 75647255-e551-4960-8251-4a1bfcd4216d
+  conditions: []
+  actions:
+  - type: toggle
+    device_id: b8801aeea04b902ec99288ca554282a6
+    entity_id: ce1b3ee597c2450baacf27d07de95fd4
+    domain: switch
   mode: single

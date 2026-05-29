@@ -23,13 +23,17 @@
       entity_id:
       - light.back_door_porch
       - light.veranda
+      label_id: outdoor_light
     data: {}
     action: light.turn_on
   - data: {}
     target:
       entity_id:
       - switch.path_lights
-      label_id: christmas
+      - switch.shed_outdoor_lights
+      label_id:
+      - christmas
+      - outdoor_light
     action: switch.turn_on
   - data: {}
     target:
@@ -82,20 +86,26 @@ boost_upstairs_heating:
 turn_off_outdoor_security_lights:
   alias: Turn Off Outdoor Security Lights
   sequence:
-  - service: light.turn_off
-    data: {}
+  - data: {}
     target:
       entity_id: light.back_door_security
       device_id: 3780bf491a1e43bfc38b5918fdac6c96
+    action: light.turn_off
+  - action: switch.turn_off
+    metadata: {}
+    target:
+      entity_id: switch.none_internalpathway
+    data: {}
   - condition: state
     entity_id: input_boolean.house_light_up_time
     state: 'off'
-  - service: light.turn_off
-    data: {}
+  - data: {}
     target:
       entity_id: light.front_door_light
+    action: light.turn_off
   mode: single
   icon: mdi:light-flood-down
+  description: ''
 sitting_room_blind_half_height:
   alias: Sitting Room Blind Half Height
   sequence:
