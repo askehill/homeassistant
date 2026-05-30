@@ -1031,3 +1031,82 @@
       entity_id: switch.pump_socket
     data: {}
   mode: single
+
+- id: '1780000000001'
+  alias: Notify washing machine finished
+  description: >
+    Opt-in push notification when the washing machine completes.
+    Each device owner controls their own toggle via the laundry dashboard card.
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.washing_machine_finished
+    to: "on"
+  conditions: []
+  actions:
+  - if:
+    - condition: state
+      entity_id: input_boolean.notify_washing_finished_oneplus
+      state: "on"
+    then:
+    - action: notify.oneplus_a6013
+      data:
+        message: "Washing machine is done 🧺"
+        title: "Laundry"
+  - if:
+    - condition: state
+      entity_id: input_boolean.notify_washing_finished_pixel
+      state: "on"
+    then:
+    - action: notify.pixel_8
+      data:
+        message: "Washing machine is done 🧺"
+        title: "Laundry"
+  mode: single
+
+- id: '1780000000002'
+  alias: Notify tumble dryer finished
+  description: >
+    Opt-in push notification when the tumble dryer completes.
+    Each device owner controls their own toggle via the laundry dashboard card.
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.tumble_dryer_finished
+    to: "on"
+  conditions: []
+  actions:
+  - if:
+    - condition: state
+      entity_id: input_boolean.notify_dryer_finished_oneplus
+      state: "on"
+    then:
+    - action: notify.oneplus_a6013
+      data:
+        message: "Tumble dryer is done 🌀"
+        title: "Laundry"
+  - if:
+    - condition: state
+      entity_id: input_boolean.notify_dryer_finished_pixel
+      state: "on"
+    then:
+    - action: notify.pixel_8
+      data:
+        message: "Tumble dryer is done 🌀"
+        title: "Laundry"
+  mode: single
+
+- id: '1780000000003'
+  alias: Reset laundry notification subscriptions at midnight
+  description: Clears all laundry notification opt-ins each night so users subscribe fresh each day.
+  triggers:
+  - trigger: time
+    at: "00:00:00"
+  conditions: []
+  actions:
+  - action: input_boolean.turn_off
+    target:
+      entity_id:
+        - input_boolean.notify_washing_finished_oneplus
+        - input_boolean.notify_washing_finished_pixel
+        - input_boolean.notify_dryer_finished_oneplus
+        - input_boolean.notify_dryer_finished_pixel
+  mode: single

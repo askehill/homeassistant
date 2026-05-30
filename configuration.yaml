@@ -196,6 +196,20 @@ timer:
 #     deep_standby: true
 #     password: !secret vu_password
 
+input_boolean:
+  notify_washing_finished_oneplus:
+    name: "Notify me when washing is done (OnePlus)"
+    icon: mdi:washing-machine
+  notify_washing_finished_pixel:
+    name: "Notify me when washing is done (Pixel)"
+    icon: mdi:washing-machine
+  notify_dryer_finished_oneplus:
+    name: "Notify me when dryer is done (OnePlus)"
+    icon: mdi:tumble-dryer
+  notify_dryer_finished_pixel:
+    name: "Notify me when dryer is done (Pixel)"
+    icon: mdi:tumble-dryer
+
 homeassistant:
   customize: !include customize.yaml
 
