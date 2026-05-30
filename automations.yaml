@@ -1048,7 +1048,7 @@
       entity_id: input_boolean.notify_washing_finished_oneplus
       state: "on"
     then:
-    - action: notify.oneplus_a6013
+    - action: notify.mobile_app_cph2581
       data:
         message: "Washing machine is done 🧺"
         title: "Laundry"
@@ -1079,7 +1079,7 @@
       entity_id: input_boolean.notify_dryer_finished_oneplus
       state: "on"
     then:
-    - action: notify.oneplus_a6013
+    - action: notify.mobile_app_cph2581
       data:
         message: "Tumble dryer is done 🌀"
         title: "Laundry"
