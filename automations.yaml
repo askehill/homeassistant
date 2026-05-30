@@ -445,10 +445,12 @@
   alias: Heater socket enabled with lights turned on
   description: ''
   triggers:
-  - type: turned_on
-    entity_id: switch.heater_socket
-    domain: switch
-    trigger: device
+  - trigger: state
+    entity_id:
+    - switch.none_hall
+    from:
+    - 'off'
+    - 'on'
   conditions:
   - condition: time
     before: '22:30:00'
@@ -465,10 +467,9 @@
   alias: Hot Water Off at 50 degrees
   description: ''
   triggers:
-  - type: temperature
-    entity_id: 313ad140345bb2e9ca08d274a44b09b5
-    domain: sensor
-    trigger: device
+  - trigger: numeric_state
+    entity_id:
+    - sensor.shellyplus1pm_e465b8faef78_temperature_3
     above: 50
   conditions:
   - condition: state
@@ -716,23 +717,25 @@
 - id: '1708790114261'
   alias: 'Electricity @ Night '
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - schedule.electricity_night
     to: 'on'
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - metadata: {}
     data:
       option: night
     target:
       entity_id: select.energy
     action: select.select_option
-  - entity_id: select.myenergi_zappi_22725918_charge_mode
-    domain: select
-    type: select_option
-    option: Fast
+  - action: select.select_option
+    metadata: {}
+    target:
+      entity_id: select.myenergi_zappi_22725918_charge_mode
+    data:
+      option: Fast
   mode: single
 - id: '1708794366178'
   alias: Electricity @ Weekend
@@ -754,44 +757,48 @@
 - id: '1708794468723'
   alias: Electricity @ Off Peak
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - schedule.electricity_offpeak
     to: 'on'
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - metadata: {}
     data:
       option: offpeak
     target:
       entity_id: select.energy
     action: select.select_option
-  - entity_id: select.myenergi_zappi_22725918_charge_mode
-    domain: select
-    type: select_option
-    option: Stopped
+  - action: select.select_option
+    metadata: {}
+    target:
+      entity_id: select.myenergi_zappi_22725918_charge_mode
+    data:
+      option: Stopped
   mode: single
 - id: '1708794531449'
   alias: Electricity @ Peak
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - schedule.electricity_peak
     to: 'on'
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - metadata: {}
     data:
       option: peak
     target:
       entity_id: select.energy
     action: select.select_option
-  - entity_id: select.myenergi_zappi_22725918_charge_mode
-    domain: select
-    type: select_option
-    option: Stopped
+  - action: select.select_option
+    metadata: {}
+    target:
+      entity_id: select.myenergi_zappi_22725918_charge_mode
+    data:
+      option: Stopped
   mode: single
 - id: '1708814827972'
   alias: Lights Off - Phase 1
@@ -815,32 +822,6 @@
     target:
       label_id: christmas_indoor
     data: {}
-  mode: single
-- id: '1728740086483'
-  alias: Zappi To Fast Charger
-  description: ''
-  triggers:
-  - trigger: time
-    at: '23:00:00'
-  conditions: []
-  actions:
-  - entity_id: select.myenergi_zappi_22725918_charge_mode
-    domain: select
-    type: select_option
-    option: Fast
-  mode: single
-- id: '1740179121351'
-  alias: Zappi to stop
-  description: ''
-  triggers:
-  - trigger: time
-    at: 08:00:00
-  conditions: []
-  actions:
-  - entity_id: select.myenergi_zappi_22725918_charge_mode
-    domain: select
-    type: select_option
-    option: Stopped
   mode: single
 - id: '1748208950255'
   alias: Lights off in Kitchen when not occupied
@@ -884,10 +865,12 @@
     event: enter
   conditions: []
   actions:
-  - entity_id: number.ev6_ac_charging_limit
-    domain: number
-    type: set_value
-    value: 100
+  - action: number.set_value
+    metadata: {}
+    target:
+      entity_id: number.ev6_ac_charging_limit
+    data:
+      value: '100'
   mode: single
 - id: '1752316083991'
   alias: Ev6 back to 80% leaving BOI ITC
@@ -899,46 +882,35 @@
     event: leave
   conditions: []
   actions:
-  - entity_id: number.ev6_ac_charging_limit
-    domain: number
-    type: set_value
-    value: 80
+  - action: number.set_value
+    metadata: {}
+    target:
+      entity_id: number.ev6_ac_charging_limit
+    data:
+      value: '80'
   mode: single
 - id: '1756563525020'
   alias: Turn water butt pump off after 5 mins
   description: ''
   triggers:
-  - type: turned_on
-    entity_id: switch.pump_socket
-    domain: switch
-    trigger: device
+  - trigger: state
+    entity_id:
+    - switch.pump_socket
+    from:
+    - 'off'
+    to:
+    - 'on'
     for:
       hours: 0
       minutes: 5
       seconds: 0
-  conditions:
-  - condition: state
-    entity_id: valve.mqtt_sonoff_valve_1
-    state: closed
-  actions:
-  - type: turn_off
-    entity_id: switch.pump_socket
-    domain: switch
-  mode: single
-- id: '1759071908742'
-  alias: Pump on with hose opened
-  description: ''
-  triggers:
-  - trigger: state
-    entity_id:
-    - valve.mqtt_sonoff_valve_1
-    from: closed
-    to: open
   conditions: []
   actions:
-  - type: turn_on
-    entity_id: switch.pump_socket
-    domain: switch
+  - action: switch.turn_off
+    metadata: {}
+    target:
+      entity_id: switch.pump_socket
+    data: {}
   mode: single
 - id: '1766170147358'
   alias: Early on for internal Christmas Lights
@@ -961,7 +933,7 @@
   triggers:
   - trigger: state
     entity_id:
-      - light.security_lights
+    - light.security_lights
   conditions:
   - condition: state
     entity_id: light.side_door_security
@@ -992,7 +964,9 @@
     tag_id: 75647255-e551-4960-8251-4a1bfcd4216d
   conditions: []
   actions:
-  - type: toggle
-    entity_id: switch.pump_socket
-    domain: switch
+  - action: switch.toggle
+    metadata: {}
+    target:
+      entity_id: switch.pump_socket
+    data: {}
   mode: single

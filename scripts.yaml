@@ -88,11 +88,13 @@ boost_upstairs_heating:
 turn_off_outdoor_security_lights:
   alias: Turn Off Outdoor Security Lights
   sequence:
-  - data: {}
+  - action: light.turn_off
+    metadata: {}
     target:
-      - entity_id: light.back_door_security
-      - entity_id: light.side_door_security
-    action: light.turn_off
+      entity_id:
+      - light.side_door_security
+      - light.back_door_security
+    data: {}
   - condition: state
     entity_id: input_boolean.house_light_up_time
     state: 'off'
