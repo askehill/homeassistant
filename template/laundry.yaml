@@ -3,67 +3,50 @@
     name: Tumble Dryer
     icon: mdi:tumble-dryer
     state: >
-      {% set current_power = states('sensor.laundry_power') | float %}
-      {% if 450 < current_power < 600 %}
-      on
-      {% elif 450 < (current_power - 500) < 600 %}
-      on
-      {% elif 450 < (current_power - 2000 ) < 450 %}
+      {% set total_w = states('sensor.laundry_power') | float %}
+      {% set washer = states('select.washing_machine') %}
+      {% if washer in ('Stopped', 'Paused') %}
+        {% set dryer_w = total_w %}
       {% else %}
-      off
+        {# Washer heating cycle draws ~2000W; tumble/rinse/spin draws ~400W.
+           Use 1500W as the crossover point between these two phases. #}
+        {% set washer_est = 2000 if total_w > 1500 else 400 %}
+        {% set dryer_w = total_w - washer_est %}
       {% endif %}
+      {{ 'on' if dryer_w > 400 else 'off' }}
 
   - unique_id: washing_machine_state
     name: Washing Machine
     icon: mdi:washing-machine
     state: >
-      {% set current_power = states('sensor.laundry_power') | float %}
-      {% if 2000 < current_power < 2100 %}
-      on
-      {% elif 2 < current_power < 450 %}
-      on
-      {% elif 2000 < (current_power - 500) < 2100 %}
-      on
-      {% elif 2 < (current_power - 500) < 450 %}
-      {% else %}
-      off
-      {% endif %}
+      {{ 'on' if is_state('select.washing_machine', 'Running') else 'off' }}
 
   - unique_id: dishwasher_state
     name: Dishwasher
     icon: mdi:dishwasher
+    delay_off:
+      minutes: 20
     state: >
       {% set current_power = states('sensor.shellypmmini_543204b7d0c0_power') | float %}
-      {% if 1900 < current_power < 3350 %}
-      on
-      {% elif 2 < current_power < 50 %}
-      on
-      {% else %}
-      off
-      {% endif %}
+      {{ current_power > 1900 }}
 
   - unique_id: hotwater_tap_state
     name: Hotwater Tap
     icon: mdi:water-pump
-    state: > 
+    state: >
       {% set current_power = states('sensor.shellypmmini_543204b7d0c0_power') | float %}
-      {% if 1200 < current_power < 1400 %}
-      on
-      {% else %}
-      off
-      {% endif %}
+      {{ 1100 < current_power < 1500 }}
 
   - unique_id: tumble_dryer_finished
     name: Tumble Dryer Complete
     delay_on:
       minutes: 3
     state: >
-      {{ is_state('tumble_dryer_state', 'off')  }}
+      {{ is_state('binary_sensor.tumble_dryer_state', 'off') }}
 
   - unique_id: washing_machine_finished
     name: Washing Machine Complete
     delay_on:
       minutes: 3
     state: >
-      {{ is_state('washing_machine_state', 'off')  }}
-
+      {{ not is_state('select.washing_machine', 'Running') }}
