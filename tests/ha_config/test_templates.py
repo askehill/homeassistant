@@ -452,3 +452,58 @@ class TestHeatingTimezoneComparison:
     def test_safer_summer_check(self, ha_env):
         ha_env.set_now(self.IST)
         assert ha_env.render(self.SUMMER_TMPL) == "on"
+
+
+# =============================================================================
+# water_volume.yaml  ── "Water Butt Volume" sensor
+# =============================================================================
+
+class TestWaterButtVolume:
+    """
+    Two-butt setup: 250 L big butt (sensor) + 100 L small butt connected at
+    1/4 height of the big butt (~62.5 L mark).
+
+    Piecewise model:
+      - ADC <= 0.179 V  →  big butt only  (0–62.5 L)
+      - ADC >  0.179 V  →  both butts     (62.5–350 L)
+
+    Calibration constant big_full_v = 0.714 V derived from observed
+    0.03 V ≈ 10.5 L (350 L/V scale). Update big_full_v in the template
+    once a confirmed full-tank reading is available.
+    """
+
+    SENSOR = "water_butt_volume"
+
+    def _render(self, ha_env, adc_v: float) -> int:
+        ha_env.set_state("sensor.shellyuni_c45bbe5f76f8_adc", str(adc_v))
+        tmpl = load_template_state("water_volume.yaml", self.SENSOR)
+        return int(ha_env.render(tmpl))
+
+    def test_empty_reads_zero(self, ha_env):
+        assert self._render(ha_env, 0.0) == 0
+
+    def test_negative_adc_clamps_to_zero(self, ha_env):
+        """Sensor can drift slightly negative when empty — must not report < 0 L."""
+        assert self._render(ha_env, -0.01) == 0
+
+    def test_low_fill_big_butt_only(self, ha_env):
+        """0.03 V ≈ 10.5 L — below connection threshold, only big butt has water."""
+        assert 10 <= self._render(ha_env, 0.03) <= 11
+
+    def test_at_threshold_is_62_litres(self, ha_env):
+        """At the connection threshold (~0.179 V) volume should be ~62.5 L."""
+        vol = self._render(ha_env, 0.179)
+        assert 60 <= vol <= 65
+
+    def test_above_threshold_both_butts_contribute(self, ha_env):
+        """Midway through combined fill should be well above big-butt-only value."""
+        vol = self._render(ha_env, 0.45)
+        assert vol > 150
+
+    def test_full_tank_is_350_litres(self, ha_env):
+        """At big_full_v (0.714 V) total volume should be 350 L."""
+        assert self._render(ha_env, 0.714) == 350
+
+    def test_overvoltage_capped_at_350(self, ha_env):
+        """ADC spike above full should not report more than total capacity."""
+        assert self._render(ha_env, 1.5) == 350

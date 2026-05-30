@@ -85,6 +85,20 @@ See the hex-to-device table in README.md.
 
 ---
 
+### Water butt volume (two-butt setup)
+`template/water_volume.yaml` reads `sensor.shellyuni_c45bbe5f76f8_adc` (Hyuduo 4-20mA submersible sensor, 0-5m range, mounted at the base of the big butt).
+
+Physical setup: 250 L big butt (sensor here) + 100 L small butt connected at 1/4 height of the big butt (~62.5 L mark) and at ~2 cm from the base of the small butt.
+
+Piecewise volume model:
+- ADC ≤ 0.179 V → big butt only, linear scale 62.5 L / 0.179 V
+- ADC > 0.179 V → both butts filling together, linear scale 287.5 L / 0.535 V
+- Clamped: minimum 0 L, maximum 350 L
+
+`big_full_v = 0.714` is derived from the observed calibration point (0.03 V ≈ 10.5 L → 350 L/V). Update this constant once a confirmed full-tank ADC reading is available.
+
+---
+
 ## What has NOT been done yet
 
 - `template/electricity_rate.yaml` contains a known stale sensor (`Electric Ireland Weekender (Sunday)`) that duplicates/conflicts with the utility_meter approach — not yet cleaned up.
