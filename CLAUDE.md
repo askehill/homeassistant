@@ -99,6 +99,18 @@ Piecewise volume model:
 
 ---
 
+### Laundry notification opt-in
+Four `input_boolean` helpers (defined in `configuration.yaml`) act as per-device opt-in flags for washing machine and tumble dryer completion notifications. Each is reset to `off` at midnight by the "Reset laundry notification subscriptions at midnight" automation.
+
+Two scripts (`toggle_washing_notification`, `toggle_dryer_notification`) use `context.user_id` to detect who pressed the Lovelace button, toggle that person's boolean, and send a confirmation notification to their device. User ID → device mapping:
+
+- `c84aab97a0c643c4bc2ee284cbb95ce8` → `notify.oneplus_a6013`
+- `caeb45de55f14787ad9f32e6172bb085` → `notify.pixel_8`
+
+To add a new device: add a new `input_boolean` pair in `configuration.yaml`, add a new `choose` branch in each script with the new user's ID, and add a new `if` block in each of the two notify automations.
+
+---
+
 ## What has NOT been done yet
 
 - `template/electricity_rate.yaml` contains a known stale sensor (`Electric Ireland Weekender (Sunday)`) that duplicates/conflicts with the utility_meter approach — not yet cleaned up.
