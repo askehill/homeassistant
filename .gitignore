@@ -1,17 +1,17 @@
-# Example .gitignore file for your config dir.
-# An * ensures that everything will be ignored.
+# Ignore everything by default.
 *
 
-# You can whitelist files/folders with !, these will not be ignored.
+# Explicitly allow the files and folders that should be tracked.
 !*.yaml
 !.gitignore
 !*.md
-!.travis.yml
 !*.py
 !custom_components/
 !custom_components/sonoff
+!.github/
+!.github/**
 
-# Ignore folders.
+# Ignore these folders.
 .storage
 .cloud
 .google.token
