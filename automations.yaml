@@ -1057,7 +1057,7 @@
       entity_id: input_boolean.notify_washing_finished_pixel
       state: "on"
     then:
-    - action: notify.pixel_8
+    - action: notify.mobile_app_pixel_8
       data:
         message: "Washing machine is done 🧺"
         title: "Laundry"
@@ -1088,7 +1088,7 @@
       entity_id: input_boolean.notify_dryer_finished_pixel
       state: "on"
     then:
-    - action: notify.pixel_8
+    - action: notify.mobile_app_pixel_8
       data:
         message: "Tumble dryer is done 🌀"
         title: "Laundry"
