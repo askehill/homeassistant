@@ -2,10 +2,10 @@
   alias: House Lighting up time
   sequence:
   - target:
-      device_id: 8dd3b302d420f1394f0c1a4b31200497
       entity_id:
       - light.kitchen_lights
       - light.living_room_lights
+      - light.lower_landing
     data: {}
     action: light.turn_on
   - action: switch.turn_on
@@ -19,8 +19,8 @@
     action: timer.start
   - delay: 00:10:00
   - target:
-      device_id: cface4cdb90d68175e3a8dcb4f5dcf45
       entity_id:
+      - light.front_door_light
       - light.back_door_porch
       - light.veranda
       label_id: outdoor_light
@@ -75,12 +75,14 @@ boost_upstairs_heating:
   - service: climate.set_temperature
     data:
       temperature: 20
-    entity_id: climate.upstairs_master_bedroom
+    target:
+      entity_id: climate.upstairs_master_bedroom
   - delay: 01:00:00
   - service: climate.set_temperature
     data:
       temperature: 7
-    entity_id: climate.upstairs_master_bedroom
+    target:
+      entity_id: climate.upstairs_master_bedroom
   mode: single
   icon: mdi:radiator
 turn_off_outdoor_security_lights:
@@ -88,14 +90,9 @@ turn_off_outdoor_security_lights:
   sequence:
   - data: {}
     target:
-      entity_id: light.back_door_security
-      device_id: 3780bf491a1e43bfc38b5918fdac6c96
+      - entity_id: light.back_door_security
+      - entity_id: light.side_door_security
     action: light.turn_off
-  - action: switch.turn_off
-    metadata: {}
-    target:
-      entity_id: switch.none_internalpathway
-    data: {}
   - condition: state
     entity_id: input_boolean.house_light_up_time
     state: 'off'
@@ -244,7 +241,7 @@ boost_1st_floor_heating:
       entity_id: timer.heating_boost
   mode: single
   icon: mdi:radiator
-bbc_radio_1_on_kitchen_display:
+rte_2fm_on_kitchen_display:
   sequence:
   - action: media_player.play_media
     target:
@@ -263,7 +260,7 @@ bbc_radio_1_on_kitchen_display:
         media_content_id: media-source://radio_browser
       - media_content_type: music
         media_content_id: media-source://radio_browser/country/IE
-  alias: BBC Radio 1 on Kitchen Display
+  alias: RTE 2FM on Kitchen Display
   description: ''
 '1766341273540':
   sequence:

@@ -31,7 +31,7 @@ utility_meter:
 
 schedule:
   electricity_peak:
-    name: "Peak Electrcity Times"
+    name: "Peak Electricity Times"
     monday:
       - from: "17:00:00"
         to: "19:00:00"
@@ -91,7 +91,7 @@ schedule:
       - from: "19:00:00"
         to: "23:00:00"
   electricity_night:
-    name: "Nighttime Electrcity Times"
+    name: "Nighttime Electrciity Times"
     monday:
       - from: "23:00:00"
         to: "24:00:00"

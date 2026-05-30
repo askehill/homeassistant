@@ -7,9 +7,8 @@
   conditions: []
   actions:
   - target:
-      device_id:
-      - cface4cdb90d68175e3a8dcb4f5dcf45
       entity_id:
+      - light.front_door_light
       - light.back_door_porch
       - light.veranda
     data: {}
@@ -27,32 +26,6 @@
     target:
       entity_id: input_boolean.house_light_up_time
     action: input_boolean.turn_off
-- id: '1579910576936'
-  alias: Lights off 23:30
-  description: ''
-  trigger:
-  - at: '23:30:00'
-    platform: time
-  condition: []
-  action:
-  - service: switch.turn_off
-    data: {}
-    target:
-      entity_id:
-      - switch.livingroomlight
-      - switch.livingroom3
-      - switch.0x00124b0026b86159
-      - switch.kitchen_corner_2
-      - switch.living_room_extra_socket
-      device_id: 1f26ce993e19ded83db08ec50768423b
-  - service: light.turn_off
-    data: {}
-    target:
-      entity_id:
-      - light.pantry
-      - light.kitchen_lights
-      - light.hotwatersensor
-  mode: single
 - id: '1581724986134'
   alias: Heating on (Winter Time)
   description: Turn all heating on from 5 mins after sunset if its Winter Time
@@ -115,7 +88,7 @@
   conditions: []
   actions:
   - target:
-      device_id: 8dd3b302d420f1394f0c1a4b31200497
+      entity_id: light.lower_landing
     action: light.turn_off
     data: {}
   mode: single
@@ -148,7 +121,7 @@
       before: sunrise
   actions:
   - target:
-      device_id: 8dd3b302d420f1394f0c1a4b31200497
+      entity_id: light.lower_landing
     data: {}
     action: light.turn_on
   - data:
@@ -235,7 +208,7 @@
   action:
   - service: light.turn_off
     target:
-      device_id: 8dd3b302d420f1394f0c1a4b31200497
+      entity_id: light.lower_landing
   mode: single
 - id: '1612027339078'
   alias: Turn off heating after boost
@@ -255,49 +228,6 @@
     data:
       temperature: 7
   mode: single
-- id: '1637008787311'
-  alias: Freya's Remote
-  description: ''
-  use_blueprint:
-    path: EPMatt/ikea_e2001_e2002.yaml
-    input:
-      integration: deCONZ
-      controller_device: 6ea6c0b214b7622c5d068f368292f20d
-      helper_last_controller_event: input_text.freya_controller
-      action_button_left_short:
-      - type: turn_on
-        device_id: 600ecb283ab949bf9b1b745403e28974
-        entity_id: light.extended_color_light_3
-        domain: light
-      action_button_right_short:
-      - type: turn_off
-        device_id: 600ecb283ab949bf9b1b745403e28974
-        entity_id: light.extended_color_light_3
-        domain: light
-      action_button_up_short:
-      - device_id: 600ecb283ab949bf9b1b745403e28974
-        domain: light
-        entity_id: light.extended_color_light_3
-        type: brightness_increase
-      action_button_down_short:
-      - device_id: 600ecb283ab949bf9b1b745403e28974
-        domain: light
-        entity_id: light.extended_color_light_3
-        type: brightness_decrease
-- id: '1637014229376'
-  alias: Study Controller
-  description: ''
-  use_blueprint:
-    path: EPMatt/ikea_e1524_e1810.yaml
-    input:
-      integration: deCONZ
-      controller_device: 999d5983438a25da9f6a81b87421da57
-      helper_last_controller_event: input_text.study_controller
-      action_button_center_short:
-      - type: toggle
-        device_id: dbb60cf9c35969d0ac5a6caacc3894eb
-        entity_id: light.study
-        domain: light
 - id: '1640031148188'
   alias: Reset things on restart
   description: ''
@@ -387,18 +317,6 @@
   action:
   - service: script.turn_off_outdoor_security_lights
     data: {}
-  mode: single
-- id: '1644096668891'
-  alias: test scene
-  description: ''
-  trigger: []
-  condition: []
-  action:
-  - device_id: 545a1a7a336d118575b03afc7ebf75b5
-    domain: select
-    entity_id: ddfa59260e2cb18afd5695cdc82640fb
-    type: select_option
-    option: Stopped
   mode: single
 - id: '1664032148317'
   alias: Turn off Davin's light on a school day
@@ -528,8 +446,7 @@
   description: ''
   triggers:
   - type: turned_on
-    device_id: 7f891ad2baa54e668db929b31446d864
-    entity_id: e5239693eeda50bf14b8e93a1e3dc28e
+    entity_id: switch.heater_socket
     domain: switch
     trigger: device
   conditions:
@@ -549,7 +466,6 @@
   description: ''
   triggers:
   - type: temperature
-    device_id: 32f4ba9c1f102c21cdd036dcc68776de
     entity_id: 313ad140345bb2e9ca08d274a44b09b5
     domain: sensor
     trigger: device
@@ -813,9 +729,8 @@
     target:
       entity_id: select.energy
     action: select.select_option
-  - device_id: 545a1a7a336d118575b03afc7ebf75b5
+  - entity_id: select.myenergi_zappi_22725918_charge_mode
     domain: select
-    entity_id: ddfa59260e2cb18afd5695cdc82640fb
     type: select_option
     option: Fast
   mode: single
@@ -852,9 +767,8 @@
     target:
       entity_id: select.energy
     action: select.select_option
-  - device_id: 545a1a7a336d118575b03afc7ebf75b5
+  - entity_id: select.myenergi_zappi_22725918_charge_mode
     domain: select
-    entity_id: ddfa59260e2cb18afd5695cdc82640fb
     type: select_option
     option: Stopped
   mode: single
@@ -874,9 +788,8 @@
     target:
       entity_id: select.energy
     action: select.select_option
-  - device_id: 545a1a7a336d118575b03afc7ebf75b5
+  - entity_id: select.myenergi_zappi_22725918_charge_mode
     domain: select
-    entity_id: ddfa59260e2cb18afd5695cdc82640fb
     type: select_option
     option: Stopped
   mode: single
@@ -911,9 +824,8 @@
     at: '23:00:00'
   conditions: []
   actions:
-  - device_id: 545a1a7a336d118575b03afc7ebf75b5
+  - entity_id: select.myenergi_zappi_22725918_charge_mode
     domain: select
-    entity_id: ddfa59260e2cb18afd5695cdc82640fb
     type: select_option
     option: Fast
   mode: single
@@ -925,9 +837,8 @@
     at: 08:00:00
   conditions: []
   actions:
-  - device_id: 545a1a7a336d118575b03afc7ebf75b5
+  - entity_id: select.myenergi_zappi_22725918_charge_mode
     domain: select
-    entity_id: ddfa59260e2cb18afd5695cdc82640fb
     type: select_option
     option: Stopped
   mode: single
@@ -973,9 +884,8 @@
     event: enter
   conditions: []
   actions:
-  - device_id: 7700466f6a621a07d36a398d22b94116
+  - entity_id: number.ev6_ac_charging_limit
     domain: number
-    entity_id: d2df2e7076df6e7959916bfbcc24debb
     type: set_value
     value: 100
   mode: single
@@ -989,9 +899,8 @@
     event: leave
   conditions: []
   actions:
-  - device_id: 7700466f6a621a07d36a398d22b94116
+  - entity_id: number.ev6_ac_charging_limit
     domain: number
-    entity_id: d2df2e7076df6e7959916bfbcc24debb
     type: set_value
     value: 80
   mode: single
@@ -1000,8 +909,7 @@
   description: ''
   triggers:
   - type: turned_on
-    device_id: b8801aeea04b902ec99288ca554282a6
-    entity_id: ce1b3ee597c2450baacf27d07de95fd4
+    entity_id: switch.pump_socket
     domain: switch
     trigger: device
     for:
@@ -1014,8 +922,7 @@
     state: closed
   actions:
   - type: turn_off
-    device_id: b8801aeea04b902ec99288ca554282a6
-    entity_id: ce1b3ee597c2450baacf27d07de95fd4
+    entity_id: switch.pump_socket
     domain: switch
   mode: single
 - id: '1759071908742'
@@ -1030,8 +937,7 @@
   conditions: []
   actions:
   - type: turn_on
-    device_id: b8801aeea04b902ec99288ca554282a6
-    entity_id: ce1b3ee597c2450baacf27d07de95fd4
+    entity_id: switch.pump_socket
     domain: switch
   mode: single
 - id: '1766170147358'
@@ -1053,11 +959,9 @@
   alias: Security lights on coming from shed
   description: ''
   triggers:
-  - type: changed_states
-    device_id: 7f891ad2baa54e668db929b31446d864
-    entity_id: af2796c116fec88ff95bf43fe0874975
-    domain: switch
-    trigger: device
+  - trigger: state
+    entity_id:
+      - light.security_lights
   conditions:
   - condition: state
     entity_id: light.side_door_security
@@ -1089,7 +993,6 @@
   conditions: []
   actions:
   - type: toggle
-    device_id: b8801aeea04b902ec99288ca554282a6
-    entity_id: ce1b3ee597c2450baacf27d07de95fd4
+    entity_id: switch.pump_socket
     domain: switch
   mode: single

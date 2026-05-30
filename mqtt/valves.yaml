@@ -1,6 +1,6 @@
 - valve:
   - unique_id: sonoff_valve_1
-    name: 
+    name: Outdoor Valve 1
     command_topic: "cmnd/zbbridge/ZbSend"
     state_topic: "tele/zbbridge/SENSOR"
     reports_position: false

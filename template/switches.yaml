@@ -14,6 +14,7 @@
     default_entity_id: switch.downstairs_template
     state: '{{ is_state(''switch.downstairs'', ''on'') }}'
     name: downstairs_template
+    unique_id: heating_downstairs
 - switch:
   - turn_on:
     - target:
@@ -28,6 +29,7 @@
     default_entity_id: switch.downstairs_living_room
     state: '{{ is_state(''switch.downstairs'', ''on'') }}'
     name: downstairs_living_room
+    unique_id: heating.downstairs_living_room
 - switch:
   - turn_on:
       - target:
@@ -42,4 +44,5 @@
     default_entity_id: switch.downstairs_kitchen
     state: '{{ is_state(''switch.downstairs'', ''on'') }}'
     name: downstairs_kitchen
+    unique_id: heating_downstairs_kitchen
   

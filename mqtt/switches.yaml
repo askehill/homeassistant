@@ -20,7 +20,7 @@
      payload_available: "Online"
      payload_not_available: "Offline"
      command_topic: "cmnd/zbbridge/ZbSend"
-     payload_on: '{"device":"0x280F8","send":{"Power":"On"} }' 
+     payload_on: '{"device":"0x80F8","send":{"Power":"On"} }' 
      payload_off: '{"device":"0x80F8","send":{"Power":"Off"} }'  
      qos: 1
      retain: false
