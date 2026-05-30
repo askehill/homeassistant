@@ -3,6 +3,8 @@
 
 # Explicitly allow the files and folders that should be tracked.
 !*.yaml
+!*.ini
+!requirements*.txt
 !.gitignore
 !*.md
 !*.py
@@ -10,6 +12,8 @@
 !custom_components/sonoff
 !.github/
 !.github/**
+!tests/
+!tests/**
 
 # Ignore these folders.
 .storage
