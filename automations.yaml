@@ -28,20 +28,30 @@
     action: input_boolean.turn_off
 - id: '1581724986134'
   alias: Heating on (Winter Time)
-  description: Turn all heating on from 5 mins after sunset if its Winter Time
+  description: >
+    Full heating on at sunset+5 min, or at 16:30 if the sun is already low —
+    whichever comes first. Fires only when GMT is active (winter) and heating
+    is not already on.
   trigger:
   - platform: sun
     event: sunset
     offset: 00:05:00
+  - platform: time
+    at: '16:30:00'
   condition:
+  - condition: state
+    entity_id: input_boolean.house_heating_time
+    state: 'off'
   - condition: template
-    value_template: '{{ now().astimezone().tzinfo | string == "GMT" }}'
+    value_template: '{{ now().utcoffset().total_seconds() == 0 }}'
+  - condition: template
+    value_template: '{{ state_attr("sun.sun", "elevation") | float < 10 }}'
   action:
-  - service: input_boolean.toggle
+  - action: input_boolean.turn_on
     data: {}
     target:
       entity_id: input_boolean.house_heating_time
-  - service: scene.turn_on
+  - action: scene.turn_on
     target:
       entity_id: scene.full_heating
     metadata: {}
@@ -93,15 +103,63 @@
     data: {}
   mode: single
 - id: '1581804716802'
-  alias: Lights On
-  description: ''
+  alias: Indoor lights on at sunset
+  description: Turns on indoor lights at sunset. Outdoor lights follow 10 minutes
+    later via the automation below — no script delay needed.
   trigger:
-  - event: sunset
-    platform: sun
+  - platform: sun
+    event: sunset
   condition: []
   action:
-  - entity_id: script.1581804598858
-    service: script.turn_on
+  - action: light.turn_on
+    data: {}
+    target:
+      entity_id:
+      - light.kitchen_lights
+      - light.living_room_lights
+      - light.lower_landing
+  - action: switch.turn_on
+    metadata: {}
+    target:
+      label_id: christmas_indoor
+    data: {}
+  - action: timer.start
+    data: {}
+    target:
+      entity_id: timer.pantry_light_timer
+  - action: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.house_light_up_time
+  mode: single
+- id: '1581804716803'
+  alias: Outdoor lights on 10 min after sunset
+  description: Fires independently of indoor lights — resilient to HA restarts between
+    the two triggers.
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: 00:10:00
+  condition: []
+  action:
+  - action: light.turn_on
+    data: {}
+    target:
+      entity_id:
+      - light.front_door_light
+      - light.back_door_porch
+      - light.veranda
+      label_id: outdoor_light
+  - action: switch.turn_on
+    data: {}
+    target:
+      entity_id:
+      - switch.path_lights
+      - switch.shed_outdoor_lights
+      label_id:
+      - christmas
+      - outdoor_light
+  mode: single
 - id: '1586039347252'
   alias: Landing Motion
   description: ''
@@ -539,20 +597,23 @@
   mode: single
 - id: '1679773598221'
   alias: Heating On (Summer Time)
-  description: Turn downstairs heating on from 5 mins if it's summer time
+  description: Downstairs heating only at sunset+5 min during BST (summer/shoulder).
   trigger:
   - platform: sun
     event: sunset
     offset: 00:05:00
   condition:
+  - condition: state
+    entity_id: input_boolean.house_heating_time
+    state: 'off'
   - condition: template
-    value_template: '{{ now().astimezone().tzinfo | string == "IST" }}'
+    value_template: '{{ now().utcoffset().total_seconds() == 3600 }}'
   action:
-  - service: input_boolean.toggle
+  - action: input_boolean.turn_on
     data: {}
     target:
       entity_id: input_boolean.house_heating_time
-  - service: scene.turn_on
+  - action: scene.turn_on
     target:
       entity_id: scene.downstairs_heating_living_room
     metadata: {}
@@ -707,9 +768,9 @@
     at: '19:45:00'
   condition:
   - condition: template
-    value_template: '{{ now().astimezone().tzinfo | string == "GMT" }}'
+    value_template: '{{ now().utcoffset().total_seconds() == 0 }}'
   action:
-  - service: scene.turn_on
+  - action: scene.turn_on
     target:
       entity_id: scene.downstairs_heating_living_room
     metadata: {}
