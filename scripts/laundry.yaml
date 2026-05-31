@@ -1,0 +1,83 @@
+toggle_washing_notification:
+  alias: Toggle Washing Machine Notification
+  description: >
+    Detects the calling user and toggles their washing machine notification
+    subscription. Sends a confirmation notification to their device.
+  sequence:
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: "{{ context.user_id == 'c84aab97a0c643c4bc2ee284cbb95ce8' }}"
+      sequence:
+      - action: input_boolean.toggle
+        target:
+          entity_id: input_boolean.notify_washing_finished_oneplus
+      - action: notify.mobile_app_cph2581
+        data:
+          title: "Laundry Notifications"
+          message: >
+            {% if is_state('input_boolean.notify_washing_finished_oneplus', 'on') %}
+              ✅ You'll be notified when the washing machine finishes.
+            {% else %}
+              🔕 Washing machine notifications off.
+            {% endif %}
+    - conditions:
+      - condition: template
+        value_template: "{{ context.user_id == 'caeb45de55f14787ad9f32e6172bb085' }}"
+      sequence:
+      - action: input_boolean.toggle
+        target:
+          entity_id: input_boolean.notify_washing_finished_pixel
+      - action: notify.mobile_app_pixel_8
+        data:
+          title: "Laundry Notifications"
+          message: >
+            {% if is_state('input_boolean.notify_washing_finished_pixel', 'on') %}
+              ✅ You'll be notified when the washing machine finishes.
+            {% else %}
+              🔕 Washing machine notifications off.
+            {% endif %}
+  mode: single
+  icon: mdi:washing-machine
+
+toggle_dryer_notification:
+  alias: Toggle Tumble Dryer Notification
+  description: >
+    Detects the calling user and toggles their tumble dryer notification
+    subscription. Sends a confirmation notification to their device.
+  sequence:
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: "{{ context.user_id == 'c84aab97a0c643c4bc2ee284cbb95ce8' }}"
+      sequence:
+      - action: input_boolean.toggle
+        target:
+          entity_id: input_boolean.notify_dryer_finished_oneplus
+      - action: notify.mobile_app_cph2581
+        data:
+          title: "Laundry Notifications"
+          message: >
+            {% if is_state('input_boolean.notify_dryer_finished_oneplus', 'on') %}
+              ✅ You'll be notified when the tumble dryer finishes.
+            {% else %}
+              🔕 Tumble dryer notifications off.
+            {% endif %}
+    - conditions:
+      - condition: template
+        value_template: "{{ context.user_id == 'caeb45de55f14787ad9f32e6172bb085' }}"
+      sequence:
+      - action: input_boolean.toggle
+        target:
+          entity_id: input_boolean.notify_dryer_finished_pixel
+      - action: notify.mobile_app_pixel_8
+        data:
+          title: "Laundry Notifications"
+          message: >
+            {% if is_state('input_boolean.notify_dryer_finished_pixel', 'on') %}
+              ✅ You'll be notified when the tumble dryer finishes.
+            {% else %}
+              🔕 Tumble dryer notifications off.
+            {% endif %}
+  mode: single
+  icon: mdi:tumble-dryer

@@ -91,7 +91,7 @@ schedule:
       - from: "19:00:00"
         to: "23:00:00"
   electricity_night:
-    name: "Nighttime Electrciity Times"
+    name: "Nighttime Electricity Times"
     monday:
       - from: "23:00:00"
         to: "24:00:00"
@@ -152,16 +152,14 @@ sensor:
     start: "{{ today_at() }}"
     end: "{{ now() }}"
 
-
-
 google_assistant:
- project_id: fruitfield-5db56
- service_account: !include service_account.json
- report_state: true
- exposed_domains:
-   - switch
-   - light
-   - camera
+  project_id: fruitfield-5db56
+  service_account: !include service_account.json
+  report_state: true
+  exposed_domains:
+    - switch
+    - light
+    - camera
 #  entity_config:
 #    switch.kitchen:
 #      name: CUSTOM_NAME_FOR_GOOGLE_ASSISTANT
@@ -171,10 +169,6 @@ google_assistant:
 #    light.living_room:
 #      expose: false
 #      room: LIVING_ROOM
-
-# Text to speech
-tts:
-  - platform: google_translate
 
 timer:
   landing_motion:
@@ -187,14 +181,6 @@ timer:
     duration: '01:00:00'
   pantry_light_timer:
     duration: '00:10:00'
-
-# media_player:
-#   - platform: enigma2
-#     name: Satellite & Saroview Receiver
-#     host: 192.168.1.131
-#     mac_address: 00:1d:ec:0e:5f:01
-#     deep_standby: true
-#     password: !secret vu_password
 
 input_boolean:
   notify_washing_finished_oneplus:
@@ -219,6 +205,6 @@ mqtt: !include_dir_merge_list mqtt
 switch: !include switches.yaml
 light: !include lights.yaml
 automation: !include automations.yaml
-script: !include scripts.yaml
+script: !include_dir_merge_named scripts
 scene: !include scenes.yaml
 climate: !include climate.yaml

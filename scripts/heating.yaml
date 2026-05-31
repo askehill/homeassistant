@@ -1,0 +1,82 @@
+boost_hot_water:
+  alias: Boost Hot Water
+  sequence:
+  - data: {}
+    action: switch.turn_on
+    target:
+      entity_id: switch.hotwater
+  - data: {}
+    target:
+      entity_id: timer.hotwater_boost
+    action: timer.start
+  mode: single
+  icon: mdi:water-boiler
+
+boost_downstairs_heating:
+  alias: Boost Downstairs Heating
+  sequence:
+  - service: climate.set_temperature
+    data:
+      temperature: 21.5
+    target:
+      entity_id: climate.downstairs_living_room
+  - service: timer.start
+    data:
+      duration: '0'
+    target:
+      entity_id: timer.heating_boost
+  mode: single
+  icon: mdi:radiator
+
+boost_upstairs_heating:
+  alias: Boost Upstairs heating
+  sequence:
+  - service: climate.set_temperature
+    data:
+      temperature: 20
+    target:
+      entity_id: climate.upstairs_master_bedroom
+  - delay: 01:00:00
+  - service: climate.set_temperature
+    data:
+      temperature: 7
+    target:
+      entity_id: climate.upstairs_master_bedroom
+  mode: single
+  icon: mdi:radiator
+
+boost_1st_floor_heating:
+  alias: Boost 1st Floor Heating
+  sequence:
+  - service: climate.set_temperature
+    data:
+      temperature: 21
+    target:
+      entity_id:
+      - climate.upstairs_study
+  - service: timer.start
+    data:
+      duration: '0'
+    target:
+      entity_id: timer.heating_boost
+  mode: single
+  icon: mdi:radiator
+
+downstairs_conditional_off:
+  alias: Downstairs Conditional Off
+  sequence:
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ state_attr(''climate.downstairs_kitchen'', ''current_temperature'')
+          > state_attr(''climate.downstairs_kitchen'', ''temperature'')}}'
+      - condition: template
+        value_template: '{{ state_attr(''climate.downstairs_living_room'', ''current_temperature'')
+          > state_attr(''climate.downstairs_living_room'', ''temperature'')}}'
+      sequence:
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id: switch.downstairs
+  mode: single
+  icon: mdi:water-boiler-off

@@ -1,0 +1,76 @@
+'1581804598858':
+  alias: House Lighting up time
+  sequence:
+  - target:
+      entity_id:
+      - light.kitchen_lights
+      - light.living_room_lights
+      - light.lower_landing
+    data: {}
+    action: light.turn_on
+  - action: switch.turn_on
+    metadata: {}
+    target:
+      label_id: christmas_indoor
+    data: {}
+  - data: {}
+    target:
+      entity_id: timer.pantry_light_timer
+    action: timer.start
+  - delay: 00:10:00
+  - target:
+      entity_id:
+      - light.front_door_light
+      - light.back_door_porch
+      - light.veranda
+      label_id: outdoor_light
+    data: {}
+    action: light.turn_on
+  - data: {}
+    target:
+      entity_id:
+      - switch.path_lights
+      - switch.shed_outdoor_lights
+      label_id:
+      - christmas
+      - outdoor_light
+    action: switch.turn_on
+  - data: {}
+    target:
+      entity_id: input_boolean.house_light_up_time
+    action: input_boolean.toggle
+  mode: single
+  description: ''
+
+turn_off_outdoor_security_lights:
+  alias: Turn Off Outdoor Security Lights
+  sequence:
+  - action: light.turn_off
+    metadata: {}
+    target:
+      entity_id:
+      - light.side_door_security
+      - light.back_door_security
+    data: {}
+  - condition: state
+    entity_id: input_boolean.house_light_up_time
+    state: 'off'
+  - data: {}
+    target:
+      entity_id: light.front_door_light
+    action: light.turn_off
+  mode: single
+  icon: mdi:light-flood-down
+  description: ''
+
+'1766341273540':
+  alias: "Christmas Lights \U0001F384✨"
+  description: ''
+  sequence:
+  - action: switch.turn_on
+    metadata: {}
+    target:
+      label_id:
+      - christmas_indoor
+      - christmas
+    data: {}

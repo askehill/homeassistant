@@ -1,0 +1,103 @@
+bbc_radio_on_kitchen_display:
+  alias: BBC Radio on Kitchen Display
+  description: Play a BBC Radio station on the kitchen display. Pass station as a key e.g. radio1, radio2, radio6.
+  fields:
+    station:
+      name: Station
+      description: BBC station key
+      required: true
+      selector:
+        select:
+          options:
+            - label: BBC Radio 1
+              value: radio1
+            - label: BBC Radio 1Xtra
+              value: radio1xtra
+            - label: BBC Radio 2
+              value: radio2
+            - label: BBC Radio 3
+              value: radio3
+            - label: BBC Radio 4
+              value: radio4
+            - label: BBC Radio 4 Extra
+              value: radio4extra
+            - label: BBC Radio 5 Live
+              value: radio5
+            - label: BBC Radio 5 Live Sports Extra
+              value: radio5sx
+            - label: BBC Radio 6 Music
+              value: radio6
+            - label: BBC Asian Network
+              value: asian
+            - label: BBC World Service
+              value: worldservice
+  sequence:
+  - variables:
+      stations:
+        radio1:
+          url: https://stream.live.vc.bbcmedia.co.uk/bbc_radio_one
+          title: BBC Radio 1
+        radio1xtra:
+          url: https://stream.live.vc.bbcmedia.co.uk/bbc_1xtra
+          title: BBC Radio 1Xtra
+        radio2:
+          url: https://stream.live.vc.bbcmedia.co.uk/bbc_radio_two
+          title: BBC Radio 2
+        radio3:
+          url: https://stream.live.vc.bbcmedia.co.uk/bbc_radio_three
+          title: BBC Radio 3
+        radio4:
+          url: https://stream.live.vc.bbcmedia.co.uk/bbc_radio_four_fm
+          title: BBC Radio 4
+        radio4extra:
+          url: https://stream.live.vc.bbcmedia.co.uk/bbc_radio_four_extra
+          title: BBC Radio 4 Extra
+        radio5:
+          url: https://stream.live.vc.bbcmedia.co.uk/bbc_radio_five_live
+          title: BBC Radio 5 Live
+        radio5sx:
+          url: https://stream.live.vc.bbcmedia.co.uk/bbc_radio_five_live_sports_extra
+          title: BBC Radio 5 Live Sports Extra
+        radio6:
+          url: https://stream.live.vc.bbcmedia.co.uk/bbc_6music
+          title: BBC Radio 6 Music
+        asian:
+          url: https://stream.live.vc.bbcmedia.co.uk/bbc_asian_network
+          title: BBC Asian Network
+        worldservice:
+          url: https://stream.live.vc.bbcmedia.co.uk/bbc_world_service
+          title: BBC World Service
+  - action: media_player.play_media
+    target:
+      entity_id: media_player.kitchen_display
+    data:
+      media_content_id: "{{ stations[station].url }}"
+      media_content_type: audio/mpeg
+    metadata:
+      title: "{{ stations[station].title }}"
+      media_class: music
+      children_media_class:
+      navigateIds:
+      - {}
+
+rte_2fm_on_kitchen_display:
+  alias: RTE 2FM on Kitchen Display
+  description: ''
+  sequence:
+  - action: media_player.play_media
+    target:
+      entity_id: media_player.kitchen_display
+    data:
+      media_content_id: media-source://radio_browser/f11919a5-3545-47a9-a420-80c5be17fe38
+      media_content_type: audio/aac
+    metadata:
+      title: RTÉ 2FM
+      thumbnail: ''
+      media_class: music
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: app
+        media_content_id: media-source://radio_browser
+      - media_content_type: music
+        media_content_id: media-source://radio_browser/country/IE

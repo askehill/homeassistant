@@ -1,0 +1,106 @@
+sitting_room_blind_half_height:
+  alias: Sitting Room Blind Half Height
+  sequence:
+  - service: cover.open_cover
+    data: {}
+    target:
+      entity_id: cover.sitting_room_blind
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 17
+      milliseconds: 0
+  - service: cover.stop_cover
+    data: {}
+    target:
+      entity_id: cover.sitting_room_blind
+  mode: restart
+  icon: mdi:blinds-open
+
+kitchen_blinds_up:
+  alias: Kitchen Blinds Up
+  sequence:
+  - service: cover.open_cover
+    data: {}
+    target:
+      entity_id: cover.back_blind_1
+  - service: cover.open_cover
+    data: {}
+    target:
+      entity_id: cover.back_blind_2
+  - service: cover.open_cover
+    data: {}
+    target:
+      entity_id: cover.back_blind_3
+  - service: cover.open_cover
+    data: {}
+    target:
+      entity_id: cover.back_blind_4
+  mode: queued
+  icon: mdi:blinds-open
+  max: 3
+
+close_sitting_room_blind:
+  alias: Close Sitting Room Blind
+  sequence:
+  - service: cover.close_cover
+    data: {}
+    target:
+      entity_id: cover.sitting_room_blind
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - service: cover.close_cover
+    data: {}
+    target:
+      entity_id: cover.sitting_room_blind
+  mode: single
+  icon: mdi:blinds
+
+kitchen_blinds_down:
+  alias: Kitchen Blinds Down
+  sequence:
+  - repeat:
+      count: 2
+      sequence:
+      - service: cover.close_cover
+        data: {}
+        target:
+          entity_id: cover.back_blind_1
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 1
+          milliseconds: 0
+      - service: cover.close_cover
+        data: {}
+        target:
+          entity_id: cover.back_blind_2
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 1
+          milliseconds: 0
+      - service: cover.close_cover
+        data: {}
+        target:
+          entity_id: cover.back_blind_3
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 1
+          milliseconds: 0
+      - service: cover.close_cover
+        data: {}
+        target:
+          entity_id: cover.back_blind_4
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 1
+          milliseconds: 0
+  mode: single
+  icon: mdi:roller-shade-closed
+  max: 3
