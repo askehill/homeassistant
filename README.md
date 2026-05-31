@@ -13,7 +13,8 @@ Personal Home Assistant configuration for an Irish home. Zigbee devices are brid
 ```
 configuration.yaml      # Top-level HA config; includes all sub-files
 automations.yaml        # All automations (single file)
-scripts.yaml / scenes.yaml / switches.yaml / lights.yaml / climate.yaml
+scripts/                # Scripts split by domain (heating, lighting, laundry, media, blinds)
+scenes.yaml / switches.yaml / lights.yaml / climate.yaml
 template/               # Template sensors & binary sensors (one file per domain)
 mqtt/                   # MQTT entities split by type (sensors, switches, lights, …)
 tests/                  # pytest suite — template logic, YAML structure, entity linting
@@ -77,7 +78,7 @@ The laundry clamp covers both the washing machine and the heat pump tumble dryer
 - If washer is Running → subtract an estimated washer draw (2000 W during heating, 400 W otherwise) and treat the residual as dryer power.
 - Dryer is considered "on" if its attributed power exceeds 400 W.
 
-The dishwasher and hot water tap share a separate Shelly PM Mini clamp. Dishwasher threshold is >1900 W with a 20-minute `delay_off` to bridge the gaps between cycles.
+The dishwasher and hot water tap share a separate Shelly PM Mini clamp. Dishwasher detection uses a dual-range approach: >1900 W (heating element) or 14–600 W (pump-only phase, ~18 W observed). The hot water tap (1100–1500 W) falls in the gap between these ranges. A 10-minute `delay_off` bridges brief transitions between phases.
 
 ---
 

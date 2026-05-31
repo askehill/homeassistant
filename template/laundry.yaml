@@ -25,10 +25,12 @@
     name: Dishwasher
     icon: mdi:dishwasher
     delay_off:
-      minutes: 20
+      minutes: 10
     state: >
       {% set current_power = states('sensor.shellypmmini_543204b7d0c0_power') | float %}
-      {{ current_power > 1900 }}
+      {# Heating phase: >1900W. Pump-only phase: ~18W (standby is ~2W, hot water tap is 1100-1500W).
+         Upper bound of 600W avoids falsely triggering on the hot water tap. #}
+      {{ current_power > 1900 or (14 < current_power < 600) }}
 
   - unique_id: hotwater_tap_state
     name: Hotwater Tap

@@ -199,28 +199,44 @@ class TestLaundryAppliances:
         assert result_low == result_high == "on"
 
     # ---- Dishwasher ---------------------------------------------------------
-    # Low-power detection (2–50W) removed — the hot water tap's ~2W standby
-    # was causing permanent false positives.  The sensor now triggers only on
-    # the heating element (>1900W) and uses delay_off: 20min to bridge the
-    # pump/fill/drain phases between heating cycles.
+    # Dual-range detection:
+    #   Heating phase:   > 1900W
+    #   Pump-only phase: 14W < power < 600W  (~18W observed in practice)
+    # Hot water tap (1100–1500W) falls in the gap between these ranges.
+    # Standby (~2W) is below the pump threshold, so no false positives.
 
     def test_dishwasher_on_at_2000w(self, ha_env):
+        # Heating element phase
         assert self._render(ha_env, "dishwasher_state", shelly_w=2000) == "on"
 
     def test_dishwasher_on_at_1950w(self, ha_env):
         assert self._render(ha_env, "dishwasher_state", shelly_w=1950) == "on"
 
+    def test_dishwasher_on_at_pump_phase(self, ha_env):
+        # Pump-only phase draws ~18W — must now trigger on
+        assert self._render(ha_env, "dishwasher_state", shelly_w=18) == "on"
+
+    def test_dishwasher_on_at_pump_phase_upper(self, ha_env):
+        # Upper end of pump range still detected
+        assert self._render(ha_env, "dishwasher_state", shelly_w=500) == "on"
+
     def test_dishwasher_off_at_0w(self, ha_env):
         assert self._render(ha_env, "dishwasher_state", shelly_w=0) == "off"
 
-    def test_dishwasher_off_at_low_power(self, ha_env):
-        # Low-power phases (pump/fill/drain) no longer trigger on — delay_off
-        # in the sensor definition handles the gaps between heating cycles.
-        assert self._render(ha_env, "dishwasher_state", shelly_w=20) == "off"
-
     def test_dishwasher_off_at_tap_standby(self, ha_env):
-        # Hot water tap ~2W standby must not trigger dishwasher detection.
+        # Hot water tap ~2W standby must not trigger dishwasher detection
         assert self._render(ha_env, "dishwasher_state", shelly_w=2) == "off"
+
+    def test_dishwasher_off_at_threshold_boundary(self, ha_env):
+        # Exactly at 14W is off (threshold is strictly > 14)
+        assert self._render(ha_env, "dishwasher_state", shelly_w=14) == "off"
+
+    def test_dishwasher_off_in_hot_water_tap_range(self, ha_env):
+        # Hot water tap range (1100–1500W) must NOT trigger dishwasher
+        assert self._render(ha_env, "dishwasher_state", shelly_w=1300) == "off"
+
+    def test_dishwasher_off_at_tap_lower_bound(self, ha_env):
+        assert self._render(ha_env, "dishwasher_state", shelly_w=700) == "off"
 
     # ---- Hot water tap ------------------------------------------------------
 
