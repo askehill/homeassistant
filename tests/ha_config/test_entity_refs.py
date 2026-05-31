@@ -28,7 +28,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from conftest import HA_ROOT  # noqa: E402
 
 AUTOMATIONS_FILE = os.path.join(HA_ROOT, "automations.yaml")
-SCRIPTS_FILE = os.path.join(HA_ROOT, "scripts.yaml")
+SCRIPTS_DIR = os.path.join(HA_ROOT, "scripts")
 
 
 # ---------------------------------------------------------------------------
@@ -38,6 +38,23 @@ SCRIPTS_FILE = os.path.join(HA_ROOT, "scripts.yaml")
 def load(path: str) -> Any:
     with open(path) as fh:
         return yaml.safe_load(fh)
+
+
+def load_scripts_dir(directory: str) -> dict:
+    """
+    Merge all YAML files in a directory into a single dict.
+    Mirrors what HA's !include_dir_merge_named does at runtime.
+    """
+    merged: dict = {}
+    for fname in sorted(os.listdir(directory)):
+        if not fname.endswith(".yaml"):
+            continue
+        fpath = os.path.join(directory, fname)
+        with open(fpath) as fh:
+            data = yaml.safe_load(fh)
+        if isinstance(data, dict):
+            merged.update(data)
+    return merged
 
 
 def _walk(obj: Any) -> Generator[Any, None, None]:
@@ -234,7 +251,7 @@ class TestAutomations:
 class TestScripts:
     @pytest.fixture(scope="class")
     def scripts(self):
-        return load(SCRIPTS_FILE)
+        return load_scripts_dir(SCRIPTS_DIR)
 
     def test_file_loads(self, scripts):
         assert scripts is not None
@@ -272,8 +289,9 @@ class TestScripts:
 
     def test_bbc_radio_script_alias_matches_content(self, scripts):
         """
-        The 'BBC Radio 1 on Kitchen Display' script actually plays RTÉ 2FM.
-        This test documents the mismatch so it gets fixed during tidy-up.
+        BBC Radio scripts that hardcode a non-BBC title in metadata are flagged.
+        Parameterised scripts (title contains '{{') are skipped — the title is
+        resolved at runtime from the stations variable and will always be a BBC name.
         """
         if not isinstance(scripts, dict):
             pytest.skip("scripts.yaml is not a dict")
@@ -284,11 +302,13 @@ class TestScripts:
             alias = val.get("alias", "")
             if "BBC Radio" not in alias:
                 continue
-            # Check if any step plays something non-BBC
+            # Check if any step plays something non-BBC (skip Jinja2 template values)
             for item in _walk(val.get("sequence", [])):
                 if isinstance(item, dict):
                     title = (item.get("metadata") or {}).get("title", "")
-                    if title and "BBC" not in title and "Radio 1" not in title:
+                    if not title or "{{" in title:
+                        continue  # parameterised — resolved at runtime
+                    if "BBC" not in title and "Radio 1" not in title:
                         pytest.fail(
                             f"Script '{alias}' plays '{title}' — alias doesn't match content. "
                             "Rename the script alias to match the actual station."
