@@ -1,13 +1,29 @@
 - sensor:
     - unique_id: electricity_rate
-      name: Electric Ireland Weekender (Sunday)
+      name: Electric Ireland SST
       unit_of_measurement: 'EUR/kWh'
       state: >
-        {% set time = { "month": (now().strftime('%m') | int), "hour": (now().strftime('%H') | int), "weekday": (now().weekday() | int ) } %}
-        {% set tariff = { "Peak": 0.40, "Weekend": 0.0, "OffPeak": 0.40 } %}
+        {# All rates are VAT-inclusive (9% VAT applied by Electric Ireland) #}
+        {% set carbon_tax  = 0.01251 %}
+        {% set rate_night  = 0.1362 + carbon_tax %}
+        {% set rate_day    = 0.2592 + carbon_tax %}
+        {% set rate_peak   = 0.2765 + carbon_tax %}
+        {% set hour = now().strftime('%H') | int %}
+        {# Night: 23:00–08:00 #}
+        {% if hour >= 23 or hour < 8 %}
+          {{ rate_night | round(4) }}
+        {# Peak: 17:00–19:00 every day #}
+        {% elif hour >= 17 and hour < 19 %}
+          {{ rate_peak | round(4) }}
+        {# Day: everything else #}
+        {% else %}
+          {{ rate_day | round(4) }}
+        {% endif %}
 
-        {%if ( (time.weekday == 6) and (time.hour > 8) and (time.hour < 23) ) %}
-            {{ tariff.Weekend }}
-        {%else%}
-            {{ tariff.Peak }}
-        {%endif%}
+    - unique_id: electricity_daily_fixed_cost
+      name: Electricity Daily Fixed Cost
+      unit_of_measurement: 'EUR'
+      icon: mdi:currency-eur
+      state: >
+        {# Standing charge €250.77/year + PSO levy €19.10/year, both charged daily — all VAT-inclusive #}
+        {{ ((250.77 + 19.10) / 365) | round(4) }}

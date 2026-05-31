@@ -27,7 +27,6 @@ utility_meter:
       - peak
       - offpeak
       - night
-      - weekend
 
 schedule:
   electricity_peak:

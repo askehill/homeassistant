@@ -40,16 +40,17 @@ For the full hardware inventory — Zigbee hex IDs, RF codes, and Shelly MAC add
 
 ---
 
-## Electricity tariff (Electric Ireland Weekender)
+## Electricity tariff (Electric Ireland SST, 30% discount)
 
-Tracked via `sensor.electricity_rate` and four `utility_meter` tariffs.
+Tracked via `sensor.electricity_rate` and three `utility_meter` tariffs. All rates are VAT-inclusive.
 
-| Tariff | Times |
-|---|---|
-| Night | 23:00 – 08:00 daily |
-| Off-Peak | 08:00 – 17:00 and 19:00 – 23:00 daily |
-| Peak | 17:00 – 19:00 Mon–Sat |
-| Weekend (free) | 08:00 – 23:00 Sunday |
+| Tariff | Times | Unit rate | Inc. carbon tax |
+|---|---|---|---|
+| Night | 23:00 – 08:00 daily | 13.62c/kWh | 14.87c/kWh |
+| Day | 08:00 – 17:00 and 19:00 – 23:00 daily | 25.92c/kWh | 27.17c/kWh |
+| Peak | 17:00 – 19:00 daily | 27.65c/kWh | 28.90c/kWh |
+
+Fixed daily charges: standing charge €250.77/year + PSO levy €19.10/year = **€0.7394/day** (`sensor.electricity_daily_fixed_cost`).
 
 Automations switch the active `utility_meter` tariff at each boundary.
 

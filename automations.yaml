@@ -798,23 +798,6 @@
     data:
       option: Fast
   mode: single
-- id: '1708794366178'
-  alias: Electricity @ Weekend
-  description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - schedule.electricity_weekend
-    to: 'on'
-  condition: []
-  action:
-  - service: select.select_option
-    metadata: {}
-    data:
-      option: weekend
-    target:
-      entity_id: select.energy
-  mode: single
 - id: '1708794468723'
   alias: Electricity @ Off Peak
   description: ''

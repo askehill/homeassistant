@@ -48,58 +48,75 @@ def summer_monday(hour: int) -> datetime:
 # electricity_rate.yaml  ── "Electric Ireland Weekender (Sunday)" sensor
 # =============================================================================
 
-class TestElectricityRateWeekender:
+class TestElectricityRateSST:
     """
-    The sensor implements a simple Sunday-daytime free rate.
-    Weekend rate (0.0) applies on Sunday between 09:00 and 22:59.
-    All other times fall back to Peak (0.40).
+    Electric Ireland Smart Standard Tariff (SST) with 30% discount.
 
-    NOTE: This sensor does NOT model the SST Saver 3-band tariff.
-    The schedule helper in configuration.yaml is the authoritative
-    source for Night / Day / Peak bands.  These tests document the
-    current (simple) logic so a refactor doesn't accidentally change it.
+    Unit rates (inc. carbon tax €0.01251/kWh):
+      Night:  23:00–08:00 all days  → €0.1362 + €0.01251 = €0.1487/kWh
+      Peak:   17:00–19:00 every day → €0.2765 + €0.01251 = €0.2890/kWh
+      Day:    everything else       → €0.2592 + €0.01251 = €0.2717/kWh
+
+    Fixed daily charges (separate sensor):
+      Standing charge €250.77/year + PSO €19.10/year = €0.7394/day
     """
 
-    TMPL_ID = "electricity_rate"
     FILE = "electricity_rate.yaml"
+    NIGHT = round(0.1362 + 0.01251, 4)   # 0.1487
+    DAY   = round(0.2592 + 0.01251, 4)   # 0.2717
+    PEAK  = round(0.2765 + 0.01251, 4)   # 0.2890
+    DAILY_FIXED = round((250.77 + 19.10) / 365, 4)  # 0.7394
 
-    def _render(self, ha_env, dt):
-        tmpl = load_template_state(self.FILE, self.TMPL_ID)
+    def _render(self, ha_env, unique_id, dt):
+        tmpl = load_template_state(self.FILE, unique_id)
         ha_env.set_now(dt)
         return ha_env.render(tmpl)
 
-    def test_sunday_midday_is_weekend_rate(self, ha_env):
-        result = self._render(ha_env, sunday(12))
-        assert float(result) == 0.0
+    # ---- Unit rate ----------------------------------------------------------
 
-    def test_sunday_9am_boundary_is_weekend(self, ha_env):
-        # hour > 8 → 09:00 is the first qualifying hour
-        result = self._render(ha_env, sunday(9))
-        assert float(result) == 0.0
+    def test_monday_midday_is_day_rate(self, ha_env):
+        assert float(self._render(ha_env, "electricity_rate", monday(12))) == self.DAY
 
-    def test_sunday_8am_is_not_weekend(self, ha_env):
-        # hour must be > 8, so 08:00 does NOT qualify
-        result = self._render(ha_env, sunday(8))
-        assert float(result) == 0.40
+    def test_monday_peak_is_peak_rate(self, ha_env):
+        assert float(self._render(ha_env, "electricity_rate", monday(17))) == self.PEAK
 
-    def test_sunday_23pm_is_not_weekend(self, ha_env):
-        # hour must be < 23, so 23:00 does NOT qualify
-        result = self._render(ha_env, sunday(23))
-        assert float(result) == 0.40
+    def test_monday_18_is_peak(self, ha_env):
+        assert float(self._render(ha_env, "electricity_rate", monday(18))) == self.PEAK
 
-    def test_monday_midday_is_peak(self, ha_env):
-        result = self._render(ha_env, monday(12))
-        assert float(result) == 0.40
+    def test_monday_19_is_day_not_peak(self, ha_env):
+        # 19:00 is end of peak window — should be day rate
+        assert float(self._render(ha_env, "electricity_rate", monday(19))) == self.DAY
 
-    def test_saturday_midday_is_peak(self, ha_env):
-        # Saturday (weekday 5) is not Sunday (weekday 6) — should be Peak
-        result = self._render(ha_env, saturday(12))
-        assert float(result) == 0.40
+    def test_monday_night_is_night_rate(self, ha_env):
+        assert float(self._render(ha_env, "electricity_rate", monday(2))) == self.NIGHT
 
-    def test_monday_night_is_peak(self, ha_env):
-        # The Weekender sensor has no night-rate logic — Night hours are 0.40 too
-        result = self._render(ha_env, monday(2))
-        assert float(result) == 0.40
+    def test_monday_23_is_night(self, ha_env):
+        # 23:00 is start of night window
+        assert float(self._render(ha_env, "electricity_rate", monday(23))) == self.NIGHT
+
+    def test_monday_8am_is_day_not_night(self, ha_env):
+        # 08:00 is end of night window — should be day rate
+        assert float(self._render(ha_env, "electricity_rate", monday(8))) == self.DAY
+
+    def test_saturday_peak_window_is_peak_rate(self, ha_env):
+        # Peak applies every day including weekends
+        assert float(self._render(ha_env, "electricity_rate", saturday(17))) == self.PEAK
+
+    def test_sunday_peak_window_is_peak_rate(self, ha_env):
+        assert float(self._render(ha_env, "electricity_rate", sunday(18))) == self.PEAK
+
+    def test_saturday_night_is_night_rate(self, ha_env):
+        assert float(self._render(ha_env, "electricity_rate", saturday(1))) == self.NIGHT
+
+    # ---- Daily fixed cost ---------------------------------------------------
+
+    def test_daily_fixed_cost_is_correct(self, ha_env):
+        result = self._render(ha_env, "electricity_daily_fixed_cost", monday(12))
+        assert float(result) == self.DAILY_FIXED
+
+    def test_daily_fixed_cost_is_positive(self, ha_env):
+        result = self._render(ha_env, "electricity_daily_fixed_cost", monday(12))
+        assert float(result) > 0
 
 
 # =============================================================================
