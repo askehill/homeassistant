@@ -235,6 +235,33 @@ class TestLaundryAppliances:
                                    laundry_w=2100, washer_state="Running")
         assert result_low == result_high == "on"
 
+    # ---- Washing machine finished -------------------------------------------
+    # SmartThings sometimes gets stuck on Running after a cycle ends.
+    # Power fallback: if SmartThings says Running but clamp < 100W → finished.
+
+    def test_washing_machine_finished_when_stopped(self, ha_env):
+        assert self._render(ha_env, "washing_machine_finished",
+                            laundry_w=0, washer_state="Stopped") == "on"
+
+    def test_washing_machine_finished_when_paused(self, ha_env):
+        assert self._render(ha_env, "washing_machine_finished",
+                            laundry_w=0, washer_state="Paused") == "on"
+
+    def test_washing_machine_finished_power_fallback(self, ha_env):
+        # SmartThings stuck on Running but clamp at idle → treat as finished
+        assert self._render(ha_env, "washing_machine_finished",
+                            laundry_w=5, washer_state="Running") == "on"
+
+    def test_washing_machine_not_finished_when_running_with_power(self, ha_env):
+        # Genuinely running — SmartThings says Running and drawing real power
+        assert self._render(ha_env, "washing_machine_finished",
+                            laundry_w=2000, washer_state="Running") == "off"
+
+    def test_washing_machine_not_finished_dryer_still_running(self, ha_env):
+        # SmartThings stuck Running, but dryer is still drawing power — not finished yet
+        assert self._render(ha_env, "washing_machine_finished",
+                            laundry_w=600, washer_state="Running") == "off"
+
     # ---- Dishwasher ---------------------------------------------------------
     # Heating element only: > 1900W. The 14-600W pump-phase band was removed
     # because the hot water tap's keep-warm cycle (~18-200W) caused false

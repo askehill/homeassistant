@@ -1079,11 +1079,26 @@
 
 - id: '1780000000003'
   alias: Reset laundry notification subscriptions at midnight
-  description: Clears all laundry notification opt-ins each night so users subscribe fresh each day.
+  description: >
+    Clears all laundry notification opt-ins each night so users subscribe fresh each day.
+    Skipped if either appliance is still running to avoid clearing a subscription mid-cycle.
+    Re-checks every 15 minutes if a cycle was in progress at midnight.
   triggers:
   - trigger: time
     at: "00:00:00"
-  conditions: []
+  - trigger: time_pattern
+    minutes: "/15"
+    id: retry
+  conditions:
+  - condition: time
+    after: "00:00:00"
+    before: "06:00:00"
+  - condition: state
+    entity_id: binary_sensor.washing_machine
+    state: "off"
+  - condition: state
+    entity_id: binary_sensor.tumble_dryer
+    state: "off"
   actions:
   - action: input_boolean.turn_off
     target:

@@ -45,15 +45,20 @@
       {{ 1100 < current_power < 1500 }}
 
   - unique_id: tumble_dryer_finished
-    name: Tumble Dryer Complete
+    name: Tumble Dryer Finished
     delay_on:
       minutes: 3
     state: >
-      {{ is_state('binary_sensor.tumble_dryer_state', 'off') }}
+      {{ is_state('binary_sensor.tumble_dryer', 'off') }}
 
   - unique_id: washing_machine_finished
-    name: Washing Machine Complete
+    name: Washing Machine Finished
     delay_on:
       minutes: 3
     state: >
-      {{ not is_state('select.washing_machine', 'Running') }}
+      {% set washer = states('select.washing_machine') %}
+      {% set total_w = states('sensor.laundry_power') | float %}
+      {# Primary: SmartThings transitions to Stopped/Paused when cycle ends.
+         Fallback: if SmartThings gets stuck on Running but clamp draws < 100W
+         for 3 min, treat the cycle as done. #}
+      {{ washer != 'Running' or total_w < 100 }}
