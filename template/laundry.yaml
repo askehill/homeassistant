@@ -2,6 +2,8 @@
   - unique_id: tumble_dryer_state
     name: Tumble Dryer
     icon: mdi:tumble-dryer
+    delay_off:
+      minutes: 15
     state: >
       {% set total_w = states('sensor.laundry_power') | float %}
       {% set washer = states('select.washing_machine') %}
@@ -9,7 +11,9 @@
         {% set dryer_w = total_w %}
       {% else %}
         {# Washer heating cycle draws ~2000W; tumble/rinse/spin draws ~400W.
-           Use 1500W as the crossover point between these two phases. #}
+           Use 1500W as the crossover point between these two phases.
+           Dryer heating adds ~500W on top; cool-down draws ~50-100W and is
+           bridged by delay_off rather than detected directly. #}
         {% set washer_est = 2000 if total_w > 1500 else 400 %}
         {% set dryer_w = total_w - washer_est %}
       {% endif %}
@@ -25,12 +29,13 @@
     name: Dishwasher
     icon: mdi:dishwasher
     delay_off:
-      minutes: 10
+      minutes: 60
     state: >
       {% set current_power = states('sensor.shellypmmini_543204b7d0c0_power') | float %}
-      {# Heating phase: >1900W. Pump-only phase: ~18W (standby is ~2W, hot water tap is 1100-1500W).
-         Upper bound of 600W avoids falsely triggering on the hot water tap. #}
-      {{ current_power > 1900 or (14 < current_power < 600) }}
+      {# Heating element only: >1900W. The 14-600W band was removed because the hot water tap's
+         keep-warm cycle (~18-200W) caused false positives. The 60-min delay_off bridges the
+         pump-only phases (~18W) between heating cycles instead. #}
+      {{ current_power > 1900 }}
 
   - unique_id: hotwater_tap_state
     name: Hotwater Tap

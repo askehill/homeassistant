@@ -185,6 +185,12 @@ class TestLaundryAppliances:
 
     # ---- Tumble dryer — washer running (residual power) ---------------------
 
+    def test_dryer_cooldown_not_detected_while_washer_runs(self, ha_env):
+        # Dryer cool-down (~100W) + washer rinse/spin (~400W) = ~500W total.
+        # dryer_w = 500 - 400 = 100W, below threshold — bridged by delay_off in sensor.
+        assert self._render(ha_env, "tumble_dryer_state",
+                            laundry_w=500, washer_state="Running") == "off"
+
     def test_dryer_on_washer_heating_both_running(self, ha_env):
         """Washer heating (~2000W) + dryer heating (~700W) = 2700W total.
         Residual = 2700 - 2000 = 700W → dryer on."""
@@ -230,44 +236,35 @@ class TestLaundryAppliances:
         assert result_low == result_high == "on"
 
     # ---- Dishwasher ---------------------------------------------------------
-    # Dual-range detection:
-    #   Heating phase:   > 1900W
-    #   Pump-only phase: 14W < power < 600W  (~18W observed in practice)
-    # Hot water tap (1100–1500W) falls in the gap between these ranges.
-    # Standby (~2W) is below the pump threshold, so no false positives.
+    # Heating element only: > 1900W. The 14-600W pump-phase band was removed
+    # because the hot water tap's keep-warm cycle (~18-200W) caused false
+    # positives on the shared clamp. The 60-min delay_off in the sensor
+    # definition bridges pump-only phases between heating cycles instead.
 
     def test_dishwasher_on_at_2000w(self, ha_env):
-        # Heating element phase
         assert self._render(ha_env, "dishwasher_state", shelly_w=2000) == "on"
 
     def test_dishwasher_on_at_1950w(self, ha_env):
         assert self._render(ha_env, "dishwasher_state", shelly_w=1950) == "on"
 
-    def test_dishwasher_on_at_pump_phase(self, ha_env):
-        # Pump-only phase draws ~18W — must now trigger on
-        assert self._render(ha_env, "dishwasher_state", shelly_w=18) == "on"
-
-    def test_dishwasher_on_at_pump_phase_upper(self, ha_env):
-        # Upper end of pump range still detected
-        assert self._render(ha_env, "dishwasher_state", shelly_w=500) == "on"
-
     def test_dishwasher_off_at_0w(self, ha_env):
         assert self._render(ha_env, "dishwasher_state", shelly_w=0) == "off"
 
     def test_dishwasher_off_at_tap_standby(self, ha_env):
-        # Hot water tap ~2W standby must not trigger dishwasher detection
+        # ~2W standby must not trigger
         assert self._render(ha_env, "dishwasher_state", shelly_w=2) == "off"
 
-    def test_dishwasher_off_at_threshold_boundary(self, ha_env):
-        # Exactly at 14W is off (threshold is strictly > 14)
-        assert self._render(ha_env, "dishwasher_state", shelly_w=14) == "off"
+    def test_dishwasher_off_at_pump_phase(self, ha_env):
+        # Pump-only phase (~18W) is bridged by delay_off, not detected directly
+        assert self._render(ha_env, "dishwasher_state", shelly_w=18) == "off"
 
     def test_dishwasher_off_in_hot_water_tap_range(self, ha_env):
-        # Hot water tap range (1100–1500W) must NOT trigger dishwasher
-        assert self._render(ha_env, "dishwasher_state", shelly_w=1300) == "off"
+        # Hot water tap keep-warm and heating (18–1500W) must not trigger
+        assert self._render(ha_env, "dishwasher_state", shelly_w=200) == "off"
 
-    def test_dishwasher_off_at_tap_lower_bound(self, ha_env):
-        assert self._render(ha_env, "dishwasher_state", shelly_w=700) == "off"
+    def test_dishwasher_off_at_1900w_boundary(self, ha_env):
+        # Exactly 1900W is off (threshold is strictly > 1900)
+        assert self._render(ha_env, "dishwasher_state", shelly_w=1900) == "off"
 
     # ---- Hot water tap ------------------------------------------------------
 
