@@ -67,7 +67,21 @@ class TestElectricityRateSST:
     PEAK  = round(0.2765 + 0.01251, 4)   # 0.2890
     DAILY_FIXED = round((250.77 + 19.10) / 365, 4)  # 0.7394
 
+    def _seed_config(self, ha_env):
+        """Seed the electricity_plan_config sensor that the rate template reads from."""
+        ha_env.set_state(
+            "sensor.electricity_plan_config",
+            "Electric Ireland SST",
+            rate_night=0.1362,
+            rate_day=0.2592,
+            rate_peak=0.2765,
+            carbon_tax=0.01251,
+            standing_charge_annual=250.77,
+            pso_annual=19.10,
+        )
+
     def _render(self, ha_env, unique_id, dt):
+        self._seed_config(ha_env)
         tmpl = load_template_state(self.FILE, unique_id)
         ha_env.set_now(dt)
         return ha_env.render(tmpl)

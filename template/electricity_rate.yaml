@@ -1,23 +1,22 @@
 - sensor:
     - unique_id: electricity_rate
-      name: Electric Ireland SST
+      name: Electricity Rate
       unit_of_measurement: 'EUR/kWh'
       state: >
-        {# All rates are VAT-inclusive (9% VAT applied by Electric Ireland) #}
-        {% set carbon_tax  = 0.01251 %}
-        {% set rate_night  = 0.1362 + carbon_tax %}
-        {% set rate_day    = 0.2592 + carbon_tax %}
-        {% set rate_peak   = 0.2765 + carbon_tax %}
+        {% set rate_night = state_attr('sensor.electricity_plan_config', 'rate_night') | float %}
+        {% set rate_day   = state_attr('sensor.electricity_plan_config', 'rate_day')   | float %}
+        {% set rate_peak  = state_attr('sensor.electricity_plan_config', 'rate_peak')  | float %}
+        {% set carbon_tax = state_attr('sensor.electricity_plan_config', 'carbon_tax') | float %}
         {% set hour = now().strftime('%H') | int %}
         {# Night: 23:00–08:00 #}
         {% if hour >= 23 or hour < 8 %}
-          {{ rate_night | round(4) }}
-        {# Peak: 17:00–19:00 every day #}
+          {{ (rate_night + carbon_tax) | round(4) }}
+        {# Peak: 17:00–19:00 daily #}
         {% elif hour >= 17 and hour < 19 %}
-          {{ rate_peak | round(4) }}
+          {{ (rate_peak + carbon_tax) | round(4) }}
         {# Day: everything else #}
         {% else %}
-          {{ rate_day | round(4) }}
+          {{ (rate_day + carbon_tax) | round(4) }}
         {% endif %}
 
     - unique_id: electricity_daily_fixed_cost
@@ -25,5 +24,6 @@
       unit_of_measurement: 'EUR'
       icon: mdi:currency-eur
       state: >
-        {# Standing charge €250.77/year + PSO levy €19.10/year, both charged daily — all VAT-inclusive #}
-        {{ ((250.77 + 19.10) / 365) | round(4) }}
+        {% set standing = state_attr('sensor.electricity_plan_config', 'standing_charge_annual') | float %}
+        {% set pso      = state_attr('sensor.electricity_plan_config', 'pso_annual') | float %}
+        {{ ((standing + pso) / 365) | round(4) }}

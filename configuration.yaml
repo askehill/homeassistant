@@ -197,6 +197,7 @@ input_boolean:
 
 homeassistant:
   customize: !include customize.yaml
+  packages: !include_dir_named packages
 
 template: !include_dir_merge_list template
 mqtt: !include_dir_merge_list mqtt

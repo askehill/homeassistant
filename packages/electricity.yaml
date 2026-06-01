@@ -1,0 +1,26 @@
+# ---------------------------------------------------------------------------
+# Electricity plan configuration
+# Update this file when tariff rates change, then restart HA.
+#
+# Plan:           Electric Ireland SST (30% discount)
+# Effective from: 2025-01-01
+# All rates are VAT-inclusive.
+# ---------------------------------------------------------------------------
+
+template:
+  - sensor:
+      - unique_id: electricity_plan_config
+        name: Electricity Plan Config
+        state: "Electric Ireland SST"
+        attributes:
+          plan_name: "Electric Ireland SST"
+          effective_from: "2025-01-01"
+          # Unit rates (VAT-inclusive, excluding carbon tax)
+          rate_night: 0.1362    # 23:00–08:00 daily
+          rate_day:   0.2592    # 08:00–17:00 and 19:00–23:00 daily
+          rate_peak:  0.2765    # 17:00–19:00 daily
+          # Carbon tax per kWh (VAT-inclusive)
+          carbon_tax: 0.01251
+          # Fixed annual charges (VAT-inclusive)
+          standing_charge_annual: 250.77
+          pso_annual: 19.10

@@ -21,6 +21,7 @@ from jinja2 import Environment
 HA_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 TEMPLATE_DIR = os.path.join(HA_ROOT, "template")
 MQTT_DIR = os.path.join(HA_ROOT, "mqtt")
+PACKAGES_DIR = os.path.join(HA_ROOT, "packages")
 
 
 # ---------------------------------------------------------------------------

@@ -23,7 +23,7 @@ import pytest
 import yaml
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from conftest import HA_ROOT, MQTT_DIR, TEMPLATE_DIR  # noqa: E402
+from conftest import HA_ROOT, MQTT_DIR, PACKAGES_DIR, TEMPLATE_DIR  # noqa: E402
 
 
 # ---------------------------------------------------------------------------
@@ -181,6 +181,7 @@ class TestTemplateSensorUniqueIds:
     @pytest.fixture(scope="class")
     def all_template_entities(self):
         entities = []
+        # Scan template/ directory
         for fname in Path(TEMPLATE_DIR).glob("*.yaml"):
             data = load(str(fname))
             for block in (data or []):
@@ -191,8 +192,25 @@ class TestTemplateSensorUniqueIds:
                     if isinstance(items, list):
                         for item in items:
                             if isinstance(item, dict):
-                                item["_source_file"] = fname.name
+                                item["_source_file"] = f"template/{fname.name}"
                                 entities.append(item)
+        # Scan packages/ directory (template: key inside each package)
+        packages_path = Path(PACKAGES_DIR)
+        if packages_path.exists():
+            for fname in packages_path.glob("*.yaml"):
+                data = load(str(fname))
+                if not isinstance(data, dict):
+                    continue
+                for block in (data.get("template") or []):
+                    if not isinstance(block, dict):
+                        continue
+                    for domain in ("sensor", "binary_sensor", "switch"):
+                        items = block.get(domain) or []
+                        if isinstance(items, list):
+                            for item in items:
+                                if isinstance(item, dict):
+                                    item["_source_file"] = f"packages/{fname.name}"
+                                    entities.append(item)
         return entities
 
     def test_all_template_entities_have_unique_id(self, all_template_entities):

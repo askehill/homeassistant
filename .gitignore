@@ -8,6 +8,8 @@
 !.gitignore
 !*.md
 !*.py
+!packages/
+!packages/**
 !custom_components/
 !custom_components/sonoff
 !.github/
