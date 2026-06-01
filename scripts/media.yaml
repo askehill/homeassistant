@@ -35,38 +35,29 @@ bbc_radio_on_kitchen_display:
   - variables:
       stations:
         radio1:
-          url: https://stream.live.vc.bbcmedia.co.uk/bbc_radio_one
+          url: https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/nonuk/pc_hd_abr_v2/aks/bbc_radio_one.mpd
           title: BBC Radio 1
         radio1xtra:
-          url: https://stream.live.vc.bbcmedia.co.uk/bbc_1xtra
+          url: https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/nonuk/pc_hd_abr_v2/aks/bbc_1xtra.mpd
           title: BBC Radio 1Xtra
         radio2:
-          url: https://stream.live.vc.bbcmedia.co.uk/bbc_radio_two
+          url: ttps://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/nonuk/pc_hd_abr_v2/aks/bbc_radio_two.mpd
           title: BBC Radio 2
         radio3:
-          url: https://stream.live.vc.bbcmedia.co.uk/bbc_radio_three
+          url: https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/nonuk/pc_hd_abr_v2/aks/bbc_radio_three.mpd
           title: BBC Radio 3
         radio4:
-          url: https://stream.live.vc.bbcmedia.co.uk/bbc_radio_four_fm
+          url: https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/nonuk/pc_hd_abr_v2/aks/bbc_radio_fourfm.mpd
           title: BBC Radio 4
         radio4extra:
-          url: https://stream.live.vc.bbcmedia.co.uk/bbc_radio_four_extra
+          url: https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/nonuk/pc_hd_abr_v2/aks/bbc_radio_four_extra.mpd
           title: BBC Radio 4 Extra
         radio5:
-          url: https://stream.live.vc.bbcmedia.co.uk/bbc_radio_five_live
+          url: ttps://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/nonuk/pc_hd_abr_v2/aks/bbc_radio_five_live.mpd
           title: BBC Radio 5 Live
-        radio5sx:
-          url: https://stream.live.vc.bbcmedia.co.uk/bbc_radio_five_live_sports_extra
-          title: BBC Radio 5 Live Sports Extra
         radio6:
-          url: https://stream.live.vc.bbcmedia.co.uk/bbc_6music
+          url: https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/nonuk/pc_hd_abr_v2/aks/bbc_6music.mpd
           title: BBC Radio 6 Music
-        asian:
-          url: https://stream.live.vc.bbcmedia.co.uk/bbc_asian_network
-          title: BBC Asian Network
-        worldservice:
-          url: https://stream.live.vc.bbcmedia.co.uk/bbc_world_service
-          title: BBC World Service
   - action: media_player.play_media
     target:
       entity_id: media_player.kitchen_display
