@@ -35,37 +35,59 @@ bbc_radio_on_kitchen_display:
   - variables:
       stations:
         radio1:
-          url: https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/nonuk/pc_hd_abr_v2/aks/bbc_radio_one.mpd
+          url: https://as-hls-ww-live.akamaized.net/pool_01505109/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d96000.norewind.m3u8
           title: BBC Radio 1
+          logo: https://sounds.files.bbci.co.uk/v2/networks/bbc_radio_one/background_image
         radio1xtra:
-          url: https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/nonuk/pc_hd_abr_v2/aks/bbc_1xtra.mpd
+          url: https://as-hls-ww-live.akamaized.net/pool_92079267/live/ww/bbc_1xtra/bbc_1xtra.isml/bbc_1xtra-audio%3d96000.norewind.m3u8
           title: BBC Radio 1Xtra
+          logo: https://sounds.files.bbci.co.uk/v2/networks/bbc_1xtra/background_image
         radio2:
-          url: ttps://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/nonuk/pc_hd_abr_v2/aks/bbc_radio_two.mpd
+          url: https://as-hls-ww-live.akamaized.net/pool_74208725/live/ww/bbc_radio_two/bbc_radio_two.isml/bbc_radio_two-audio%3d96000.norewind.m3u8
           title: BBC Radio 2
+          logo: https://sounds.files.bbci.co.uk/v2/networks/bbc_radio_two/background_image
         radio3:
-          url: https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/nonuk/pc_hd_abr_v2/aks/bbc_radio_three.mpd
+          url: https://as-hls-ww-live.akamaized.net/pool_23461179/live/ww/bbc_radio_three/bbc_radio_three.isml/bbc_radio_three-audio%3d96000.norewind.m3u8
           title: BBC Radio 3
+          logo: https://sounds.files.bbci.co.uk/v2/networks/bbc_radio_three/background_image
         radio4:
-          url: https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/nonuk/pc_hd_abr_v2/aks/bbc_radio_fourfm.mpd
+          url: https://as-hls-ww-live.akamaized.net/pool_55057080/live/ww/bbc_radio_fourfm/bbc_radio_fourfm.isml/bbc_radio_fourfm-audio%3d96000.norewind.m3u8
           title: BBC Radio 4
+          logo: https://sounds.files.bbci.co.uk/v2/networks/bbc_radio_fourfm/background_image
         radio4extra:
-          url: https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/nonuk/pc_hd_abr_v2/aks/bbc_radio_four_extra.mpd
+          url: https://as-hls-ww-live.akamaized.net/pool_26173715/live/ww/bbc_radio_four_extra/bbc_radio_four_extra.isml/bbc_radio_four_extra-audio%3d96000.norewind.m3u8
           title: BBC Radio 4 Extra
+          logo: https://sounds.files.bbci.co.uk/v2/networks/bbc_radio_four_extra/background_image
         radio5:
-          url: ttps://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/nonuk/pc_hd_abr_v2/aks/bbc_radio_five_live.mpd
+          url: https://as-hls-ww-live.akamaized.net/pool_89021708/live/ww/bbc_radio_five_live/bbc_radio_five_live.isml/bbc_radio_five_live-audio%3d96000.norewind.m3u8
           title: BBC Radio 5 Live
+          logo: https://sounds.files.bbci.co.uk/v2/networks/bbc_radio_five_live/background_image
+        radio5sx:
+          # UK-only stream — may be geo-blocked in Ireland
+          url: https://as-hls-uk-live.akamaized.net/pool_47700285/live/uk/bbc_radio_five_live_sports_extra/bbc_radio_five_live_sports_extra.isml/bbc_radio_five_live_sports_extra-audio%3d96000.norewind.m3u8
+          title: BBC Radio 5 Live Sports Extra
+          logo: https://sounds.files.bbci.co.uk/v2/networks/bbc_radio_five_live_sports_extra/background_image
         radio6:
-          url: https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/nonuk/pc_hd_abr_v2/aks/bbc_6music.mpd
+          url: https://as-hls-ww-live.akamaized.net/pool_81827798/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d96000.norewind.m3u8
           title: BBC Radio 6 Music
+          logo: https://sounds.files.bbci.co.uk/v2/networks/bbc_6music/background_image
+        asian:
+          url: https://as-hls-ww-live.akamaized.net/pool_22108647/live/ww/bbc_asian_network/bbc_asian_network.isml/bbc_asian_network-audio%3d96000.norewind.m3u8
+          title: BBC Asian Network
+          logo: https://sounds.files.bbci.co.uk/v2/networks/bbc_asian_network/background_image
+        worldservice:
+          url: https://as-hls-ww-live.akamaized.net/pool_87948813/live/ww/bbc_world_service/bbc_world_service.isml/bbc_world_service-audio%3d96000.norewind.m3u8
+          title: BBC World Service
+          logo: https://sounds.files.bbci.co.uk/v2/networks/bbc_world_service/background_image
   - action: media_player.play_media
     target:
       entity_id: media_player.kitchen_display
     data:
       media_content_id: "{{ stations[station].url }}"
-      media_content_type: audio/mpeg
+      media_content_type: application/x-mpegURL
     metadata:
       title: "{{ stations[station].title }}"
+      thumbnail: "{{ stations[station].logo }}"
       media_class: music
       children_media_class:
       navigateIds:
