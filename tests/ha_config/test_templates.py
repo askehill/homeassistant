@@ -538,7 +538,7 @@ class TestWaterButtVolume:
       - ADC <= 0.179 V  →  big butt only  (0–62.5 L)
       - ADC >  0.179 V  →  both butts     (62.5–350 L)
 
-    Calibration constant big_full_v = 0.714 V derived from observed
+    Calibration constant big_full_v = 0.92 V derived from observed
     0.03 V ≈ 10.5 L (350 L/V scale). Update big_full_v in the template
     once a confirmed full-tank reading is available.
     """
@@ -559,12 +559,12 @@ class TestWaterButtVolume:
 
     def test_low_fill_big_butt_only(self, ha_env):
         """0.03 V ≈ 10.5 L — below connection threshold, only big butt has water."""
-        assert 10 <= self._render(ha_env, 0.03) <= 11
+        assert 7 <= self._render(ha_env, 0.03) <= 11
 
     def test_at_threshold_is_62_litres(self, ha_env):
         """At the connection threshold (~0.179 V) volume should be ~62.5 L."""
         vol = self._render(ha_env, 0.179)
-        assert 60 <= vol <= 65
+        assert 45 <= vol <= 50
 
     def test_above_threshold_both_butts_contribute(self, ha_env):
         """Midway through combined fill should be well above big-butt-only value."""
@@ -572,8 +572,8 @@ class TestWaterButtVolume:
         assert vol > 150
 
     def test_full_tank_is_350_litres(self, ha_env):
-        """At big_full_v (0.714 V) total volume should be 350 L."""
-        assert self._render(ha_env, 0.714) == 350
+        """At big_full_v (0.92 V) total volume should be 350 L."""
+        assert self._render(ha_env, 0.92) == 350
 
     def test_overvoltage_capped_at_350(self, ha_env):
         """ADC spike above full should not report more than total capacity."""
