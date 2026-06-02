@@ -8,10 +8,10 @@
       {# Two-butt setup: 250L big butt (sensor here) + 100L small butt connected
          at 1/4 height of big butt (~62.5L mark). Below that threshold only the
          big butt holds water; above it both fill together.
-         Calibration: 0V = empty, ~0.714V = big butt full (350 L/V scale).
+         Calibration: 0V = empty, ~1.0V = big butt full (350 L/V scale).
          Tune big_full_v once you observe a full reading. #}
       {% set adc = [states('sensor.shellyuni_c45bbe5f76f8_adc') | float(0), 0] | max %}
-      {% set big_full_v = 0.92 %}
+      {% set big_full_v = 0.99 %}
       {% set threshold_v = big_full_v * 0.25 %}
       {% if adc <= threshold_v %}
         {% set volume = (adc / threshold_v) * 62.5 %}

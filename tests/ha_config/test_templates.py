@@ -568,12 +568,12 @@ class TestWaterButtVolume:
 
     def test_above_threshold_both_butts_contribute(self, ha_env):
         """Midway through combined fill should be well above big-butt-only value."""
-        vol = self._render(ha_env, 0.45)
+        vol = self._render(ha_env, 0.5)
         assert vol > 150
 
     def test_full_tank_is_350_litres(self, ha_env):
-        """At big_full_v (0.92 V) total volume should be 350 L."""
-        assert self._render(ha_env, 0.92) == 350
+        """At big_full_v (1.0 V) total volume should be 350 L."""
+        assert self._render(ha_env, 1.0) == 350
 
     def test_overvoltage_capped_at_350(self, ha_env):
         """ADC spike above full should not report more than total capacity."""
