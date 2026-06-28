@@ -180,6 +180,8 @@ timer:
     duration: '01:00:00'
   pantry_light_timer:
     duration: '00:10:00'
+  outdoor_pump_timer:
+    duration: '00:10:00'
 
 input_boolean:
   notify_washing_finished_oneplus:
