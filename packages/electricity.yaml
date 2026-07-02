@@ -16,9 +16,9 @@ template:
           plan_name: "Electric Ireland SST"
           effective_from: "2025-01-01"
           # Unit rates (VAT-inclusive, excluding carbon tax)
-          rate_night: 0.1362    # 23:00–08:00 daily
-          rate_day:   0.2592    # 08:00–17:00 and 19:00–23:00 daily
-          rate_peak:  0.2765    # 17:00–19:00 daily
+          rate_night: 0.1491    # 23:00–08:00 daily
+          rate_day:   0.2838    # 08:00–17:00 and 19:00–23:00 daily
+          rate_peak:  0.3028    # 17:00–19:00 daily
           # Carbon tax per kWh (VAT-inclusive)
           carbon_tax: 0.01251
           # Fixed annual charges (VAT-inclusive)
