@@ -7,7 +7,7 @@
   hot_tolerance: 0
   initial_hvac_mode: "heat"
   heater: switch.downstairs_living_room
-  target_sensor: sensor.living_room_temperature
+  target_sensor: sensor.0x00124b0024ce1bc7_temperature
   target_temp: 7
 - platform: generic_thermostat
   name: Downstairs (Kitchen)
@@ -37,6 +37,6 @@
   hot_tolerance: 0
   initial_hvac_mode: "heat"
   heater: switch.floor2
-  target_sensor: sensor.master_bedroom_temperature_2
+  target_sensor: sensor.0x00158d008b314867_temperature
   target_temp: 7
   
