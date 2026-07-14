@@ -16,6 +16,7 @@
   entities:
     - light.livingroomlight_1
     - light.livingroomlight_2
+    - light.living_room_sonoff_socket
 - platform: group
   name: Outdoor Lights
   entities:
