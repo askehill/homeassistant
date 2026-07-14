@@ -2,7 +2,7 @@
 - platform: group
   name: "Kitchen Lights"
   entities:
-    - switch.kitchen_corner
+    - light.kitchen_corner
     - light.pantry
 - platform: group
   name: Security Lights
