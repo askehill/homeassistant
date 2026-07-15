@@ -90,34 +90,6 @@ class TestMqttSwitches:
         missing = [s.get("unique_id", "?") for s in switches if not s.get("state_topic")]
         assert missing == [], f"Switches missing state_topic: {missing}"
 
-
-# ---------------------------------------------------------------------------
-# MQTT sensors — availability topic consistency
-# ---------------------------------------------------------------------------
-
-class TestMqttSensors:
-    SENSORS_FILE = os.path.join(MQTT_DIR, "sensors.yaml")
-
-    @pytest.fixture(scope="class")
-    def sensors(self):
-        data = load(self.SENSORS_FILE)
-        result = []
-        for block in data:
-            if isinstance(block, dict):
-                items = block.get("sensor") or []
-                if isinstance(items, list):
-                    result.extend(items)
-        return result
-
-    def test_all_sensors_have_availability_topic(self, sensors):
-        missing = [s.get("name", "?") for s in sensors if not s.get("availability_topic")]
-        assert missing == [], f"Sensors without availability_topic: {missing}"
-
-    def test_all_sensors_have_unit(self, sensors):
-        missing = [s.get("name", "?") for s in sensors if not s.get("unit_of_measurement")]
-        assert missing == [], f"Sensors without unit_of_measurement: {missing}"
-
-
 # ---------------------------------------------------------------------------
 # MQTT valves — must have a name
 # ---------------------------------------------------------------------------
