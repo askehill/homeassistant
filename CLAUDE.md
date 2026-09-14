@@ -46,18 +46,20 @@ The heat pump dryer draws 500–900 W while heating, 100–300 W in cool-down.
 - Dishwasher detection: `current_power > 1900` with `delay_off: minutes: 60`. The 60-min delay_off bridges pump-only phases (~18 W) between heating cycles. A 14–600 W band was tried but caused false positives because the hot water tap's keep-warm boiler cycles at ~18–200 W every 10–15 min — indistinguishable from the dishwasher pump on a shared clamp. Reverted to heating-element-only detection.
 - Hot water tap detection: `1100 < current_power < 1500`.
 
-### Electricity tariff — Electric Ireland SST
+### Electricity tariff — Electric Ireland Home Electric + SST Saver 20%
 Rates are centralised in `packages/electricity.yaml` as a template sensor (`sensor.electricity_plan_config`) with attributes. `template/electricity_rate.yaml` reads from that sensor via `state_attr()`. This means tariff changes only require editing one file.
 
-Current rates (VAT-inclusive, effective 2025-01-01):
-- Night (23:00–08:00): 13.62 c/kWh
-- Day (08:00–17:00 and 19:00–23:00): 25.92 c/kWh
-- Peak (17:00–19:00, every day): 27.65 c/kWh
-- Carbon tax: 1.251 c/kWh (added on top of all bands)
-- Standing charge: €250.77/year (charged daily)
-- PSO levy: €19.10/year (charged daily)
+Current rates (VAT-inclusive, effective 2026-09-14):
+- Night (23:00–08:00): 17.04 c/kWh
+- Day (08:00–17:00 and 19:00–23:00): 32.43 c/kWh
+- Peak (17:00–19:00, every day): 34.60 c/kWh
+- Carbon tax: 1.251 c/kWh (added on top of all bands, unchanged)
+- Standing charge: €250.77/year, urban (charged daily; unchanged)
+- PSO levy: €19.10/year (charged daily; unchanged)
 
-**To update rates (e.g. July 1st change):** edit only `packages/electricity.yaml`.
+Plan switched from the previous "Electric Ireland SST" (30% discount) to "Home Electric + SST Saver 20%" (20% discount) on 2026-09-14. History: rates were previously updated 2025-01-01 → 2026-07-01 (14.91/28.38/30.28 c/kWh, same SST plan) → 2026-09-14 (this change, new plan).
+
+**To update rates (e.g. next annual review):** edit `packages/electricity.yaml` — append a line to the rate-history table at the top of that file, then update the plan/rate attributes below it — then refresh this section, `README.md`'s tariff table, and the `TestElectricityRateSST` constants in `tests/ha_config/test_templates.py`.
 
 ### Laundry notifications — entity ID naming rule
 HA generates entity IDs from the `name` field, not `unique_id`. A sensor named "Washing Machine Finished" becomes `binary_sensor.washing_machine_finished`. Automations must reference the name-derived entity ID. Previous bug: sensors were named "Complete" but automations referenced `_finished` IDs — notifications never fired. Fixed by renaming to "Finished" throughout.

@@ -2,23 +2,33 @@
 # Electricity plan configuration
 # Update this file when tariff rates change, then restart HA.
 #
-# Plan:           Electric Ireland SST (30% discount)
-# Effective from: 2025-01-01
+# Plan:           Electric Ireland Home Electric + SST Saver 20% (20% discount)
+# Effective from: 2026-09-14
 # All rates are VAT-inclusive.
+#
+# Rate history (append one line here every time you update the block below —
+# this is the historical record; git log has the diffs but not the "why/what
+# changed" summary at a glance):
+#
+#   Effective     Plan                                              Night    Day      Peak     Discount
+#   2025-01-01    Electric Ireland SST                              13.62c   25.92c   27.65c   30%
+#   2026-07-01    Electric Ireland SST (rate refresh, same plan)    14.91c   28.38c   30.28c   30%
+#   2026-09-14    Electric Ireland Home Electric + SST Saver 20%    17.04c   32.43c   34.60c   20%
+#                 (plan switch — standing charge/PSO/carbon tax unchanged)
 # ---------------------------------------------------------------------------
 
 template:
   - sensor:
       - unique_id: electricity_plan_config
         name: Electricity Plan Config
-        state: "Electric Ireland SST"
+        state: "Electric Ireland Home Electric + SST Saver 20%"
         attributes:
-          plan_name: "Electric Ireland SST"
-          effective_from: "2026-07-01"
+          plan_name: "Electric Ireland Home Electric + SST Saver 20%"
+          effective_from: "2026-09-14"
           # Unit rates (VAT-inclusive, excluding carbon tax)
-          rate_night: 0.1491    # 23:00–08:00 daily
-          rate_day:   0.2838    # 08:00–17:00 and 19:00–23:00 daily
-          rate_peak:  0.3028    # 17:00–19:00 daily
+          rate_night: 0.1704    # 23:00–08:00 daily
+          rate_day:   0.3243    # 08:00–17:00 and 19:00–23:00 daily
+          rate_peak:  0.3460    # 17:00–19:00 daily
           # Carbon tax per kWh (VAT-inclusive)
           carbon_tax: 0.01251
           # Fixed annual charges (VAT-inclusive)

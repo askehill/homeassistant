@@ -50,31 +50,31 @@ def summer_monday(hour: int) -> datetime:
 
 class TestElectricityRateSST:
     """
-    Electric Ireland Smart Standard Tariff (SST) with 30% discount.
+    Electric Ireland Home Electric + SST Saver 20% (20% discount), effective 2026-09-14.
 
     Unit rates (inc. carbon tax €0.01251/kWh):
-      Night:  23:00–08:00 all days  → €0.1362 + €0.01251 = €0.1487/kWh
-      Peak:   17:00–19:00 every day → €0.2765 + €0.01251 = €0.2890/kWh
-      Day:    everything else       → €0.2592 + €0.01251 = €0.2717/kWh
+      Night:  23:00–08:00 all days  → €0.1704 + €0.01251 = €0.1829/kWh
+      Peak:   17:00–19:00 every day → €0.3460 + €0.01251 = €0.3585/kWh
+      Day:    everything else       → €0.3243 + €0.01251 = €0.3368/kWh
 
     Fixed daily charges (separate sensor):
       Standing charge €250.77/year + PSO €19.10/year = €0.7394/day
     """
 
     FILE = "electricity_rate.yaml"
-    NIGHT = round(0.1362 + 0.01251, 4)   # 0.1487
-    DAY   = round(0.2592 + 0.01251, 4)   # 0.2717
-    PEAK  = round(0.2765 + 0.01251, 4)   # 0.2890
+    NIGHT = round(0.1704 + 0.01251, 4)   # 0.1829
+    DAY   = round(0.3243 + 0.01251, 4)   # 0.3368
+    PEAK  = round(0.3460 + 0.01251, 4)   # 0.3585
     DAILY_FIXED = round((250.77 + 19.10) / 365, 4)  # 0.7394
 
     def _seed_config(self, ha_env):
         """Seed the electricity_plan_config sensor that the rate template reads from."""
         ha_env.set_state(
             "sensor.electricity_plan_config",
-            "Electric Ireland SST",
-            rate_night=0.1362,
-            rate_day=0.2592,
-            rate_peak=0.2765,
+            "Electric Ireland Home Electric + SST Saver 20%",
+            rate_night=0.1704,
+            rate_day=0.3243,
+            rate_peak=0.3460,
             carbon_tax=0.01251,
             standing_charge_annual=250.77,
             pso_annual=19.10,

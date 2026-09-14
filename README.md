@@ -40,15 +40,15 @@ For the full hardware inventory — Zigbee hex IDs, RF codes, and Shelly MAC add
 
 ---
 
-## Electricity tariff (Electric Ireland SST, 30% discount)
+## Electricity tariff (Electric Ireland Home Electric + SST Saver 20%, 20% discount)
 
-Tracked via `sensor.electricity_rate` and three `utility_meter` tariffs. All rates are VAT-inclusive.
+Tracked via `sensor.electricity_rate` and three `utility_meter` tariffs. All rates are VAT-inclusive. Effective from 2026-09-14.
 
 | Tariff | Times | Unit rate | Inc. carbon tax |
 |---|---|---|---|
-| Night | 23:00 – 08:00 daily | 13.62c/kWh | 14.87c/kWh |
-| Day | 08:00 – 17:00 and 19:00 – 23:00 daily | 25.92c/kWh | 27.17c/kWh |
-| Peak | 17:00 – 19:00 daily | 27.65c/kWh | 28.90c/kWh |
+| Night | 23:00 – 08:00 daily | 17.04c/kWh | 18.29c/kWh |
+| Day | 08:00 – 17:00 and 19:00 – 23:00 daily | 32.43c/kWh | 33.68c/kWh |
+| Peak | 17:00 – 19:00 daily | 34.60c/kWh | 35.85c/kWh |
 
 Fixed daily charges: standing charge €250.77/year + PSO levy €19.10/year = **€0.7394/day** (`sensor.electricity_daily_fixed_cost`).
 
