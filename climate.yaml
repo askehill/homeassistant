@@ -37,6 +37,6 @@
   hot_tolerance: 0
   initial_hvac_mode: "heat"
   heater: switch.floor2
-  target_sensor: sensor.0x00158d008b314867_temperature
+  target_sensor: sensor.0x8c73dafffeb678eb_temperature
   target_temp: 7
   
