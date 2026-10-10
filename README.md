@@ -71,6 +71,7 @@ Automations switch the active `utility_meter` tariff at each boundary.
 | `water_volume.yaml` | Water butt volume estimation |
 | `scenic_usage_sensor.yaml` | Scenic (family car) booked hours this month, per person |
 | `scenic_upcoming.yaml` | Scenic upcoming bookings list for the dashboard |
+| `scenic_status.yaml` | Scenic "In use" / "Free" status for a dashboard badge |
 
 ### Laundry single-clamp logic
 
