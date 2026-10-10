@@ -2,6 +2,14 @@
     - unique_id: electricity_rate
       name: Electricity Rate
       unit_of_measurement: 'EUR/kWh'
+      # The config sensor can be missing at startup/reload; stay unavailable
+      # until every attribute used below exists (avoids float(None) errors).
+      availability: >
+        {% set c = 'sensor.electricity_plan_config' %}
+        {{ state_attr(c, 'rate_night') is not none
+           and state_attr(c, 'rate_day') is not none
+           and state_attr(c, 'rate_peak') is not none
+           and state_attr(c, 'carbon_tax') is not none }}
       state: >
         {% set rate_night = state_attr('sensor.electricity_plan_config', 'rate_night') | float %}
         {% set rate_day   = state_attr('sensor.electricity_plan_config', 'rate_day')   | float %}
@@ -23,6 +31,10 @@
       name: Electricity Daily Fixed Cost
       unit_of_measurement: 'EUR'
       icon: mdi:currency-eur
+      availability: >
+        {% set c = 'sensor.electricity_plan_config' %}
+        {{ state_attr(c, 'standing_charge_annual') is not none
+           and state_attr(c, 'pso_annual') is not none }}
       state: >
         {% set standing = state_attr('sensor.electricity_plan_config', 'standing_charge_annual') | float %}
         {% set pso      = state_attr('sensor.electricity_plan_config', 'pso_annual') | float %}

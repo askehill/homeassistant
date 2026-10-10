@@ -58,6 +58,7 @@ book_the_scenic:
         summary: "{{ who }}{{ ' - ' ~ note if note not in ['', 'unknown'] else '' }}"
         start_date_time: "{{ start }}"
         end_date_time: "{{ end }}"
+    - event: scenic_booking_created
     - action: input_text.set_value
       target:
         entity_id: input_text.scenic_note
