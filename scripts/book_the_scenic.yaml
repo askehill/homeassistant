@@ -5,7 +5,14 @@ book_the_scenic:
     - variables:
         start: "{{ states('input_datetime.scenic_start') }}"
         end: "{{ states('input_datetime.scenic_end') }}"
-        who: "{{ states('input_select.scenic_booker') }}"
+        # Who pressed the button: match the logged-in user to a person entity
+        # (person name must equal a key in notify_map). Falls back to the
+        # dropdown if the caller isn't a person (e.g. run from an automation).
+        who: >-
+          {% set uid = context.user_id %}
+          {% set p = (states.person | selectattr('attributes.user_id', 'eq', uid)
+                      | map(attribute='name') | list) if uid else [] %}
+          {{ p[0] if p else states('input_select.scenic_booker') }}
         note: "{{ states('input_text.scenic_note') | trim }}"
         notify_map:
           Adrian: notify.mobile_app_cph2581
