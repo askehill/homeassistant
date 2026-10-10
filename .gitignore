@@ -18,6 +18,8 @@
 !tests/**
 !scripts/
 !scripts/**
+!template/
+!template/**
 __pycache__/
 *.pyc
 

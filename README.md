@@ -67,9 +67,10 @@ Automations switch the active `utility_meter` tariff at each boundary.
 | `shower.yaml` | Shower running binary sensor |
 | `sun.yaml` | Derived sun conditions (e.g. "dark enough" threshold) |
 | `misc.yaml` | Miscellaneous helper sensors |
-| `evcharger.yaml` | EV charger state |
 | `switches.yaml` | Template switch helpers |
 | `water_volume.yaml` | Water butt volume estimation |
+| `scenic_usage_sensor.yaml` | Scenic (family car) booked hours this month, per person |
+| `scenic_upcoming.yaml` | Scenic upcoming bookings list for the dashboard |
 
 ### Laundry single-clamp logic
 

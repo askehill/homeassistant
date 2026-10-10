@@ -150,11 +150,17 @@ To add a new device: add a new `input_boolean` pair in `configuration.yaml`, add
 
 ---
 
+### Scenic (family car) booking
+`calendar.scenic_2011` (Local Calendar) holds bookings, titled `Name - note`. Booking goes through `script.book_the_scenic` (`scripts/book_the_scenic.yaml`): it works out the booker from `context.user_id` by matching a `person` entity (person names must equal the `notify_map` keys: Adrian/Finn/Davin; falls back to `input_select.scenic_booker`), rejects bad/past times, checks `calendar.get_events` for clashes, creates the event, fires `scenic_booking_created`, and notifies the booker's phone. `script.book_the_scenic_now_4_hours` sets start=now, end=+4h and calls it. `template/scenic_usage_sensor.yaml` (hours per person this month) and `template/scenic_upcoming.yaml` (upcoming list) are trigger-based sensors refreshed every 15 min, on calendar start/end, and on `scenic_booking_created`. A reminder automation notifies 30 min before start and end.
+
+Note: `.gitignore` ignores everything by default; `template/` had to be explicitly allowed (`!template/`, `!template/**`) or new template files silently never reach the HA server.
+
+---
+
 ## What has NOT been done yet
 
 - Travis CI badge in README is present but `.travis.yml` may be stale (was not reviewed).
 - `python_scripts/shellies_discovery.py` was not reviewed.
-- `template/evcharger.yaml` was not reviewed in detail.
 - 10 unidentified Shelly devices in DEVICES.md — not yet mapped.
 - `big_full_v` constant in `template/water_volume.yaml` needs updating once a confirmed full-tank ADC reading is available.
 - Dynamic electricity pricing (July 2026): monitor Irish supplier APIs and HA community integrations. `packages/electricity.yaml` is ready to be updated when dynamic tariff is activated.
