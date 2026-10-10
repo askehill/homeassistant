@@ -1,0 +1,15 @@
+book_the_scenic_now_4_hours:
+  alias: Book the Scenic now (4 hours)
+  mode: single
+  sequence:
+    - action: input_datetime.set_datetime
+      target:
+        entity_id: input_datetime.scenic_start
+      data:
+        datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+    - action: input_datetime.set_datetime
+      target:
+        entity_id: input_datetime.scenic_end
+      data:
+        datetime: "{{ (now() + timedelta(hours=4)).strftime('%Y-%m-%d %H:%M:%S') }}"
+    - action: script.book_the_scenic

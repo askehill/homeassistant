@@ -28,10 +28,11 @@
     action: input_boolean.turn_off
 - id: '1581724986134'
   alias: Heating on (Winter Time)
-  description: >
-    Full heating on at sunset+5 min, or at 16:30 if the sun is already low —
-    whichever comes first. Fires only when GMT is active (winter) and heating
+  description: 'Full heating on at sunset+5 min, or at 16:30 if the sun is already
+    low — whichever comes first. Fires only when GMT is active (winter) and heating
     is not already on.
+
+    '
   trigger:
   - platform: sun
     event: sunset
@@ -253,6 +254,7 @@
   actions:
   - data: {}
     action: script.boost_hot_water
+    enabled: true
   mode: single
 - id: '1612026197579'
   alias: Landing lights off after motion
@@ -322,6 +324,11 @@
     target:
       entity_id:
       - switch.hotwater
+  - action: switch.turn_off
+    metadata: {}
+    target:
+      entity_id: switch.shellyplus1pm_c82e180640c4_switch_0
+    data: {}
   mode: single
 - id: '1644091533856'
   alias: Security Lights at night
@@ -458,7 +465,7 @@
     action: light.turn_off
   mode: single
 - id: '1666458373744'
-  alias: Alarm house at 23:00
+  alias: Attempt to alarm house at 23:00
   description: ''
   triggers:
   - at: '23:00:00'
@@ -532,12 +539,15 @@
   conditions:
   - condition: state
     entity_id: switch.hotwater
-    state: 'on'
+    state:
+    - 'on'
+    enabled: true
   actions:
   - data: {}
     target:
       entity_id: switch.hotwater
     action: switch.turn_off
+    enabled: true
   mode: single
 - id: '1672348619169'
   alias: Living Room Boost
@@ -659,36 +669,10 @@
       entity_id: alarm_control_panel.home
     action: alarm_control_panel.alarm_disarm
   mode: single
-- id: '1694289245169'
-  alias: Retry Alarm when windows closed
-  description: If it's after 11, the alarm isn't on, try again if there was a window
-    open
-  trigger:
-  - platform: state
-    entity_id:
-    - binary_sensor.upstairs_fr_side
-    - binary_sensor.sitting_room
-    from: 'on'
-    to: 'off'
-  condition:
-  - condition: and
-    conditions:
-    - condition: time
-      after: '23:00:00'
-      before: 06:00:00
-    - condition: state
-      entity_id: alarm_control_panel.home
-      state: disarmed
-  action:
-  - service: alarm_control_panel.alarm_arm_away
-    data: {}
-    target:
-      entity_id: alarm_control_panel.home
-  mode: single
 - id: '1695594207787'
-  alias: Retry alarm after side door closed for 3 mins
+  alias: Arm house at night when there's an event on doors / windows
   description: If it's after 11, the alarm isn't on, try again if the side door was
-    used and playroom light is now off
+    used or windows were closed and playroom light is now off
   triggers:
   - entity_id:
     - binary_sensor.side_door_wc
@@ -698,6 +682,12 @@
       hours: 0
       minutes: 3
       seconds: 0
+    trigger: state
+  - entity_id:
+    - binary_sensor.upstairs_fr_side
+    - binary_sensor.sitting_room
+    from: 'on'
+    to: 'off'
     trigger: state
   conditions:
   - condition: and
@@ -857,9 +847,8 @@
     target:
       entity_id:
       - light.living_room_lights
-      - light.pantry
-      - light.kitchen_corner_2
       - light.back_door_porch
+      - light.kitchen_lights
     action: homeassistant.turn_off
   - action: switch.turn_off
     metadata: {}
@@ -934,7 +923,7 @@
       value: '80'
   mode: single
 - id: '1756563525020'
-  alias: Turn water butt pump off after 5 mins
+  alias: Turn water butt pump off when timer fires
   description: ''
   triggers:
   - trigger: state
@@ -948,6 +937,10 @@
       hours: 0
       minutes: 5
       seconds: 0
+  - trigger: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.outdoor_pump_timer
   conditions: []
   actions:
   - action: switch.turn_off
@@ -1013,98 +1006,150 @@
     target:
       entity_id: switch.pump_socket
     data: {}
+  - action: timer.start
+    metadata: {}
+    target:
+      entity_id: timer.outdoor_pump_timer
+    data: {}
   mode: single
-
 - id: '1780000000001'
   alias: Notify washing machine finished
-  description: >
-    Opt-in push notification when the washing machine completes.
-    Each device owner controls their own toggle via the laundry dashboard card.
+  description: 'Opt-in push notification when the washing machine completes. Each
+    device owner controls their own toggle via the laundry dashboard card.
+
+    '
   triggers:
   - trigger: state
-    entity_id: binary_sensor.washing_machine_finished
-    to: "on"
+    entity_id:
+    - select.washing_machine
+    from:
+    - run
+    to:
+    - stop
+    - pause
   conditions: []
   actions:
   - if:
     - condition: state
       entity_id: input_boolean.notify_washing_finished_oneplus
-      state: "on"
+      state: 'on'
     then:
     - action: notify.mobile_app_cph2581
       data:
-        message: "Washing machine is done 🧺"
-        title: "Laundry"
+        message: "Washing machine is done \U0001F9FA"
+        title: Laundry
   - if:
     - condition: state
       entity_id: input_boolean.notify_washing_finished_pixel
-      state: "on"
+      state: 'on'
     then:
     - action: notify.mobile_app_pixel_8
       data:
-        message: "Washing machine is done 🧺"
-        title: "Laundry"
+        message: "Washing machine is done \U0001F9FA"
+        title: Laundry
   mode: single
-
 - id: '1780000000002'
   alias: Notify tumble dryer finished
-  description: >
-    Opt-in push notification when the tumble dryer completes.
-    Each device owner controls their own toggle via the laundry dashboard card.
+  description: 'Opt-in push notification when the tumble dryer completes. Each device
+    owner controls their own toggle via the laundry dashboard card.
+
+    '
   triggers:
   - trigger: state
     entity_id: binary_sensor.tumble_dryer_finished
-    to: "on"
+    to: 'on'
   conditions: []
   actions:
   - if:
     - condition: state
       entity_id: input_boolean.notify_dryer_finished_oneplus
-      state: "on"
+      state: 'on'
     then:
     - action: notify.mobile_app_cph2581
       data:
-        message: "Tumble dryer is done 🌀"
-        title: "Laundry"
+        message: "Tumble dryer is done \U0001F300"
+        title: Laundry
   - if:
     - condition: state
       entity_id: input_boolean.notify_dryer_finished_pixel
-      state: "on"
+      state: 'on'
     then:
     - action: notify.mobile_app_pixel_8
       data:
-        message: "Tumble dryer is done 🌀"
-        title: "Laundry"
+        message: "Tumble dryer is done \U0001F300"
+        title: Laundry
   mode: single
-
 - id: '1780000000003'
   alias: Reset laundry notification subscriptions at midnight
-  description: >
-    Clears all laundry notification opt-ins each night so users subscribe fresh each day.
-    Skipped if either appliance is still running to avoid clearing a subscription mid-cycle.
-    Re-checks every 15 minutes if a cycle was in progress at midnight.
+  description: 'Clears all laundry notification opt-ins each night so users subscribe
+    fresh each day. Skipped if either appliance is still running to avoid clearing
+    a subscription mid-cycle. Re-checks every 15 minutes if a cycle was in progress
+    at midnight.
+
+    '
   triggers:
   - trigger: time
-    at: "00:00:00"
+    at: 00:00:00
   - trigger: time_pattern
-    minutes: "/15"
+    minutes: /15
     id: retry
   conditions:
   - condition: time
-    after: "00:00:00"
-    before: "06:00:00"
+    after: 00:00:00
+    before: 06:00:00
   - condition: state
     entity_id: binary_sensor.washing_machine
-    state: "off"
+    state: 'off'
   - condition: state
     entity_id: binary_sensor.tumble_dryer
-    state: "off"
+    state: 'off'
   actions:
   - action: input_boolean.turn_off
     target:
       entity_id:
-        - input_boolean.notify_washing_finished_oneplus
-        - input_boolean.notify_washing_finished_pixel
-        - input_boolean.notify_dryer_finished_oneplus
-        - input_boolean.notify_dryer_finished_pixel
+      - input_boolean.notify_washing_finished_oneplus
+      - input_boolean.notify_washing_finished_pixel
+      - input_boolean.notify_dryer_finished_oneplus
+      - input_boolean.notify_dryer_finished_pixel
   mode: single
+- id: '1782663690109'
+  alias: 'Make sure water butt pump is off '
+  description: ''
+  triggers:
+  - type: turned_on
+    device_id: b8801aeea04b902ec99288ca554282a6
+    entity_id: ce1b3ee597c2450baacf27d07de95fd4
+    domain: switch
+    trigger: device
+    for:
+      hours: 0
+      minutes: 15
+      seconds: 0
+  conditions: []
+  actions:
+  - type: turn_off
+    device_id: b8801aeea04b902ec99288ca554282a6
+    entity_id: ce1b3ee597c2450baacf27d07de95fd4
+    domain: switch
+  mode: single
+- id: '1791633739077'
+  alias: Scenic booking reminders
+  description: Notify 30 minutes before a Scenic booking starts and ends
+  triggers:
+  - trigger: calendar
+    event: start
+    offset: -0:30:0
+    entity_id: calendar.scenic_2011
+    id: start
+  - trigger: calendar
+    event: end
+    offset: -0:30:0
+    entity_id: calendar.scenic_2011
+    id: end
+  actions:
+  - action: notify.notify
+    data:
+      title: "{{ 'Scenic booking starts in 30 minutes' if trigger.id == 'start'\n
+        \  else 'Scenic booking ends in 30 minutes' }}"
+      message: '{{ trigger.calendar_event.summary }}'
+  mode: parallel
