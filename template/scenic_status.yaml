@@ -1,0 +1,11 @@
+# Simple Scenic status for dashboard badges: "In use" / "Free".
+# Updates itself whenever calendar.scenic_2011 flips between on and off.
+- sensor:
+    - unique_id: scenic_status
+      name: Scenic Status
+      availability: "{{ states('calendar.scenic_2011') in ['on', 'off'] }}"
+      state: "{{ 'In use' if is_state('calendar.scenic_2011', 'on') else 'Free' }}"
+      icon: >-
+        {{ 'mdi:car-key' if is_state('calendar.scenic_2011', 'on') else 'mdi:car-estate' }}
+      attributes:
+        booking: "{{ state_attr('calendar.scenic_2011', 'message') }}"
