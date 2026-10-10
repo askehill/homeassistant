@@ -25,24 +25,33 @@
         end_date_time: "{{ month_end }}"
       response_variable: result
     - variables:
+        # booked = whole month incl. future bookings; used = only the part of
+        # each booking that has already elapsed (clipped to now).
         totals: >-
-          {% set ns = namespace(t={}) %}
+          {% set ns = namespace(b={}, u={}) %}
           {% set ms = as_timestamp(month_start) %}
           {% set me = as_timestamp(month_end) %}
+          {% set nw = as_timestamp(now()) %}
           {%- for ev in result['calendar.scenic_2011'].events if 'T' in ev.start %}
             {%- set name = ev.summary.split(' - ')[0] | trim | title %}
             {%- set s = [as_timestamp(ev.start), ms] | max %}
             {%- set e = [as_timestamp(ev.end), me] | min %}
             {%- if e > s %}
-              {%- set hrs = (e - s) / 3600 %}
-              {%- set ns.t = dict(ns.t, **{name: ((ns.t.get(name, 0) + hrs) | round(2))}) %}
+              {%- set booked = (e - s) / 3600 %}
+              {%- set eu = [e, nw] | min %}
+              {%- set used = ((eu - s) / 3600) if eu > s else 0 %}
+              {%- set ns.b = dict(ns.b, **{name: ((ns.b.get(name, 0) + booked) | round(2))}) %}
+              {%- set ns.u = dict(ns.u, **{name: ((ns.u.get(name, 0) + used) | round(2))}) %}
             {%- endif %}
           {%- endfor %}
-          {{ ns.t }}
+          {{ {'booked': ns.b, 'used': ns.u} }}
   sensor:
     - name: Scenic hours this month
       unique_id: scenic_hours_this_month
       unit_of_measurement: h
-      state: "{{ totals.values() | sum | round(1) }}"
+      # State = total booked hours this month (incl. future bookings).
+      state: "{{ totals.booked.values() | sum | round(1) }}"
       attributes:
-        by_user: "{{ totals }}"
+        by_user: "{{ totals.booked }}"
+        used_by_user: "{{ totals.used }}"
+        used_total: "{{ totals.used.values() | sum | round(1) }}"
