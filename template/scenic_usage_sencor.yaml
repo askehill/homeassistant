@@ -1,0 +1,48 @@
+- triggers:
+    - trigger: time_pattern
+      minutes: "/15"
+    - trigger: homeassistant
+      event: start
+    - trigger: calendar
+      event: start
+      entity_id: calendar.scenic_2011
+    - trigger: calendar
+      event: end
+      entity_id: calendar.scenic_2011
+    - trigger: event
+      event_type: scenic_booking_created
+  actions:
+    - variables:
+        month_start: "{{ now().replace(day=1, hour=0, minute=0, second=0, microsecond=0).isoformat() }}"
+        month_end: >-
+          {{ (now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+              + timedelta(days=32)).replace(day=1).isoformat() }}
+    - action: calendar.get_events
+      target:
+        entity_id: calendar.scenic_2011
+      data:
+        start_date_time: "{{ month_start }}"
+        end_date_time: "{{ month_end }}"
+      response_variable: result
+    - variables:
+        totals: >-
+          {% set ns = namespace(t={}) %}
+          {% set ms = as_timestamp(month_start) %}
+          {% set me = as_timestamp(month_end) %}
+          {%- for ev in result['calendar.scenic_2011'].events if 'T' in ev.start %}
+            {%- set name = ev.summary.split(' - ')[0] | trim | title %}
+            {%- set s = [as_timestamp(ev.start), ms] | max %}
+            {%- set e = [as_timestamp(ev.end), me] | min %}
+            {%- if e > s %}
+              {%- set hrs = (e - s) / 3600 %}
+              {%- set ns.t = dict(ns.t, **{name: ((ns.t.get(name, 0) + hrs) | round(2))}) %}
+            {%- endif %}
+          {%- endfor %}
+          {{ ns.t }}
+  sensor:
+    - name: Scenic hours this month
+      unique_id: scenic_hours_this_month
+      unit_of_measurement: h
+      state: "{{ totals.values() | sum | round(1) }}"
+      attributes:
+        by_user: "{{ totals }}"
