@@ -89,7 +89,7 @@ HA_DOMAINS = {
     "alarm_control_panel", "lock", "fan", "vacuum", "remote",
     "number", "select", "button", "update", "schedule",
     "utility_meter", "template", "valve", "water_heater",
-    "event", "todo", "conversation", "stt", "tts", "wake_word",
+    "calendar", "event", "todo", "conversation", "stt", "tts", "wake_word",
 }
 
 

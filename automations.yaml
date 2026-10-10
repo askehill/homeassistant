@@ -1116,21 +1116,18 @@
   alias: 'Make sure water butt pump is off '
   description: ''
   triggers:
-  - type: turned_on
-    device_id: b8801aeea04b902ec99288ca554282a6
-    entity_id: ce1b3ee597c2450baacf27d07de95fd4
-    domain: switch
-    trigger: device
+  - trigger: state
+    entity_id: switch.pump_socket
+    to: 'on'
     for:
       hours: 0
       minutes: 15
       seconds: 0
   conditions: []
   actions:
-  - type: turn_off
-    device_id: b8801aeea04b902ec99288ca554282a6
-    entity_id: ce1b3ee597c2450baacf27d07de95fd4
-    domain: switch
+  - action: switch.turn_off
+    target:
+      entity_id: switch.pump_socket
   mode: single
 - id: '1791633739077'
   alias: Scenic booking reminders
