@@ -8,9 +8,9 @@ book_the_scenic:
         who: "{{ states('input_select.scenic_booker') }}"
         note: "{{ states('input_text.scenic_note') | trim }}"
         notify_map:
-          Adrian: notify.mobile_app_adrians_phone
-          Finn: notify.mobile_app_finns_phone
-          Davin: notify.mobile_app_davins_phone
+          Adrian: notify.mobile_app_cph2581
+          Finn: notify.mobile_app_sm_s921b
+          Davin: notify.mobile_app_sm_g780f
         notify_service: "{{ notify_map.get(who, 'persistent_notification.create') }}"
         problem: >-
           {% set bad = ['unknown', 'unavailable', ''] %}
